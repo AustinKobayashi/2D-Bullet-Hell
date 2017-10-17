@@ -7,5 +7,6 @@ public class ArmourTest : Armour {
 		SetId (1);
 		defence = 10;
 		SetImage ("armour");
+		SetItemType (ItemTypes.armour);
 	}
 }

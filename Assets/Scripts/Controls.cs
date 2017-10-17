@@ -21,8 +21,11 @@ public class Controls : NetworkBehaviour {
 	public Text dexterityValue;
 	public Text enduranceValue;
 	public Text wisdomValue;
-	[SyncVar] int selectedItemIndex;
-	[SyncVar] Item selectedItem;
+
+	[SyncVar] public int selectedItemIndex;
+	[SyncVar] public int selectedItem;
+	ItemTypes itemType;
+
 	public Image weaponSlot, abilitySlot, armorSlot, ringSlot, inventorySlot0, inventorySlot1, inventorySlot2, inventorySlot3, inventorySlot4, inventorySlot5,
 	inventorySlot6, inventorySlot7;
 	public Sprite defautImg;
@@ -35,6 +38,7 @@ public class Controls : NetworkBehaviour {
 		statsMenu.SetActive (true);
 		inventory = GetComponent<Inventory> ();
 		selectedItemIndex = -1;
+		selectedItem = -1;
 	}
 	
 	// Update is called once per frame
@@ -89,28 +93,28 @@ public class Controls : NetworkBehaviour {
 
 	public void ClickItemSlot(int index){
 
-		if (selectedItemIndex == -1 && selectedItem == null) { 
+		if (selectedItemIndex == -1 && selectedItem == -1) { 
 			if(inventory.GetItem(index) != null)
 				selectedItemIndex = index;
 		}else{
-			if (selectedItem == null) {
+			if (selectedItem == -1) {
 				inventory.CmdSwapItems (selectedItemIndex, index);
 				selectedItemIndex = -1;
 			}else {
 				inventory.CmdUnequipWeapon (index);
-				selectedItem = null;
+				selectedItem = -1;
 			}
 		}
 		LoadItemImages ();
 	}
 
-	public void ClickWeaponSlot(){
+	public void ClickEquipSlot(){
 		if (selectedItemIndex != -1) {
-			inventory.CmdEquipItem (selectedItemIndex);
+			inventory.CmdEquipWeapon (selectedItemIndex);
+			selectedItemIndex = -1;
 			LoadItemImages ();
 		} else {
-			Debug.Log ("No selected item");
-			selectedItem = inventory.GetWeapon ();
+			selectedItem = inventory.GetWeapon () != null ? inventory.GetWeapon ().GetId() : -1;
 		}
 	}
 }

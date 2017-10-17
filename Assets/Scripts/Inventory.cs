@@ -7,11 +7,15 @@ public class Inventory : NetworkBehaviour {
 	//public Item[] inventory = new Item[8];
 	SyncListInt inventory = new SyncListInt();
 	ItemDatabase database;
-	[SyncVar] private Item weapon;
+	//[SyncVar] private Item weapon;
+	[SyncVar] private int weapon;
+	[SyncVar] private int ability;
+	[SyncVar] private int armour;
+	[SyncVar] private int ring;
 
 	// Use this for initialization
 	void Start () {
-		weapon = new StaffTest ();
+		weapon = new StaffTest ().GetId();
 		database = GameObject.FindGameObjectWithTag ("ItemDatabase").GetComponent<ItemDatabase>();
 		Debug.Log (database);
 		for (int i = 0; i < 8; i++)
@@ -59,25 +63,63 @@ public class Inventory : NetworkBehaviour {
 		CmdRemoveItem (item);
 	}
 	*/
+
+	/* Equips the weapon
+	 * - If the index = -1 this means that a weapon is selected in the inventory
+	 *
+	 *
+	 */
 	[Command]
-	public void CmdEquipItem(int index){
+	public void CmdEquipWeapon(int index){
+
+		if (GetItem (index).GetItemType () != ItemTypes.weapon)
+			return;
+		
 		if (inventory [index] == -1) {
-			weapon = GetItem (index);
+			Debug.Log ("called");
+			weapon = GetItem (index).GetId ();
 			CmdRemoveItem (index);
 		} else {
-			Item temp = weapon;
-			weapon = GetItem (index);
-			inventory [index] = temp.GetId ();
+			int temp = weapon;
+			weapon = GetItem (index).GetId();
+			inventory [index] = temp;
 		}
 	}
 
 	[Command]
 	public void CmdUnequipWeapon(int index){
 		if(inventory[index] == -1){
-			inventory [index] = weapon.GetId ();
-			weapon = null;
+			inventory [index] = weapon;
+			weapon = -1;
 		} else {
-			CmdEquipItem (index);
+			CmdEquipWeapon (index);
+		}
+	}
+	
+	[Command]
+	public void CmdEquipArmour(int index){
+
+		if (GetItem (index).GetItemType () != ItemTypes.armour)
+			return;
+
+		if (inventory [index] == -1) {
+			Debug.Log ("called");
+			armour = GetItem (index).GetId ();
+			CmdRemoveItem (index);
+		} else {
+			int temp = armour;
+			weapon = GetItem (index).GetId();
+			inventory [index] = temp;
+		}
+	}
+
+	[Command]
+	public void CmdUnequipArmour(int index){
+		if(inventory[index] == -1){
+			inventory [index] = armour;
+			weapon = -1;
+		} else {
+			CmdEquipArmour (index);
 		}
 	}
 
@@ -90,7 +132,7 @@ public class Inventory : NetworkBehaviour {
 
 	[Server]
 	public Weapon GetWeapon(){
-		return weapon as Weapon;	
+		return database.GetItem(weapon) as Weapon;	
 	}
 
 	int GetFirstFreeSlot(){

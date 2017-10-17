@@ -6,9 +6,18 @@ public class Item {
 
 	int id;
 	Sprite itemImage;
+	ItemTypes itemType;
 
 	public void SetId(int id){
 		this.id = id;
+	}
+
+	public void SetItemType(ItemTypes itemType){
+		this.itemType = itemType;
+	}
+
+	public ItemTypes GetItemType(){
+		return itemType;
 	}
 
 	public int GetId(){

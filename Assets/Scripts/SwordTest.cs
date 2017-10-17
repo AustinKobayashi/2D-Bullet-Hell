@@ -9,5 +9,6 @@ public class SwordTest : Weapon {
 		projectileSpeed = 8;
 		range = 1;
 		SetImage ("sword");
+		SetItemType (ItemTypes.weapon);
 	}
 }
