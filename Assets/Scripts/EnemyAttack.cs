@@ -25,6 +25,9 @@ public class EnemyAttack : NetworkBehaviour {
 		}
 	}
 
+	public void ClearTarget(){
+		target = null;
+	}
 	void Attack(){
 
 		// This is the number of rays / 2 - 1

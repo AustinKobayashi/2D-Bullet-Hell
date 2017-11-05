@@ -11,6 +11,8 @@ public class ItemDatabase : NetworkBehaviour {
 		database [0] = new StaffTest ();
 		database [1] = new ArmourTest ();
 		database [2] = new SwordTest ();
+		database [3] = new PotionTest ();
+		database [4] = new ScrollTest ();
 	}
 
 	[Server]

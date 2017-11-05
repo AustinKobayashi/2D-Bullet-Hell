@@ -26,5 +26,6 @@ public class EnemyAI : MonoBehaviour {
 
 	void OnTriggerExit2D(Collider2D coll){
 		movement.ClearTarget ();
+		attack.ClearTarget ();
 	}
 }

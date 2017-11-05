@@ -11,7 +11,6 @@ public class AttackController : MonoBehaviour {
 	private Rigidbody2D rigid;
 	private PlayerAttack playerAttack;
 
-
 	// Update is called once per frame
 	void Update () {
 

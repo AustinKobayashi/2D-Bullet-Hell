@@ -5,16 +5,20 @@ using UnityEngine.Networking;
 public class Inventory : NetworkBehaviour {
 
 	//public Item[] inventory = new Item[8];
-	SyncListInt inventory = new SyncListInt();
+	public SyncListInt inventory = new SyncListInt();
 	ItemDatabase database;
 	//[SyncVar] private Item weapon;
-	[SyncVar] private int weapon;
+	[SyncVar] public int weapon;
 	[SyncVar] private int ability;
-	[SyncVar] private int armour;
+	[SyncVar] public int armour;
 	[SyncVar] private int ring;
 
 	// Use this for initialization
 	void Start () {
+		weapon = -1;
+		ability = -1;
+		armour = -1;
+		ring = -1;
 		weapon = new StaffTest ().GetId();
 		database = GameObject.FindGameObjectWithTag ("ItemDatabase").GetComponent<ItemDatabase>();
 		Debug.Log (database);
@@ -23,6 +27,8 @@ public class Inventory : NetworkBehaviour {
 		
 		inventory [0] = new ArmourTest ().GetId();
 		inventory [1] = new SwordTest ().GetId();
+		inventory [2] = new PotionTest ().GetId();
+		inventory [3] = new ScrollTest ().GetId();
 	}
 	
 	// Update is called once per frame
@@ -76,7 +82,6 @@ public class Inventory : NetworkBehaviour {
 			return;
 		
 		if (inventory [index] == -1) {
-			Debug.Log ("called");
 			weapon = GetItem (index).GetId ();
 			CmdRemoveItem (index);
 		} else {
@@ -87,12 +92,17 @@ public class Inventory : NetworkBehaviour {
 	}
 
 	[Command]
-	public void CmdUnequipWeapon(int index){
-		if(inventory[index] == -1){
-			inventory [index] = weapon;
-			weapon = -1;
+	public void CmdEquipAbility(int index){
+
+		if (GetItem (index).GetItemType () != ItemTypes.ability)
+			return;
+		if (inventory [index] == -1) {
+			ability = GetItem (index).GetId ();
+			CmdRemoveItem (index);
 		} else {
-			CmdEquipWeapon (index);
+			int temp = ability;
+			ability = GetItem (index).GetId();
+			inventory [index] = temp;
 		}
 	}
 	
@@ -101,25 +111,47 @@ public class Inventory : NetworkBehaviour {
 
 		if (GetItem (index).GetItemType () != ItemTypes.armour)
 			return;
-
 		if (inventory [index] == -1) {
-			Debug.Log ("called");
 			armour = GetItem (index).GetId ();
 			CmdRemoveItem (index);
 		} else {
 			int temp = armour;
-			weapon = GetItem (index).GetId();
+			armour = GetItem (index).GetId();
 			inventory [index] = temp;
 		}
 	}
-
+		
 	[Command]
-	public void CmdUnequipArmour(int index){
-		if(inventory[index] == -1){
-			inventory [index] = armour;
-			weapon = -1;
-		} else {
-			CmdEquipArmour (index);
+	public void CmdUnequipItem(int selectedItem, int index){
+		ItemTypes type = database.GetItem (selectedItem).GetItemType ();
+		switch(type){
+		case(ItemTypes.weapon):
+			if(inventory[index] == -1){
+				inventory [index] = weapon;
+				weapon = -1;
+			} else {
+				CmdEquipWeapon (index);
+			}
+			break;
+		case(ItemTypes.ability):
+			if(inventory[index] == -1){
+				inventory [index] = ability;
+				ability = -1;
+			} else {
+				CmdEquipAbility (index);
+			}
+			break;
+		case(ItemTypes.armour):
+			if(inventory[index] == -1){
+				inventory [index] = armour;
+				armour = -1;
+			} else {
+				CmdEquipArmour (index);
+			}
+			break;
+		default:
+			break;
+
 		}
 	}
 
@@ -134,6 +166,18 @@ public class Inventory : NetworkBehaviour {
 	public Weapon GetWeapon(){
 		return database.GetItem(weapon) as Weapon;	
 	}
+
+
+	[Server]
+	public AbilityItem GetAbility(){
+		return database.GetItem(ability) as AbilityItem;	
+	}
+
+	[Server]
+	public Armour GetArmour(){
+		return database.GetItem(armour) as Armour;	
+	}
+		
 
 	int GetFirstFreeSlot(){
 		for (int i = 0; i < 8; i++)

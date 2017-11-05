@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿//using System;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
 
@@ -6,18 +7,17 @@ public class PlayerWizardStatsTest : AbstractPlayerStats {
 
 	float timer;
 	Inventory inventory;
-	Controls controls;
+	InventoryControls controls;
 
 	// Use this for initialization
 	void Start () {
 		inventory = GetComponent<Inventory> ();
-		controls = GetComponent<Controls> ();
+		controls = GetComponent<InventoryControls> ();
 		SetHealth (10000);
 		maxHealth = 100;
-		SetStrength (12000);
+		SetStrength (12);
 		SetDexterity (15);
 		endurance = 12;
-		healthText.text = health.ToString();
 	}
 	
 	// Update is called once per frame
@@ -47,11 +47,22 @@ public class PlayerWizardStatsTest : AbstractPlayerStats {
 		
 		controls.UpdateStatText ();
 	}
-
+		
 	public int GetWpnDamage(){
-		return Random.Range (inventory.GetWeapon().GetDamage()[0], inventory.GetWeapon().GetDamage()[1] + 1);
+		try{
+			return Random.Range (inventory.GetWeapon().GetDamage()[0], inventory.GetWeapon().GetDamage()[1] + 1);
+		}catch(System.NullReferenceException e){
+			return 0;
+		}
 	}
 
+	public int GetAbilityPower(){
+		try{
+			return Random.Range (inventory.GetAbility().GetDamage()[0], inventory.GetAbility().GetDamage()[1] + 1);
+		}catch(System.NullReferenceException e){
+			return 0;
+		}
+	}
 
 	public void IncreaseExperience(int amount){
 		experience += amount;

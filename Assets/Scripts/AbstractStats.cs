@@ -6,16 +6,18 @@ using UnityEngine.UI;
 
 public abstract class AbstractStats : NetworkBehaviour {
 
-	[SyncVar] public int health;
+	[SyncVar (hook = "UpdateManaText")] public int health;
 	[SyncVar] public int maxHealth;
-	[SyncVar] public int strength;
-	[SyncVar] public int defence;
-	[SyncVar] public int speed;
-	[SyncVar] public int dexterity;
-	public Text healthText;
+	[SyncVar (hook = "UpdateStrengthText")] public int strength;
+	[SyncVar (hook = "UpdateDefenceText")] public int defence;
+	[SyncVar (hook = "UpdateSpeedText")] public int speed;
+	[SyncVar (hook = "UpdateDexterityText")] public int dexterity;
+	InventoryControls inventoryControls;
 
    	// Use this for initialization
 	void Start () {
+		if (isLocalPlayer)
+			inventoryControls = GetComponent<InventoryControls> ();
 	}
 	
 	// Update is called once per frame
@@ -37,15 +39,13 @@ public abstract class AbstractStats : NetworkBehaviour {
 
 	[Server]
 	public bool TakeDamage(int damage){
+		
 		health -= (int)(damage * 0.15f);
 
 		if (defence < (int)(damage * 0.85f)) {
 			health -= ((int)(damage * 0.85f) - defence);
 
 		}
-
-		if(healthText)
-			healthText.text = health.ToString();
 
 		if (health <= 0) {
 			Die ();
@@ -81,5 +81,42 @@ public abstract class AbstractStats : NetworkBehaviour {
 
 	public void SetDexterity(int dexterity){
 		this.dexterity = dexterity;
+	}
+
+	[Command]
+	public void CmdIncreaseDefence(int amount){
+		this.defence += amount;
+	}
+
+	[Command]
+	public void CmdDecreaseDefence(int amount){
+		this.defence -= amount;
+	}
+
+
+
+	public void UpdateHealthText(int health){
+		if (!isLocalPlayer)
+			return;
+	}
+
+	public void UpdateStrengthText(int strength){
+		if (!isLocalPlayer)
+			return;
+	}
+
+	public void UpdateDefence(int defence){
+		if (!isLocalPlayer)
+			return;
+	}
+
+	public void UpdateSpeedText(int speed){
+		if (!isLocalPlayer)
+			return;
+	}
+
+	public void UpdateDexterityText(int dexterity){
+		if (!isLocalPlayer)
+			return;
 	}
 }

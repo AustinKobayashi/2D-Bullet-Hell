@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 
-public class Controls : NetworkBehaviour {
+public class InventoryControls : NetworkBehaviour {
 
 	//public Image menu;
 	public GameObject menu;
@@ -80,6 +80,8 @@ public class Controls : NetworkBehaviour {
 	public void LoadItemImages(){
 
 		weaponSlot.sprite = inventory.GetWeapon() != null ? inventory.GetWeapon().GetItemImage () : defautImg;
+		abilitySlot.sprite = inventory.GetAbility() != null ? inventory.GetAbility().GetItemImage () : defautImg;
+		armorSlot.sprite = inventory.GetArmour() != null ? inventory.GetArmour().GetItemImage () : defautImg;
 		inventorySlot0.sprite = inventory.GetItem (0) != null ? inventory.GetItem (0).GetItemImage () : defautImg;
 		inventorySlot1.sprite = inventory.GetItem (1) != null ? inventory.GetItem (1).GetItemImage () : defautImg;
 		inventorySlot2.sprite = inventory.GetItem (2) != null ? inventory.GetItem (2).GetItemImage () : defautImg;
@@ -101,14 +103,14 @@ public class Controls : NetworkBehaviour {
 				inventory.CmdSwapItems (selectedItemIndex, index);
 				selectedItemIndex = -1;
 			}else {
-				inventory.CmdUnequipWeapon (index);
+				inventory.CmdUnequipItem(selectedItem, index);
 				selectedItem = -1;
 			}
 		}
 		LoadItemImages ();
 	}
 
-	public void ClickEquipSlot(){
+	public void ClickWeaponSlot(){
 		if (selectedItemIndex != -1) {
 			inventory.CmdEquipWeapon (selectedItemIndex);
 			selectedItemIndex = -1;
@@ -117,4 +119,77 @@ public class Controls : NetworkBehaviour {
 			selectedItem = inventory.GetWeapon () != null ? inventory.GetWeapon ().GetId() : -1;
 		}
 	}
+
+
+	public void ClickAbilitySlot(){
+		if (selectedItemIndex != -1) {
+			inventory.CmdEquipAbility (selectedItemIndex);
+			selectedItemIndex = -1;
+			LoadItemImages ();
+		} else {
+			selectedItem = inventory.GetAbility () != null ? inventory.GetAbility ().GetId() : -1;
+		}
+	}
+
+	public void ClickArmourSlot(){
+		if (selectedItemIndex != -1) {
+			inventory.CmdEquipArmour (selectedItemIndex);
+			selectedItemIndex = -1;
+			LoadItemImages ();
+		} else {
+			selectedItem = inventory.GetArmour () != null ? inventory.GetArmour ().GetId() : -1;
+		}
+	}
+
+	public void UpdateHealthText(int health){
+		healthValue.text = stats.GetHealth ().ToString();
+		levelValue.text = stats.GetLevel ().ToString();
+		experienceValue.text = stats.GetExperience ().ToString();
+		enduranceValue.text = stats.GetEndurance ().ToString();
+		wisdomValue.text = stats.GetWisdom ().ToString();
+	}
+
+	#region UpdateTexts
+	public void UpdateManaText(int mana){
+		manaValue.text = mana.ToString();
+	}
+
+	public void UpdateStrengthText(int strength){
+		strengthValue.text = strength.ToString();
+
+	}
+
+	public void UpdateDefence(int defence){
+		defenceValue.text = defence.ToString();
+
+	}
+
+	public void UpdateSpeedText(int speed){
+		speedValue.text = speed.ToString();
+
+	}
+
+	public void UpdateDexterityText(int dexterity){
+		dexterityValue.text = dexterity.ToString();
+	} 
+
+	public void UpdateEnduranceText(int endurance){
+		enduranceValue.text = endurance.ToString();
+
+	}
+
+	public void UpdateWisdom(int wisdom){
+		wisdomValue.text = wisdom.ToString();
+
+	}
+
+	public void UpdateExperienceText(int experience){
+		experienceValue.text = experience.ToString();
+
+	}
+
+	public void UpdateLeveText(int level){
+		levelValue.text = level.ToString();
+	}
+	#endregion
 }

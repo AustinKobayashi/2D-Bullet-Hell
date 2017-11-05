@@ -4,15 +4,17 @@ using UnityEngine.Networking;
 
 public abstract class AbstractPlayerStats : AbstractStats {
 
-	[SyncVar] protected int mana;
+	[SyncVar (hook = "UpdateManaText")] protected int mana;
 	[SyncVar] protected int maxMana;
-	[SyncVar] protected int endurance;
-	[SyncVar] protected int wisdom;
-	[SyncVar] protected int experience;
+	[SyncVar (hook = "UpdateEnduranceText")] protected int endurance;
+	[SyncVar (hook = "UpdateWisdomText")] protected int wisdom;
+	[SyncVar(hook = "UpdateExperienceText") ] protected int experience;
 	[SyncVar] protected int experienceToLevel;
-	[SyncVar] protected int level;
+	[SyncVar (hook = "UpdateLevelText")] protected int level;
+	InventoryControls inventoryControls;
 
 	void Start(){
+		inventoryControls = GetComponent<InventoryControls> ();
 		level = 0;
 		if (level == 0)
 			experienceToLevel = 50;
@@ -40,5 +42,32 @@ public abstract class AbstractPlayerStats : AbstractStats {
 
 	public int GetExperience(){
 		return experience;
+	}
+		
+
+	public void UpdateManaText(int mana){
+		if (!isLocalPlayer)
+			return;
+		inventoryControls.UpdateManaText (mana);
+	}
+
+	public void UpdateEnduranceText(int endurance){
+		if (!isLocalPlayer)
+			return;
+	}
+
+	public void UpdateWisdom(int wisdom){
+		if (!isLocalPlayer)
+			return;
+	}
+
+	public void UpdateExperienceText(int experience){
+		if (!isLocalPlayer)
+			return;
+	}
+
+	public void UpdateLeveText(int level){
+		if (!isLocalPlayer)
+			return;
 	}
 }
