@@ -48,17 +48,17 @@ public class EnemyAttack : NetworkBehaviour {
 		float theta = Mathf.Atan2 (attackPos.y, attackPos.x);
 
 		GameObject tempBullet = Instantiate(bullet, transform.position, Quaternion.identity) as GameObject;
-		tempBullet.GetComponent<EnemyAttackController>().SetTarget(CalculateTarget (theta, 0 , deltaTheta));
-		tempBullet.GetComponent<EnemyAttackController> ().SetEnemyAttack (this);
+		tempBullet.GetComponent<EnemyAttackMovement>().SetTarget(CalculateTarget (theta, 0 , deltaTheta));
+		tempBullet.GetComponent<EnemyAttackMovement> ().SetEnemyAttack (this);
 
 		for (int i = 1; i <= halfNumRays; i++) {
 			GameObject tempBulletPositive = Instantiate(bullet, transform.position, Quaternion.identity) as GameObject;
-			tempBulletPositive.GetComponent<EnemyAttackController>().SetTarget(CalculateTarget (theta, i, deltaTheta));
-			tempBulletPositive.GetComponent<EnemyAttackController> ().SetEnemyAttack (this);
+			tempBulletPositive.GetComponent<EnemyAttackMovement>().SetTarget(CalculateTarget (theta, i, deltaTheta));
+			tempBulletPositive.GetComponent<EnemyAttackMovement> ().SetEnemyAttack (this);
 
 			GameObject tempBulletNegative = Instantiate(bullet, transform.position, Quaternion.identity) as GameObject;
-			tempBulletNegative.GetComponent<EnemyAttackController>().SetTarget(CalculateTarget (theta - 2f * Mathf.PI, -i, deltaTheta));
-			tempBulletNegative.GetComponent<EnemyAttackController> ().SetEnemyAttack (this);
+			tempBulletNegative.GetComponent<EnemyAttackMovement>().SetTarget(CalculateTarget (theta - 2f * Mathf.PI, -i, deltaTheta));
+			tempBulletNegative.GetComponent<EnemyAttackMovement> ().SetEnemyAttack (this);
 		}
 	}
 

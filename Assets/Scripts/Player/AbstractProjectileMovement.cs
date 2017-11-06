@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class AttackController : MonoBehaviour {
+public abstract class AbstractProjectileMovement : MonoBehaviour {
 
-    public float bulletSpeed;
-    public float attackLife;
+    public float Speed;
+    public float LifeSpan;
+	public string targetTag;
     private float timer;
 	private Rigidbody2D rigid;
-	private PlayerAttack playerAttack;
 
 	// Update is called once per frame
 	void Update () {
 
         timer += Time.deltaTime;
-        if (timer >= attackLife)
+        if (timer >= LifeSpan)
             Destroy(this.gameObject);
 
 	}
@@ -23,19 +23,19 @@ public class AttackController : MonoBehaviour {
     public void SetTarget(Vector2 target)
     {
 		rigid = GetComponent<Rigidbody2D> ();
-		rigid.velocity = target.normalized * bulletSpeed;
+		rigid.velocity = target.normalized * Speed;
     }
 
 
 	void OnTriggerEnter2D(Collider2D coll) {
-		if (coll.tag == "Enemy" && !coll.isTrigger) {
-			playerAttack.CmdDealDamage (coll.gameObject);
+		if (coll.tag == targetTag && !coll.isTrigger) {
+			hit(coll);
 			Destroy (this.gameObject);
 		}
 	}
 
-
-	public void SetPlayerAttack(PlayerAttack playerAttack){
-		this.playerAttack = playerAttack;
+	public virtual void hit(Collider2D coll)
+	{
 	}
+
 }

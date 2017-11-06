@@ -1917,8 +1917,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44da17fa5084e014a8476ec65a858753, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 1528086511244940, guid: cd9686bedad96fb4097c751dfe135306, type: 2}
   attackCooldown: 0.3
+  timer: 0
+  stats: {fileID: 114000014041856802}
+  bullet: {fileID: 1528086511244940, guid: cd9686bedad96fb4097c751dfe135306, type: 2}
 --- !u!114 &114000011451756264
 MonoBehaviour:
   m_ObjectHideFlags: 1
