@@ -108,12 +108,8 @@ public abstract class AbstractStats : NetworkBehaviour {
 	}
 
 	public void UpdateDefenceText(int defence){
-		Debug.Log ("called");
-
 		if (!isLocalPlayer)
 			return;
-
-		Debug.Log ("is local player");
 		inventoryControls.UpdateDefenceText (defence);
 	}
 
