@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4971895530181866}
   - component: {fileID: 212391385795123334}
-  - component: {fileID: 114327143621149134}
+  - component: {fileID: 114938749188583074}
   - component: {fileID: 58536103248424864}
   m_Layer: 0
   m_Name: FireStorm
@@ -57,7 +57,7 @@ CircleCollider2D:
   m_Offset: {x: -0.1, y: 0}
   serializedVersion: 2
   m_Radius: 2.5
---- !u!114 &114327143621149134
+--- !u!114 &114938749188583074
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
