@@ -4,55 +4,65 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
+// Base class for all stats
 public abstract class AbstractStats : NetworkBehaviour {
 
-	[SyncVar (hook = "UpdateHealthText")] public int health;
-	[SyncVar] public int maxHealth;
-	[SyncVar (hook = "UpdateStrengthText")] public int strength;
-	[SyncVar (hook = "UpdateDefenceText")] public int defence;
-	[SyncVar (hook = "UpdateSpeedText")] public int speed;
-	[SyncVar (hook = "UpdateDexterityText")] public int dexterity;
-	public InventoryControls inventoryControls;
+	[SyncVar (hook = "UpdateHealthText")] protected int health;
+	[SyncVar (hook = "UpdateStrengthText")] protected int strength;
+	[SyncVar (hook = "UpdateDefenceText")] protected int defence;
+	[SyncVar (hook = "UpdateSpeedText")] protected int speed;
+	[SyncVar (hook = "UpdateDexterityText")] protected int dexterity;
+	[SyncVar] protected int maxHealth;
+	protected InventoryControls inventoryControls;
 
    	// Use this for initialization
 	void Awake () {
 		if (isLocalPlayer)
 			inventoryControls = GetComponent<InventoryControls> ();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
 	void Die(){
 		Destroy (this.gameObject);
 	}
 
+	// Used by buffs
+	[Command]
+	public void CmdIncreaseDefence(int amount){
+		this.defence += amount;
+	}
+
+	// Used by buffs
+	[Command]
+	public void CmdDecreaseDefence(int amount){
+		this.defence -= amount;
+	}
+		
+	// up to 85% of damage can be reduced by armour
+	// Returns true if the attack killed the unit
+	[Server]
+	public bool TakeDamage(int damage){
+
+		health -= (int)(damage * 0.15f);
+
+		if (defence < (int)(damage * 0.85f))
+			health -= ((int)(damage * 0.85f) - defence);
+		
+		if (health <= 0) {
+			Die ();
+			return true;
+		}
+
+		return false;
+	}
+		
+
+	#region stats getters and setters
 	public int GetHealth(){
 		return health;
 	}
 
 	public void SetHealth(int health){
 		this.health = health;
-	}
-
-	[Server]
-	public bool TakeDamage(int damage){
-		
-		health -= (int)(damage * 0.15f);
-
-		if (defence < (int)(damage * 0.85f)) {
-			health -= ((int)(damage * 0.85f) - defence);
-
-		}
-
-		if (health <= 0) {
-			Die ();
-			return true;
-		}
-			
-		return false;
 	}
 
 	public int GetStrength(){
@@ -75,6 +85,10 @@ public abstract class AbstractStats : NetworkBehaviour {
 		return speed;
 	}
 
+	public void SetSpeed(int speed){
+		this.speed = speed;
+	}
+
 	public int GetDexterity(){
 		return dexterity;
 	}
@@ -83,17 +97,9 @@ public abstract class AbstractStats : NetworkBehaviour {
 		this.dexterity = dexterity;
 	}
 
-	[Command]
-	public void CmdIncreaseDefence(int amount){
-		this.defence += amount;
-	}
+	#endregion
 
-	[Command]
-	public void CmdDecreaseDefence(int amount){
-		this.defence -= amount;
-	}
-
-
+	// Syncvar hooks to update the text for the player menu
 	#region UpdateTexts
 	public void UpdateHealthText(int health){
 		if (!isLocalPlayer)
