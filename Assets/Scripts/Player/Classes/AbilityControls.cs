@@ -31,7 +31,7 @@ public class AbilityControls : NetworkBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+
         if(onCoolDown1 || onCoolDown2 || onCoolDown3)
 			CalculateCooldown ();
 		

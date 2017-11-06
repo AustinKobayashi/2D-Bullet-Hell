@@ -8,7 +8,7 @@ public class FireStorm : Ability {
     int damage;
 
 	public FireStorm(){
-        cooldown = 10f;
+        cooldown = 20f;
 		duration = 3;
         damage = 20;
 	}

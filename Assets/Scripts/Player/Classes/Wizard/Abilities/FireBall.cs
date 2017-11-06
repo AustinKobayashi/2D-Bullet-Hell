@@ -5,11 +5,10 @@ using UnityEngine.Networking;
 
 public class FireBall : Ability{
 
-	float cooldown;
     int damage;
 
 	public FireBall(){
-		cooldown = 2f;
+		cooldown = 5f;
         damage = 10;
 	}
 

@@ -7,7 +7,7 @@ public class FireShield : Ability {
 	int duration;
 
 	public FireShield(){
-		cooldown = 1f;
+		cooldown = 15f;
 		duration = 5;
 	}
 }
