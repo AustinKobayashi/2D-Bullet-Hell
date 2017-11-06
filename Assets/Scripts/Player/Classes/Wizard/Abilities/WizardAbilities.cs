@@ -7,11 +7,13 @@ public class WizardAbilities : Abilities {
 
 	public GameObject fireBallPrefab;
 	public GameObject fireShieldPrefab;
+    public GameObject fireStormPrefab;
 
 	// Use this for initialization
 	void Awake () {
 		firstAbility = new FireBall ();
 		secondAbility = new FireShield ();
+        thirdAbility = new FireStorm ();
 	}
 
 	// Update is called once per frame
@@ -32,4 +34,11 @@ public class WizardAbilities : Abilities {
 		tempFireShield.GetComponent<FireShieldController> ().SetStats (stats);
 		tempFireShield.GetComponent<FireShieldController>().AddDefence((int)(stats.GetDefence() * 0.25f), 5);
 	}
+
+    [Server]
+    public void CastThirdAbility(Vector2 target, AbilityControls abilityControls)
+    {
+        GameObject tempFireStorm = Instantiate(fireStormPrefab, target, Quaternion.identity) as GameObject;
+        tempFireStorm.GetComponent<FireStormController>().SetAbilityControls(abilityControls);
+    }
 }

@@ -15,9 +15,8 @@ public class FireBallController : MonoBehaviour {
 	void Update () {
 
 		timer += Time.deltaTime;
-		if (timer >= fireBallLife)
-			Destroy(this.gameObject);
-
+        if (timer >= fireBallLife)
+            Destroy(this.gameObject);
 	}
 
 	public void SetTarget(Vector2 target)
@@ -28,7 +27,7 @@ public class FireBallController : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D coll) {
 		if (coll.tag == "Enemy" && !coll.isTrigger) {
-			abilityControls.CmdDealDamage (coll.gameObject);
+			abilityControls.CmdDealDamage (coll.gameObject, 1);
 			Destroy (this.gameObject);
 		}
 	}

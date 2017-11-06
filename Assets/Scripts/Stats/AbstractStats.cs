@@ -40,7 +40,7 @@ public abstract class AbstractStats : NetworkBehaviour {
 
 		if (defence < (int)(damage * 0.85f))
 			health -= ((int)(damage * 0.85f) - defence);
-		
+
 		if (health <= 0) {
 			Die ();
 			return true;
