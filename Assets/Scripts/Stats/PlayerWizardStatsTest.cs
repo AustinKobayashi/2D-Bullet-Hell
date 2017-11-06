@@ -5,14 +5,14 @@ using UnityEngine.Networking;
 
 public class PlayerWizardStatsTest : AbstractPlayerStats {
 
-	float timer;
-	Inventory inventory;
+	float regenTimer;
 	InventoryControls controls;
 
 	// Use this for initialization
 	void Start () {
-		inventory = GetComponent<Inventory> ();
 		controls = GetComponent<InventoryControls> ();
+
+		// Used for testing
 		SetHealth (10000);
 		maxHealth = 100;
 		SetStrength (12);
@@ -22,10 +22,11 @@ public class PlayerWizardStatsTest : AbstractPlayerStats {
 	}
 	
 	// Update is called once per frame
+	// Regenerate health and mana every second
 	void Update () {
-		timer += Time.deltaTime;
-		if(timer >= 1){
-			timer = 0;
+		regenTimer += Time.deltaTime;
+		if(regenTimer >= 1){
+			regenTimer = 0;
 			CmdRegenHealth ();
 			CmdRegenMana ();
 		}
@@ -37,7 +38,7 @@ public class PlayerWizardStatsTest : AbstractPlayerStats {
 		if (health > maxHealth)
 			health = maxHealth;
 
-		controls.UpdateStatText ();
+		//controls.UpdateStatText (); shouldnt be necessary due to the stat hooks (requires testing)
 	}
 
 	[Command]
@@ -46,39 +47,12 @@ public class PlayerWizardStatsTest : AbstractPlayerStats {
 		if (mana > maxMana)
 			mana = maxMana;
 		
-		controls.UpdateStatText ();
+		//controls.UpdateStatText (); shouldnt be necessary due to the stat hooks (requires testing)
 	}
 		
-	public int GetWpnDamage(){
-		try{
-			return Random.Range (inventory.GetWeapon().GetDamage()[0], inventory.GetWeapon().GetDamage()[1] + 1);
-		}catch(System.NullReferenceException e){
-			return 0;
-		}
-	}
-
-	public int GetAbilityPower(){
-		try{
-			return Random.Range (inventory.GetAbility().GetDamage()[0], inventory.GetAbility().GetDamage()[1] + 1);
-		}catch(System.NullReferenceException e){
-			return 0;
-		}
-	}
-
-	public void IncreaseExperience(int amount){
-		experience += amount;
-		while (experience >= experienceToLevel) {
-			CmdLevelUp ();
-			experience -= experienceToLevel;
-			experienceToLevel += 100;
-		}
-
-		controls.UpdateStatText ();
-	}
-
-
+	// Increases each stat by a random value
 	[Command]
-	void CmdLevelUp(){
+	public override void CmdLevelUp(){
 		level++;
 		maxHealth += Random.Range (20, 31);
 		mana += Random.Range (5, 16);
@@ -87,6 +61,6 @@ public class PlayerWizardStatsTest : AbstractPlayerStats {
 		dexterity += Random.Range (1, 3);
 		endurance += Random.Range (0, 2);
 		wisdom += Random.Range (0, 3);
-		controls.UpdateStatText ();
+		//controls.UpdateStatText (); shouldnt be necessary due to the stat hooks (requires testing)
 	}
 }
