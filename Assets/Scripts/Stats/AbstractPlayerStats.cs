@@ -26,7 +26,7 @@ public abstract class AbstractPlayerStats : AbstractStats {
 	public int GetWpnDamage(){
 		try{
 			return Random.Range (inventory.GetWeapon().GetDamage()[0], inventory.GetWeapon().GetDamage()[1] + 1);
-		}catch(System.NullReferenceException e){
+		}catch(System.NullReferenceException){
 			return 0;
 		}
 	}
@@ -35,7 +35,7 @@ public abstract class AbstractPlayerStats : AbstractStats {
 	public int GetAbilityPower(){
 		try{
 			return Random.Range (inventory.GetAbility().GetDamage()[0], inventory.GetAbility().GetDamage()[1] + 1);
-		}catch(System.NullReferenceException e){
+		}catch(System.NullReferenceException){
 			return 0;
 		}
 	}
@@ -69,7 +69,7 @@ public abstract class AbstractPlayerStats : AbstractStats {
         return endurance;
     }
 
-	public void SetEndurance(int endurence){
+	public void SetEndurance(int endurance){
 		this.endurance = endurance;
 	}
 

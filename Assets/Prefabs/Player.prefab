@@ -1699,7 +1699,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000010329159928}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d6157f3fefcf487eb98613cd94547f4, type: 3}
+  m_Script: {fileID: 11500000, guid: daaa1ca1d1b5748f691a338eb21440b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   menu: {fileID: 1000013027932558}
@@ -3325,12 +3325,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f98d909a4f3fb40e4846106bebb8ea66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
-  maxHealth: 0
-  strength: 0
-  defence: 0
-  speed: 0
-  dexterity: 0
   inventoryControls: {fileID: 114000011105857710}
 --- !u!114 &114000014127057184
 MonoBehaviour:
@@ -3430,8 +3424,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 749b5c2410b294c479b04f15d85a47ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weapon: 0
-  armour: 0
 --- !u!114 &114000014188367592
 MonoBehaviour:
   m_ObjectHideFlags: 1

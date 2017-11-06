@@ -8,12 +8,10 @@ public class PlayerAttack : NetworkBehaviour {
     public GameObject bullet;
     public float attackCooldown;
     private float timer;
-    PlayerMovement playerMovement;
 	private PlayerWizardStatsTest stats;
 
 	// Use this for initialization
 	void Start () {
-        playerMovement = GetComponent<PlayerMovement>();
 		stats = GetComponent<PlayerWizardStatsTest> ();
 		attackCooldown = 1f / (1.5f + 6.5f * (stats.GetDexterity () / 75f));
 	}
@@ -23,24 +21,23 @@ public class PlayerAttack : NetworkBehaviour {
 
         timer += Time.deltaTime;
 
-        if (Input.GetMouseButton(0) && timer >= attackCooldown)
-        {
-            Attack(Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position);
+        if (Input.GetMouseButton(0) && timer >= attackCooldown) {
+			CmdAttack(Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position);
             timer = 0;
         }
 	}
 
-
-    void Attack(Vector2 target)
+	// Create a bullet and assign the appropriate fields
+	[Command]
+    void CmdAttack(Vector2 target)
     {
 		GameObject tempBullet = Instantiate(bullet, transform.position, Quaternion.identity) as GameObject;
 		tempBullet.GetComponent<AttackController>().SetTarget(target);
 		tempBullet.GetComponent<AttackController> ().SetPlayerAttack (this);
     }
+		
 
-	//Client tells server to do something = command
-	//Must begin with cmd
-	//[Command] means that this is run on the server
+	// Called from the bullet if it hits an enemy
 	[Command]
 	public void CmdDealDamage(GameObject enemy){
 

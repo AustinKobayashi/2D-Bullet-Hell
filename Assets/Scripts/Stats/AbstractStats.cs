@@ -13,13 +13,7 @@ public abstract class AbstractStats : NetworkBehaviour {
 	[SyncVar (hook = "UpdateSpeedText")] protected int speed;
 	[SyncVar (hook = "UpdateDexterityText")] protected int dexterity;
 	[SyncVar] protected int maxHealth;
-	protected InventoryControls inventoryControls;
-
-   	// Use this for initialization
-	void Awake () {
-		if (isLocalPlayer)
-			inventoryControls = GetComponent<InventoryControls> ();
-	}
+	public InventoryControls inventoryControls;
 
 	void Die(){
 		Destroy (this.gameObject);

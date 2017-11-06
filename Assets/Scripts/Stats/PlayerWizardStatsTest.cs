@@ -6,11 +6,11 @@ using UnityEngine.Networking;
 public class PlayerWizardStatsTest : AbstractPlayerStats {
 
 	float regenTimer;
-	InventoryControls controls;
+	//InventoryControls controls; shouldnt be necessary due to the stat hooks (requires testing)
 
 	// Use this for initialization
 	void Start () {
-		controls = GetComponent<InventoryControls> ();
+		//controls = GetComponent<InventoryControls> (); shouldnt be necessary due to the stat hooks (requires testing)
 
 		// Used for testing
 		SetHealth (10000);

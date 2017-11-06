@@ -24,10 +24,17 @@ public class EnemyAttack : NetworkBehaviour {
 			timer = 0;
 		}
 	}
+		
+	[Server]
+	public void DealDamage(GameObject player){
 
-	public void ClearTarget(){
-		target = null;
+		AbstractPlayerStats playerStats = player.GetComponent<AbstractPlayerStats> ();
+
+		if (playerStats != null) 
+			playerStats.TakeDamage (stats.GetStrength ());
 	}
+
+	// Attacks in a spray pattern
 	void Attack(){
 
 		// This is the number of rays / 2 - 1
@@ -39,7 +46,6 @@ public class EnemyAttack : NetworkBehaviour {
 		Vector2 attackPos = target.transform.position - transform.position;
 		attackPos.Normalize();
 		float theta = Mathf.Atan2 (attackPos.y, attackPos.x);
-		float xPos, yPos;
 
 		GameObject tempBullet = Instantiate(bullet, transform.position, Quaternion.identity) as GameObject;
 		tempBullet.GetComponent<EnemyAttackController>().SetTarget(CalculateTarget (theta, 0 , deltaTheta));
@@ -53,11 +59,8 @@ public class EnemyAttack : NetworkBehaviour {
 			GameObject tempBulletNegative = Instantiate(bullet, transform.position, Quaternion.identity) as GameObject;
 			tempBulletNegative.GetComponent<EnemyAttackController>().SetTarget(CalculateTarget (theta - 2f * Mathf.PI, -i, deltaTheta));
 			tempBulletNegative.GetComponent<EnemyAttackController> ().SetEnemyAttack (this);
-
-
 		}
 	}
-
 
 	// Calculatest the position of theta + i * deltaTheta
 	Vector2 CalculateTarget (float theta, int i, float deltaTheta){
@@ -69,20 +72,13 @@ public class EnemyAttack : NetworkBehaviour {
 		return target;
 	}
 
+
 	public void SetTarget(GameObject target){
 		this.target = target;
 	}
 
 
-	[Server]
-	public void DealDamage(GameObject player){
-
-		AbstractPlayerStats playerStats = player.GetComponent<AbstractPlayerStats> ();
-		// did player kill the enemy
-		bool kill = false;
-
-		if (playerStats != null) 
-			kill = playerStats.TakeDamage (stats.GetStrength ());
-		
+	public void ClearTarget(){
+		target = null;
 	}
 }
