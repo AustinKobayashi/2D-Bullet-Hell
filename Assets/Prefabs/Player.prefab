@@ -59,10 +59,10 @@ GameObject:
   - component: {fileID: 114000011340614738}
   - component: {fileID: 61000010729236240}
   - component: {fileID: 50000012998098984}
+  - component: {fileID: 114000011105857710}
   - component: {fileID: 114000014041856802}
   - component: {fileID: 114000013475474228}
   - component: {fileID: 114000014177579674}
-  - component: {fileID: 114000011105857710}
   - component: {fileID: 114816836806154972}
   - component: {fileID: 114024825674233774}
   m_Layer: 9
@@ -3331,7 +3331,7 @@ MonoBehaviour:
   defence: 0
   speed: 0
   dexterity: 0
-  healthText: {fileID: 114000014127057184}
+  inventoryControls: {fileID: 114000011105857710}
 --- !u!114 &114000014127057184
 MonoBehaviour:
   m_ObjectHideFlags: 1

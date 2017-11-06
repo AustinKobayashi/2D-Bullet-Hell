@@ -20,6 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4122649033867648}
   - component: {fileID: 212178569397673924}
+  - component: {fileID: 114117639570477278}
+  - component: {fileID: 114591686301146928}
   m_Layer: 0
   m_Name: FireShield
   m_TagString: Untagged
@@ -35,11 +37,54 @@ Transform:
   m_GameObject: {fileID: 1903925933090776}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114117639570477278
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1903925933090776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 132
+    i1: 178
+    i2: 1
+    i3: 119
+    i4: 191
+    i5: 53
+    i6: 52
+    i7: 239
+    i8: 42
+    i9: 42
+    i10: 217
+    i11: 65
+    i12: 96
+    i13: 27
+    i14: 85
+    i15: 158
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
+--- !u!114 &114591686301146928
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1903925933090776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02583e558b4134cb2901e7e023e885bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212178569397673924
 SpriteRenderer:
   m_ObjectHideFlags: 1

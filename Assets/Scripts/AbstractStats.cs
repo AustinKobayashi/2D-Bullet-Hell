@@ -6,16 +6,16 @@ using UnityEngine.UI;
 
 public abstract class AbstractStats : NetworkBehaviour {
 
-	[SyncVar (hook = "UpdateManaText")] public int health;
+	[SyncVar (hook = "UpdateHealthText")] public int health;
 	[SyncVar] public int maxHealth;
 	[SyncVar (hook = "UpdateStrengthText")] public int strength;
 	[SyncVar (hook = "UpdateDefenceText")] public int defence;
 	[SyncVar (hook = "UpdateSpeedText")] public int speed;
 	[SyncVar (hook = "UpdateDexterityText")] public int dexterity;
-	InventoryControls inventoryControls;
+	public InventoryControls inventoryControls;
 
    	// Use this for initialization
-	void Start () {
+	void Awake () {
 		if (isLocalPlayer)
 			inventoryControls = GetComponent<InventoryControls> ();
 	}
@@ -94,29 +94,39 @@ public abstract class AbstractStats : NetworkBehaviour {
 	}
 
 
-
+	#region UpdateTexts
 	public void UpdateHealthText(int health){
 		if (!isLocalPlayer)
 			return;
+		inventoryControls.UpdateHealthText (health);
 	}
 
 	public void UpdateStrengthText(int strength){
 		if (!isLocalPlayer)
 			return;
+		inventoryControls.UpdateStrengthText (strength);
 	}
 
-	public void UpdateDefence(int defence){
+	public void UpdateDefenceText(int defence){
+		Debug.Log ("called");
+
 		if (!isLocalPlayer)
 			return;
+
+		Debug.Log ("is local player");
+		inventoryControls.UpdateDefenceText (defence);
 	}
 
 	public void UpdateSpeedText(int speed){
 		if (!isLocalPlayer)
 			return;
+		inventoryControls.UpdateSpeedText (speed);
 	}
 
 	public void UpdateDexterityText(int dexterity){
 		if (!isLocalPlayer)
 			return;
+		inventoryControls.UpdateDexterityText (dexterity);
 	}
+	#endregion
 }

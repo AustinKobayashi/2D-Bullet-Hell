@@ -159,7 +159,7 @@ public class InventoryControls : NetworkBehaviour {
 
 	}
 
-	public void UpdateDefence(int defence){
+	public void UpdateDefenceText(int defence){
 		defenceValue.text = defence.ToString();
 
 	}
@@ -178,7 +178,7 @@ public class InventoryControls : NetworkBehaviour {
 
 	}
 
-	public void UpdateWisdom(int wisdom){
+	public void UpdateWisdomText(int wisdom){
 		wisdomValue.text = wisdom.ToString();
 
 	}
@@ -188,7 +188,7 @@ public class InventoryControls : NetworkBehaviour {
 
 	}
 
-	public void UpdateLeveText(int level){
+	public void UpdateLevelText(int level){
 		levelValue.text = level.ToString();
 	}
 	#endregion

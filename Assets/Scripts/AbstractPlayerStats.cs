@@ -11,10 +11,8 @@ public abstract class AbstractPlayerStats : AbstractStats {
 	[SyncVar(hook = "UpdateExperienceText") ] protected int experience;
 	[SyncVar] protected int experienceToLevel;
 	[SyncVar (hook = "UpdateLevelText")] protected int level;
-	InventoryControls inventoryControls;
 
-	void Start(){
-		inventoryControls = GetComponent<InventoryControls> ();
+	void Awake(){
 		level = 0;
 		if (level == 0)
 			experienceToLevel = 50;
@@ -45,6 +43,7 @@ public abstract class AbstractPlayerStats : AbstractStats {
 	}
 		
 
+	#region UpdateTexts
 	public void UpdateManaText(int mana){
 		if (!isLocalPlayer)
 			return;
@@ -54,20 +53,25 @@ public abstract class AbstractPlayerStats : AbstractStats {
 	public void UpdateEnduranceText(int endurance){
 		if (!isLocalPlayer)
 			return;
+		inventoryControls.UpdateEnduranceText (endurance);
 	}
 
-	public void UpdateWisdom(int wisdom){
+	public void UpdateWisdomText(int wisdom){
 		if (!isLocalPlayer)
 			return;
+		inventoryControls.UpdateWisdomText (wisdom);
 	}
 
 	public void UpdateExperienceText(int experience){
 		if (!isLocalPlayer)
 			return;
+		inventoryControls.UpdateExperienceText (experience);
 	}
 
-	public void UpdateLeveText(int level){
+	public void UpdateLevelText(int level){
 		if (!isLocalPlayer)
 			return;
+		inventoryControls.UpdateLevelText (level);
 	}
+	#endregion
 }
