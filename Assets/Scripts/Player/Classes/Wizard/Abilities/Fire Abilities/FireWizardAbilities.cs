@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class WizardAbilities : Abilities {
+public class FireWizardAbilities : Abilities {
 
 	public GameObject fireBallPrefab;
 	public GameObject fireShieldPrefab;
@@ -22,7 +22,7 @@ public class WizardAbilities : Abilities {
 	}
 
 	[Server]
-	public void CastFirstAbility(Vector2 target, AbilityControls abilityControls){
+    public void CastFirstAbility(Vector2 target, FireWizardAbilityControls abilityControls){
 		GameObject tempFireBall = Instantiate(fireBallPrefab, transform.position, Quaternion.identity) as GameObject;
 		tempFireBall.GetComponent<FireBallMovement>().SetTarget(target);
 		tempFireBall.GetComponent<FireBallMovement> ().SetAbilityControls (abilityControls);
@@ -36,7 +36,7 @@ public class WizardAbilities : Abilities {
 	}
 
     [Server]
-    public void CastThirdAbility(Vector2 target, AbilityControls abilityControls)
+    public void CastThirdAbility(Vector2 target, FireWizardAbilityControls abilityControls)
     {
         GameObject tempFireStorm = Instantiate(fireStormPrefab, target, Quaternion.identity) as GameObject;
         tempFireStorm.GetComponent<FireStormController>().SetAbilityControls(abilityControls);

@@ -8,7 +8,7 @@ public class FireStormController : MonoBehaviour {
     float attackTickTimer = 1;
     float durationTimer;
     int duration = 3;
-    private AbilityControls abilityControls;
+    private FireWizardAbilityControls abilityControls;
     List<GameObject> enemies = new List<GameObject>();
 
 	// Use this for initialization
@@ -49,7 +49,7 @@ public class FireStormController : MonoBehaviour {
 			enemies.Remove (coll.gameObject);
 	}
 
-    public void SetAbilityControls(AbilityControls abilityControls) {
+    public void SetAbilityControls(FireWizardAbilityControls abilityControls) {
         this.abilityControls = abilityControls;
     }
 }
