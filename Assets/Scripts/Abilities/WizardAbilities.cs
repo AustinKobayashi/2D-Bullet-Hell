@@ -22,8 +22,8 @@ public class WizardAbilities : Abilities {
 	[Server]
 	public void CastFirstAbility(Vector2 target, AbilityControls abilityControls){
 		GameObject tempFireBall = Instantiate(fireBallPrefab, transform.position, Quaternion.identity) as GameObject;
-		tempFireBall.GetComponent<FireBallController>().SetTarget(target);
-		tempFireBall.GetComponent<FireBallController> ().SetAbilityControls (abilityControls);
+		tempFireBall.GetComponent<FireBallMovement>().SetTarget(target);
+		tempFireBall.GetComponent<FireBallMovement> ().SetAbilityControls (abilityControls);
 	}
 
 	[Server]
