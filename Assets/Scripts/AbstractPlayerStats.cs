@@ -8,7 +8,7 @@ public abstract class AbstractPlayerStats : AbstractStats {
 	[SyncVar] protected int maxMana;
 	[SyncVar (hook = "UpdateEnduranceText")] protected int endurance;
 	[SyncVar (hook = "UpdateWisdomText")] protected int wisdom;
-	[SyncVar(hook = "UpdateExperienceText") ] protected int experience;
+	[SyncVar(hook = "UpdateExperienceText")] protected int experience;
 	[SyncVar] protected int experienceToLevel;
 	[SyncVar (hook = "UpdateLevelText")] protected int level;
 

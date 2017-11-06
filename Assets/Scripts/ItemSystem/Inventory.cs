@@ -4,16 +4,16 @@ using UnityEngine.Networking;
 
 public class Inventory : NetworkBehaviour {
 
-	//public Item[] inventory = new Item[8];
+	//Synclist representing the players inventory.
 	public SyncListInt inventory = new SyncListInt();
 	ItemDatabase database;
-	//[SyncVar] private Item weapon;
-	[SyncVar] public int weapon;
+	//[SyncVar]s for the players equiped items.
+	[SyncVar] private int weapon;
 	[SyncVar] private int ability;
-	[SyncVar] public int armour;
+	[SyncVar] private int armour;
 	[SyncVar] private int ring;
 
-	// Use this for initialization
+	// Sets all inventory slots to -1 (as 0 is an item).
 	void Start () {
 		weapon = -1;
 		ability = -1;
@@ -36,7 +36,7 @@ public class Inventory : NetworkBehaviour {
 	
 	}
 
-
+	//Adds item to the inventory as long as its not full.
 	[Command]
 	public void CmdAddItem(Item item){
 		if(!InventoryIsFull())
@@ -50,12 +50,14 @@ public class Inventory : NetworkBehaviour {
 			if (inventory [i] == item)
 				inventory [i] = null;
 	}*/
-
+	
+	//removes an item from the inventory at index index.
 	[Command]
 	public void CmdRemoveItem(int index){
 		inventory [index] = -1;
 	}
 
+	//Returns the item at index in the players inventory.
 	[Server]
 	public Item GetItem(int index){
 		return database.GetItem(inventory [index]);
@@ -75,6 +77,7 @@ public class Inventory : NetworkBehaviour {
 	 *
 	 *
 	 */
+	//Sets a players weapon to an item in their inventory at index (if it is a weapon).
 	[Command]
 	public void CmdEquipWeapon(int index){
 
@@ -90,7 +93,7 @@ public class Inventory : NetworkBehaviour {
 			inventory [index] = temp;
 		}
 	}
-
+	//Sets a players Ability to an item in their inventory at index (if it is an Ability).
 	[Command]
 	public void CmdEquipAbility(int index){
 
@@ -105,7 +108,7 @@ public class Inventory : NetworkBehaviour {
 			inventory [index] = temp;
 		}
 	}
-	
+	//Sets a players Armour to an item in their inventory at index (if it is an Armour).
 	[Command]
 	public void CmdEquipArmour(int index){
 
@@ -120,7 +123,7 @@ public class Inventory : NetworkBehaviour {
 			inventory [index] = temp;
 		}
 	}
-		
+	//Unequips an item and moves it back into the players inventory.	
 	[Command]
 	public void CmdUnequipItem(int selectedItem, int index){
 		ItemTypes type = database.GetItem (selectedItem).GetItemType ();
@@ -151,17 +154,17 @@ public class Inventory : NetworkBehaviour {
 			break;
 		default:
 			break;
-
 		}
 	}
-
+	//Swaps two items by index in the inventory.
 	[Command]
 	public void CmdSwapItems(int index1, int index2){
 		Item temp = GetItem (index1);
 		inventory [index1] = inventory [index2];
 		inventory [index2] = temp.GetId();
 	}
-
+	
+	//Returns the players currently equipped weapon/ability/armour.
 	[Server]
 	public Weapon GetWeapon(){
 		return database.GetItem(weapon) as Weapon;	
@@ -178,18 +181,20 @@ public class Inventory : NetworkBehaviour {
 		return database.GetItem(armour) as Armour;	
 	}
 		
-
+	//returns the first free inventory slot or -1 if there are no free slots.
 	int GetFirstFreeSlot(){
 		for (int i = 0; i < 8; i++)
-			if (inventory [i] == null)
-				return 1;
+			if (inventory [i] == -1)
+				return i;
 
 		return -1;
 	}
 
+	
+	//Returns true if inventory is full, false otherwise;
 	bool InventoryIsFull(){
 		for (int i = 0; i < 8; i++)
-			if (inventory [i] == null)
+			if (inventory [i] == -1)
 				return false;
 		return true;
 	}
