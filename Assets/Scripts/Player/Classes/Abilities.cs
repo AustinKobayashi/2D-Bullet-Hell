@@ -7,12 +7,18 @@ public class Abilities : NetworkBehaviour {
 
 	public Ability firstAbility;
 	public Ability secondAbility;
+    public Ability thirdAbility;
 
 	public Ability GetFirstAbility(){
+        Debug.Log(firstAbility.GetCoolDown());
 		return firstAbility;
 	}
 
 	public Ability GetSecondAbility(){
 		return secondAbility;
 	}
+
+    public Ability GetThirdAbility(){
+        return thirdAbility;
+    }
 }

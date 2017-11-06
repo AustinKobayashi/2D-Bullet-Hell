@@ -3501,6 +3501,8 @@ MonoBehaviour:
     type: 2}
   fireShieldPrefab: {fileID: 1903925933090776, guid: 84b20177bf3534ef2a2ad941601b559e,
     type: 2}
+  fireStormPrefab: {fileID: 1867249858863192, guid: 5e36bc12a2ecd4abe9bc7fff7b660367,
+    type: 2}
 --- !u!114 &114816836806154972
 MonoBehaviour:
   m_ObjectHideFlags: 1

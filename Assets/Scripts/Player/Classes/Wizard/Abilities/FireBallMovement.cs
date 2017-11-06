@@ -12,7 +12,7 @@ public class FireBallMovement : AbstractProjectileMovement {
 	}
 
 	public override void hit(Collider2D coll) {
-		abilityControls.CmdDealDamage(coll.gameObject);
+		abilityControls.CmdDealDamage(coll.gameObject, 1);
 	}
 		
 	public void SetAbilityControls(AbilityControls abilityControls){
