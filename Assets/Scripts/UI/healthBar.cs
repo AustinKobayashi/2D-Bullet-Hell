@@ -3,24 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class healthBar : MonoBehaviour
-{
-	private AbstractPlayerStats stats;
-	public GameObject Player;
+public class healthBar : MonoBehaviour {
+	private AbstractStats stats;
+	public GameObject Mob;
 	public GameObject Bar;
-	public Image Health;
+	private Image _health;
 	// Use this for initialization
-	void Start ()
-	{
-		stats = Player.GetComponent<AbstractPlayerStats>();
-		Health = Bar.GetComponent<Image>();
+	void Start () {
+		stats = Mob.GetComponent<AbstractStats>();
+		_health = Bar.GetComponent<Image>();
 	}
 	
 	// Update is called once per frame
-	void Update ()
-	{
-		Health.fillAmount = stats.GetHealth() / 100f;
-		Debug.Log(stats.GetHealth() / 100f);
+	void Update () {
+		var fillamt = stats.GetHealth() / (float) stats.getMaxHealth();
+		_health.fillAmount = fillamt < 0 ? 0 : fillamt;
 	}
 
 }
