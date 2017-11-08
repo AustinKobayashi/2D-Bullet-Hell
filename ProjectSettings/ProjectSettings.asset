@@ -681,7 +681,7 @@ PlayerSettings:
     UNet: 1
     Unity_Ads: 0
   facebookSdkVersion: 7.9.4
-  apiCompatibilityLevel: 2
+  apiCompatibilityLevel: 3
   cloudProjectId: 01315421-dd87-4739-8338-6106559a75bd
   projectName: Dicklers World
   organizationId: bkstudios
