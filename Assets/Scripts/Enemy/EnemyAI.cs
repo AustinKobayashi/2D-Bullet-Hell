@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
-public class EnemyAI : MonoBehaviour {
+public class EnemyAI : NetworkBehaviour {
 
 	private EnemyMovement movement;
 	private EnemyAttack attack;
@@ -15,7 +16,12 @@ public class EnemyAI : MonoBehaviour {
 	}
 
 	private void OnDestroy() {
-		Instantiate(itemDrop, transform.position, Quaternion.identity);
+		RpcDropItem();
+	}
+
+	private void RpcDropItem() {
+		var drop = Instantiate(itemDrop, transform.position, Quaternion.identity);
+		NetworkServer.Spawn(drop);
 	}
 
 	// Update is called once per frame
