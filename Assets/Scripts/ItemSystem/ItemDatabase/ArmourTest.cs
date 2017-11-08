@@ -8,5 +8,6 @@ public class ArmourTest : Armour {
 		defence = 10;
 		SetImage ("armour");
 		SetItemType (ItemTypes.armour);
+		setItemRarity(ItemRarity.Common);
 	}
 }

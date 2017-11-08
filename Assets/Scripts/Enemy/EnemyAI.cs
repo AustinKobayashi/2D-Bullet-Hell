@@ -5,13 +5,19 @@ public class EnemyAI : MonoBehaviour {
 
 	private EnemyMovement movement;
 	private EnemyAttack attack;
+	public GameObject itemDrop;
+	
 
 	// Use this for initialization
 	void Start () {
 		movement = GetComponent<EnemyMovement> ();
 		attack = GetComponent<EnemyAttack> ();
 	}
-	
+
+	private void OnDestroy() {
+		Instantiate(itemDrop, transform.position, Quaternion.identity);
+	}
+
 	// Update is called once per frame
 	void Update () {
 	

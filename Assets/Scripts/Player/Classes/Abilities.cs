@@ -10,7 +10,6 @@ public class Abilities : NetworkBehaviour {
     public Ability thirdAbility;
 
 	public Ability GetFirstAbility(){
-        Debug.Log(firstAbility.GetCoolDown());
 		return firstAbility;
 	}
 

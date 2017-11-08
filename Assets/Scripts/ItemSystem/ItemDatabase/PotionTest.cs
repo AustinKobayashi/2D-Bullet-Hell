@@ -8,5 +8,6 @@ public class PotionTest : Consumable {
 		SetId (3);
 		SetImage ("potion");
 		SetItemType (ItemTypes.consumable);
+		setItemRarity(ItemRarity.Epic);
 	}
 }

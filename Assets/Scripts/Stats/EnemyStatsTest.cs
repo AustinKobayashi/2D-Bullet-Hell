@@ -10,7 +10,7 @@ public class EnemyStatsTest : AbstractStats {
 	void Start () {
 
 		// For testing
-		SetHealth (1000);
+		SetHealth (100);
 		maxHealth = health;
 		SetStrength (5);
 		SetDefence (0);
