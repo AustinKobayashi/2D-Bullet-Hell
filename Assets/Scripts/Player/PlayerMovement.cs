@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// TODO abstract movement
 public class PlayerMovement : MonoBehaviour {
 
     Vector2 moveVec = Vector2.zero;

@@ -2432,8 +2432,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   iciclePrefab: {fileID: 1940391430751638, guid: 8a423203b75cf4fd4b83c061eecf61c0,
     type: 2}
-  fireShieldPrefab: {fileID: 0}
-  fireStormPrefab: {fileID: 0}
+  iceBlockPrefab: {fileID: 1018986076127266, guid: 8fa9559afda4540d1bff56170ac28a4d,
+    type: 2}
+  frostConePrefab: {fileID: 1316833662398914, guid: 7d109692602fe426688f5df909338dfa,
+    type: 2}
 --- !u!114 &114509937946067852
 MonoBehaviour:
   m_ObjectHideFlags: 1

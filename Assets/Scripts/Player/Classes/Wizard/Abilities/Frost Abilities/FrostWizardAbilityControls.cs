@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class FrostWizardAbilityControls : AbstractAbilityControls {
 
@@ -26,23 +27,39 @@ public class FrostWizardAbilityControls : AbstractAbilityControls {
         if(onCoolDown1 || onCoolDown2 || onCoolDown3)
             CalculateCooldown ();
 
-        if (Input.GetKeyDown(KeyCode.Alpha1) && !onCoolDown1)
-        {
+        if (Input.GetKeyDown(KeyCode.Alpha1) && !onCoolDown1){
             onCoolDown1 = true;
             abilities.CastFirstAbility(Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position, this);
         }
-        /*
-        if (Input.GetKeyDown(KeyCode.Alpha2) && !onCoolDown2)
-        {
+
+        if (Input.GetKeyDown(KeyCode.Alpha2) && !onCoolDown2){
             onCoolDown2 = true;
             abilities.CastSecondAbility(stats);
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha3) && !onCoolDown3)
-        {
+        if (Input.GetKeyDown(KeyCode.Alpha3) && !onCoolDown3){
             onCoolDown3 = true;
             abilities.CastThirdAbility(Camera.main.ScreenToWorldPoint(Input.mousePosition), this);
         }
-        */
+    }
+
+
+    [Command]
+    public void CmdDealDamage(GameObject enemy, int ability){
+
+        if (!isLocalPlayer)
+            return;
+
+        EnemyStatsTest enemyStats = enemy.GetComponent<EnemyStatsTest>();
+
+        // did player kill the enemy
+        bool kill = false;
+
+        if (enemyStats != null)
+            kill = ability == 1 ? enemyStats.TakeDamage((int)(stats.GetAbilityPower() * (0.5f + (stats.GetStrength() + new Icicle().GetDamage()) / 50f))) :
+                                            enemyStats.TakeDamage((int)(stats.GetAbilityPower() * (0.5f + (stats.GetStrength() + new FrostCone().GetDamage()) / 50f)));
+
+        if (kill)
+            stats.IncreaseExperience(enemyStats.GetExperienceGain());
     }
 }

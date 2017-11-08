@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
+// TODO implement passive
 public class FireWizardAbilities : Abilities {
 
 	public GameObject fireBallPrefab;

@@ -6,15 +6,15 @@ using UnityEngine.Networking;
 public class FrostWizardAbilities : Abilities {
 
     public GameObject iciclePrefab;
-    public GameObject fireShieldPrefab;
-    public GameObject fireStormPrefab;
+    public GameObject iceBlockPrefab;
+    public GameObject frostConePrefab;
 
     // Use this for initialization
     void Awake()
     {
         firstAbility = new Icicle();
-        secondAbility = new FireShield();
-        thirdAbility = new FireStorm();
+        secondAbility = new IceBlock();
+        thirdAbility = new FrostCone();
     }
 
 
@@ -36,15 +36,32 @@ public class FrostWizardAbilities : Abilities {
     [Server]
     public void CastSecondAbility(PlayerWizardStatsTest stats)
     {
-        GameObject tempFireShield = Instantiate(fireShieldPrefab, this.transform) as GameObject;
-        tempFireShield.GetComponent<FireShieldController>().SetStats(stats);
-        tempFireShield.GetComponent<FireShieldController>().AddDefence((int)(stats.GetDefence() * 0.25f), 5);
+        StartCoroutine(InvulnerableDuration(stats));
     }
 
+    // TODO implement frozen status effect
+    IEnumerator InvulnerableDuration(PlayerWizardStatsTest stats){
+
+        GameObject tempIceBlock = Instantiate(iceBlockPrefab, transform) as GameObject;
+        stats.CmdSetInvulnerable(true);
+        yield return new WaitForSeconds(new IceBlock().GetDuration());
+        stats.CmdSetInvulnerable(false);
+        Destroy(tempIceBlock);
+        yield return null;
+    }
+
+
+    // TODO attack must stun enemy (not freeze or else enemy will be invulnerable)
     [Server]
-    public void CastThirdAbility(Vector2 target, FireWizardAbilityControls abilityControls)
+    public void CastThirdAbility(Vector2 target, FrostWizardAbilityControls abilityControls)
     {
-        GameObject tempFireStorm = Instantiate(fireStormPrefab, target, Quaternion.identity) as GameObject;
-        tempFireStorm.GetComponent<FireStormController>().SetAbilityControls(abilityControls);
+        GameObject tempFrostCone = Instantiate(frostConePrefab, transform) as GameObject;
+        var dir = target - (Vector2)transform.position;
+        var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg + 90;
+        tempFrostCone.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
+        tempFrostCone.GetComponent<FrostConeController>().SetDuration(new FrostCone().GetDuration());
+        tempFrostCone.GetComponent<FrostConeController>().SetAbilityControls(abilityControls);
+
     }
 }

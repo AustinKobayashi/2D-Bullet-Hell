@@ -43,4 +43,24 @@ public class FireWizardAbilityControls : AbstractAbilityControls {
             abilities.CastThirdAbility(Camera.main.ScreenToWorldPoint(Input.mousePosition), this);
         }
 	}
+
+
+    [Command]
+    public void CmdDealDamage(GameObject enemy, int ability){
+
+        if (!isLocalPlayer)
+            return;
+
+        EnemyStatsTest enemyStats = enemy.GetComponent<EnemyStatsTest>();
+
+        // did player kill the enemy
+        bool kill = false;
+
+        if (enemyStats != null)
+            kill = ability == 1 ? enemyStats.TakeDamage((int)(stats.GetAbilityPower() * (0.5f + (stats.GetStrength() + new FireBall().GetDamage()) / 50f))) :
+                                            enemyStats.TakeDamage((int)(stats.GetAbilityPower() * (0.5f + (stats.GetStrength() + new FireStorm().GetDamage()) / 50f)));
+
+        if (kill)
+            stats.IncreaseExperience(enemyStats.GetExperienceGain());
+    }
 }
