@@ -7,13 +7,15 @@ using UnityEngine.UI;
 // Base class for all stats
 public abstract class AbstractStats : NetworkBehaviour {
 
-	[SyncVar (hook = "UpdateHealthText")] protected int health;
+	[SyncVar (hook = "UpdateHealthText")] public int health;
 	[SyncVar (hook = "UpdateStrengthText")] protected int strength;
 	[SyncVar (hook = "UpdateDefenceText")] protected int defence;
 	[SyncVar (hook = "UpdateSpeedText")] protected int speed;
 	[SyncVar (hook = "UpdateDexterityText")] protected int dexterity;
 	[SyncVar] protected int maxHealth;
-	public InventoryControls inventoryControls;
+    public InventoryControls inventoryControls;
+
+    protected bool invulnerable; 
 
 	void Die(){
 		Destroy (this.gameObject);
@@ -30,12 +32,21 @@ public abstract class AbstractStats : NetworkBehaviour {
 	public void CmdDecreaseDefence(int amount){
 		this.defence -= amount;
 	}
+
+
+    [Command]
+    public void CmdSetInvulnerable(bool invulnerable){
+        this.invulnerable = invulnerable;
+    }
 		
 	// up to 85% of damage can be reduced by armour
 	// Returns true if the attack killed the unit
 	[Server]
 	public bool TakeDamage(int damage){
 
+        if (invulnerable)
+            return false;
+        
 		health -= (int)(damage * 0.15f);
 
 		if (defence < (int)(damage * 0.85f))

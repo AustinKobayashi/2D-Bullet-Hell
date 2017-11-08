@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class FireBallMovement : AbstractProjectileMovement {
 
-	private AbilityControls abilityControls;
+    private FireWizardAbilityControls abilityControls;
 
-	public FireBallMovement()
-	{
+	public FireBallMovement() {
 		targetTag = "Enemy";
 	}
 
@@ -15,7 +14,7 @@ public class FireBallMovement : AbstractProjectileMovement {
 		abilityControls.CmdDealDamage(coll.gameObject, 1);
 	}
 		
-	public void SetAbilityControls(AbilityControls abilityControls){
+    public void SetAbilityControls(FireWizardAbilityControls abilityControls){
 		this.abilityControls = abilityControls;
 	}
 }

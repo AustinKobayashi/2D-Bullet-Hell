@@ -8,16 +8,14 @@ using UnityEngine.Networking;
 public class WizardAttack : AbstractPlayerAttack {
 
     public GameObject bullet;
-	
-	
+
 	// Use this for initialization
 	void Start () {
 		stats = GetComponent<PlayerWizardStatsTest> ();
 		attackCooldown = 1f / (1.5f + 6.5f * (stats.GetDexterity () / 75f));
 	}
 
-	public override void attack(Vector2 target)
-	{
+	public override void attack(Vector2 target){
 		CmdAttack(target);
 	}
 
@@ -30,5 +28,6 @@ public class WizardAttack : AbstractPlayerAttack {
 	    tempBullet.GetComponent<BasicAttackMovement> ().SetPlayerAttack (this);
 
     }
+
 	
 }
