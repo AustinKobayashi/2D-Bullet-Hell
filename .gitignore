@@ -40,3 +40,5 @@ sysinfo.txt
 
 \.DS_Store
 
+
+*.orig

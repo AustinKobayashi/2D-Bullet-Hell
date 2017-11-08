@@ -7,9 +7,18 @@ public class Item {
 	int id;
 	Sprite itemImage;
 	ItemTypes itemType;
+	ItemRarity itemRarity;
 
 	public void SetId(int id){
 		this.id = id;
+	}
+
+	public void setItemRarity(ItemRarity rarity) {
+		this.itemRarity = rarity;
+	}
+
+	public ItemRarity GetItemRarity() {
+		return this.itemRarity;
 	}
 
 	public void SetItemType(ItemTypes itemType){

@@ -10,5 +10,6 @@ public class StaffTest : Weapon {
 		range = 1;
 		SetImage ("staff");
 		SetItemType (ItemTypes.weapon);
+		setItemRarity(ItemRarity.Rare);
 	}
 }
