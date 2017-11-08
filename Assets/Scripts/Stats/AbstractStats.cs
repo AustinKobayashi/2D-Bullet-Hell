@@ -59,6 +59,11 @@ public abstract class AbstractStats : NetworkBehaviour {
 		this.health = health;
 	}
 
+	public int getMaxHealth()
+	{
+		return maxHealth;
+	}
+
 	public int GetStrength(){
 		return strength;
 	}
