@@ -44,7 +44,7 @@ public abstract class AbstractPlayerStats : AbstractStats {
 	public void IncreaseExperience(int amount){
 		experience += amount;
 		while (experience >= experienceToLevel) {
-			CmdLevelUp ();
+			LevelUp ();
 			experience -= experienceToLevel;
 			experienceToLevel += 100;
 		}
@@ -52,8 +52,7 @@ public abstract class AbstractPlayerStats : AbstractStats {
 		//controls.UpdateStatText (); shouldnt be necessary due to the stat hooks (requires testing)
 	}
 
-	[Command]
-	public virtual void CmdLevelUp(){
+	public virtual void LevelUp(){
 	}
 
 	#region stats getters and setters

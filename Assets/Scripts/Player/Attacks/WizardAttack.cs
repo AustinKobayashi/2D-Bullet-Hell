@@ -14,7 +14,8 @@ public class WizardAttack : AbstractPlayerAttack {
 		attackCooldown = 1f / (1.5f + 6.5f * (stats.GetDexterity () / 75f));
 	}
 
-	public override void attack(Vector2 target){
+	public override void attack(Vector2 target) {
+		if (!isLocalPlayer) return;
 		CmdAttack(target);
 	}
 

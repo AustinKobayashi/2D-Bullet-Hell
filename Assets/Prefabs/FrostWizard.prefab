@@ -608,6 +608,7 @@ GameObject:
   - component: {fileID: 4308300785097100}
   - component: {fileID: 212005062717918972}
   - component: {fileID: 114487014440443544}
+  - component: {fileID: 114025756395360778}
   - component: {fileID: 114497866516368878}
   - component: {fileID: 61566346666638696}
   - component: {fileID: 50979733210293182}
@@ -617,6 +618,7 @@ GameObject:
   - component: {fileID: 114933100406256550}
   - component: {fileID: 114505704967923256}
   - component: {fileID: 114598685765585650}
+  - component: {fileID: 114462110098415096}
   m_Layer: 9
   m_Name: FrostWizard
   m_TagString: Player
@@ -1213,6 +1215,18 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114025756395360778
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1551092487562292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b2f9610cb967914a8b9c56c4f8fc196, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 20248256302423720}
 --- !u!114 &114027222864136494
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2424,6 +2438,27 @@ MonoBehaviour:
   inventorySlot6: {fileID: 114352779178997836}
   inventorySlot7: {fileID: 114859020989351154}
   defautImg: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 3}
+--- !u!114 &114462110098415096
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1551092487562292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 2
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 3
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
 --- !u!114 &114466406519033766
 MonoBehaviour:
   m_ObjectHideFlags: 1
