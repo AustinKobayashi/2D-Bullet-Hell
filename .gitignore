@@ -40,3 +40,7 @@ sysinfo.txt
 
 \.DS_Store
 
+
+*.orig
+
+Assets/Prefabs/FireWizard\.prefab\.orig\.meta

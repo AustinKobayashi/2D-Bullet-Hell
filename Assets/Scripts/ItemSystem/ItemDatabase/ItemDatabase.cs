@@ -1,18 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.Networking;
 
 public class ItemDatabase : NetworkBehaviour {
 
-	Item[] database;
+	List<Item> database;
+	private ItemRarityDatabase IRDB;
 
-	void Start(){
-		database = new Item[10];
-		database [0] = new StaffTest ();
-		database [1] = new ArmourTest ();
-		database [2] = new SwordTest ();
-		database [3] = new PotionTest ();
-		database [4] = new ScrollTest ();
+	void Start() {
+		database = new List<Item> {new StaffTest(), new ArmourTest(), new SwordTest(), new PotionTest(), new ScrollTest()};
+		IRDB = gameObject.GetComponent<ItemRarityDatabase>();
+		IRDB.updateDB(database);
 	}
 
 	[Server]
@@ -21,5 +20,23 @@ public class ItemDatabase : NetworkBehaviour {
 			return null;
 		
 		return database [index];
+	}
+
+	private ItemRarity rand() {
+		float rand = Random.Range(0f, 100f);
+		if (rand < 1) return ItemRarity.Mythic;
+		if (rand < 10) return ItemRarity.Legendary;
+		if (rand < 30) return ItemRarity.Epic;
+		if (rand < 60) return ItemRarity.Rare;
+		return ItemRarity.Common;
+	}
+	
+	[Server]
+	public Item Roll() {
+		int i = -1;
+		while (i < 0) {
+			i = IRDB.getRandomOfRarity(rand());
+		}
+		return database[i];
 	}
 }

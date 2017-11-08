@@ -11,5 +11,6 @@ public class ScrollTest : AbilityItem {
 		damage = new int[] {50, 75};
 		projectileSpeed = 8;
 		range = 1;
+		setItemRarity(ItemRarity.Legendary);
 	}
 }
