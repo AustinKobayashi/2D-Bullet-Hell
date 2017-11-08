@@ -1,10 +1,8 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Player
-{
-    public class BasicAttackMovement : AbstractProjectileMovement {
-        private WizardAttack _wizardAttack;
+
+public class BasicAttackMovement : AbstractProjectileMovement {
+    private WizardAttack _wizardAttack;
         public BasicAttackMovement()
         {
             targetTag = "Enemy";
@@ -16,5 +14,4 @@ namespace Player
         public void SetPlayerAttack(WizardAttack wizardAttack){
             this._wizardAttack = wizardAttack;
         }
-    }
 }
