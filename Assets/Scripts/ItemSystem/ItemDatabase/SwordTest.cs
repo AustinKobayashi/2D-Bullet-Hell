@@ -10,5 +10,6 @@ public class SwordTest : Weapon {
 		range = 1;
 		SetImage ("sword");
 		SetItemType (ItemTypes.weapon);
+		setItemRarity(ItemRarity.Mythic);
 	}
 }

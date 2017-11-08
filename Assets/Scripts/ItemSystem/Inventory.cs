@@ -23,7 +23,6 @@ public class Inventory : NetworkBehaviour {
         ability = new ScrollTest().GetId();
 
 		database = GameObject.FindGameObjectWithTag ("ItemDatabase").GetComponent<ItemDatabase>();
-		Debug.Log (database);
 		for (int i = 0; i < 8; i++)
 			inventory.Add (-1);
 		
