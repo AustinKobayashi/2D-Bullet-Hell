@@ -16,17 +16,12 @@ public class EnemyAI : NetworkBehaviour {
 	}
 
 	private void OnDestroy() {
-		RpcDropItem();
+		CmdDropItem();
 	}
-
-	private void RpcDropItem() {
+	[Command]
+	private void CmdDropItem() {
 		var drop = Instantiate(itemDrop, transform.position, Quaternion.identity);
 		NetworkServer.Spawn(drop);
-	}
-
-	// Update is called once per frame
-	void Update () {
-	
 	}
 
 	void OnTriggerEnter2D(Collider2D coll) {

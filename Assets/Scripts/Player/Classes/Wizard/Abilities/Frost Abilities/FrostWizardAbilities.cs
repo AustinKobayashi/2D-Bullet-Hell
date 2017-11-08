@@ -25,16 +25,17 @@ public class FrostWizardAbilities : Abilities {
     }
 
 
-    [Server]
-    public void CastFirstAbility(Vector2 target, FrostWizardAbilityControls abilityControls)
+    [Command]
+    public void CmdCastFirstAbility(Vector2 target, FrostWizardAbilityControls abilityControls)
     {
         GameObject tempIcicle = Instantiate(iciclePrefab, transform.position, Quaternion.identity) as GameObject;
         tempIcicle.GetComponent<IcicleMovement>().SetTarget(target);
         tempIcicle.GetComponent<IcicleMovement>().SetAbilityControls(abilityControls);
+        NetworkServer.Spawn(tempIcicle);
     }
 
-    [Server]
-    public void CastSecondAbility(PlayerWizardStatsTest stats)
+    [Command]
+    public void CmdCastSecondAbility(PlayerWizardStatsTest stats)
     {
         StartCoroutine(InvulnerableDuration(stats));
     }
@@ -43,6 +44,7 @@ public class FrostWizardAbilities : Abilities {
     IEnumerator InvulnerableDuration(PlayerWizardStatsTest stats){
 
         GameObject tempIceBlock = Instantiate(iceBlockPrefab, transform) as GameObject;
+        NetworkServer.Spawn(tempIceBlock);
         stats.CmdSetInvulnerable(true);
         yield return new WaitForSeconds(new IceBlock().GetDuration());
         stats.CmdSetInvulnerable(false);
@@ -52,8 +54,8 @@ public class FrostWizardAbilities : Abilities {
 
 
     // TODO attack must stun enemy (not freeze or else enemy will be invulnerable)
-    [Server]
-    public void CastThirdAbility(Vector2 target, FrostWizardAbilityControls abilityControls)
+    [Command]
+    public void CmdCastThirdAbility(Vector2 target, FrostWizardAbilityControls abilityControls)
     {
         GameObject tempFrostCone = Instantiate(frostConePrefab, transform) as GameObject;
         var dir = target - (Vector2)transform.position;
@@ -62,6 +64,6 @@ public class FrostWizardAbilities : Abilities {
 
         tempFrostCone.GetComponent<FrostConeController>().SetDuration(new FrostCone().GetDuration());
         tempFrostCone.GetComponent<FrostConeController>().SetAbilityControls(abilityControls);
-
+        NetworkServer.Spawn(tempFrostCone);
     }
 }

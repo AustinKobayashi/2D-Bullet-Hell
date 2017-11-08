@@ -22,24 +22,27 @@ public class FireWizardAbilities : Abilities {
 
 	}
 
-	[Server]
-    public void CastFirstAbility(Vector2 target, FireWizardAbilityControls abilityControls){
+	[Command]
+    public void CmdCastFirstAbility(Vector2 target, FireWizardAbilityControls abilityControls){
 		GameObject tempFireBall = Instantiate(fireBallPrefab, transform.position, Quaternion.identity) as GameObject;
 		tempFireBall.GetComponent<FireBallMovement>().SetTarget(target);
 		tempFireBall.GetComponent<FireBallMovement> ().SetAbilityControls (abilityControls);
+		NetworkServer.Spawn(tempFireBall);
 	}
 
-	[Server]
-	public void CastSecondAbility(PlayerWizardStatsTest stats){
+	[Command]
+	public void CmdCastSecondAbility(PlayerWizardStatsTest stats){
 		GameObject tempFireShield = Instantiate (fireShieldPrefab, this.transform) as GameObject;
 		tempFireShield.GetComponent<FireShieldController> ().SetStats (stats);
 		tempFireShield.GetComponent<FireShieldController>().AddDefence((int)(stats.GetDefence() * 0.25f), 5);
+		NetworkServer.Spawn(tempFireShield);
 	}
 
-    [Server]
-    public void CastThirdAbility(Vector2 target, FireWizardAbilityControls abilityControls)
+    [Command]
+    public void CmdCastThirdAbility(Vector2 target, FireWizardAbilityControls abilityControls)
     {
         GameObject tempFireStorm = Instantiate(fireStormPrefab, target, Quaternion.identity) as GameObject;
         tempFireStorm.GetComponent<FireStormController>().SetAbilityControls(abilityControls);
+	    NetworkServer.Spawn(tempFireStorm);
     }
 }

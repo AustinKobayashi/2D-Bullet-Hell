@@ -30,17 +30,17 @@ public class FireWizardAbilityControls : AbstractAbilityControls {
         
 		if(Input.GetKeyDown(KeyCode.Alpha1) && !onCoolDown1){
 			onCoolDown1 = true;
-			abilities.CastFirstAbility(Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position, this);
+			abilities.CmdCastFirstAbility(Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position, this);
 		}
 
 		if(Input.GetKeyDown(KeyCode.Alpha2) && !onCoolDown2){
 			onCoolDown2 = true;
-			abilities.CastSecondAbility(stats);
+			abilities.CmdCastSecondAbility(stats);
 		}
 
         if (Input.GetKeyDown(KeyCode.Alpha3) && !onCoolDown3){
             onCoolDown3 = true;
-            abilities.CastThirdAbility(Camera.main.ScreenToWorldPoint(Input.mousePosition), this);
+            abilities.CmdCastThirdAbility(Camera.main.ScreenToWorldPoint(Input.mousePosition), this);
         }
 	}
 
