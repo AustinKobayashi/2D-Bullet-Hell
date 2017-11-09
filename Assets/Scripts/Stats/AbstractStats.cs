@@ -6,7 +6,11 @@ using UnityEngine.UI;
 
 // Base class for all stats
 public abstract class AbstractStats : NetworkBehaviour {
-
+/*
+ * TODO: Stats needs to be looked at and redesigned for NetworkBehavior
+ * Ideally more things would be initialized at start (for new clients joining in)
+ * Also since I think there can only be one hook per syncvar, we need to make them count.
+ */
 	[SyncVar (hook = "UpdateHealthText")] public int health;
 	[SyncVar (hook = "UpdateStrengthText")] protected int strength;
 	[SyncVar (hook = "UpdateDefenceText")] protected int defence;
@@ -113,7 +117,7 @@ public abstract class AbstractStats : NetworkBehaviour {
 	// Syncvar hooks to update the text for the player menu
 	#region UpdateTexts
 	/*
-	TODO Set fill amount on start so its loaded without calling the hook
+	TODO: Set fill amount on start so its loaded without calling the hook
 		(add start to this class, probably should ask austin first)
 	*/
 	public void UpdateHealthText(int health){

@@ -3,7 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-// TODO implement abilities locked depending on level
+/*
+ * TODO: implement abilities locked depending on level
+ * TODO: Fix networked behavior for abilities on client
+ * Right now abilities can only be cast by the host
+ * and the ability is shot from the host + all clients, although only the host can see it.
+ * TODO: Add ability gameObjects to network spawner OR add them as children to player
+ * TODO: Check for Local Player Authority when casting spells
+ * TODO: Properly instantiate abilities with NetworkServer.spawn() so everyone can see them.
+ */
 public class AbstractAbilityControls : NetworkBehaviour {
 
     protected float cooldown1;

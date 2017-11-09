@@ -3,7 +3,10 @@ using System.Collections;
 using UnityEngine.Networking;
 
 public class EnemyAI : NetworkBehaviour {
-
+/*
+ * Its pretty funny but the AI can somehow attack one player and follow another.
+ * TODO: Upgrade AI (not important)
+ */
 	private EnemyMovement movement;
 	private EnemyAttack attack;
 	public GameObject itemDrop;
@@ -30,7 +33,6 @@ public class EnemyAI : NetworkBehaviour {
 		var drop = Instantiate(itemDrop, transform.position, Quaternion.identity);
 		var i = GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>().Roll();
 		NetworkServer.Spawn(drop);
-		Debug.Log("server dropeed.");
 		drop.GetComponent<ItemDrop>().RpcSetItem(i.GetId());
 	}
 

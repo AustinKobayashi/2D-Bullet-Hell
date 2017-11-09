@@ -4,7 +4,9 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 public abstract class AbstractPlayerAttack : NetworkBehaviour {
-
+/*
+ * TODO: Bullets aren't shooting from the center of the player in Networked mode (probably just lag)
+ */
     public float attackCooldown;
     public float timer;
 	public AbstractPlayerStats stats;
