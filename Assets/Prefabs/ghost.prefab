@@ -44,7 +44,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224875108383146050}
-  - component: {fileID: 114908598113461566}
   m_Layer: 9
   m_Name: HealthBar
   m_TagString: Untagged
@@ -251,6 +250,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 0
   inventoryControls: {fileID: 0}
+  Bar: {fileID: 1429877383811022}
 --- !u!114 &114000014064947040
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -359,19 +359,6 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
---- !u!114 &114908598113461566
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1101476146378044}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c20234068176d3f4f8ab2034b6bfac2e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Mob: {fileID: 1000012085686948}
-  Bar: {fileID: 1429877383811022}
 --- !u!114 &114938793391729602
 MonoBehaviour:
   m_ObjectHideFlags: 1

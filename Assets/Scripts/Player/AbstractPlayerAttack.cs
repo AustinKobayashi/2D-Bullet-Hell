@@ -29,9 +29,6 @@ public abstract class AbstractPlayerAttack : NetworkBehaviour {
 	[Command]
 	public void CmdDealDamage(GameObject enemy){
 
-		if (!isLocalPlayer)
-			return;
-
 		EnemyStatsTest enemyStats = enemy.GetComponent<EnemyStatsTest> ();
 
 		// did player kill the enemy

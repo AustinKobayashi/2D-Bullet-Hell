@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212591512614060768}
   - component: {fileID: 61204053841305472}
   - component: {fileID: 114205614364395906}
+  - component: {fileID: 114700874770386322}
   m_Layer: 0
   m_Name: itemDrop
   m_TagString: Untagged
@@ -78,6 +79,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ebe8be81e7de894693bda50399fd6ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114700874770386322
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1325249343263034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 188
+    i1: 44
+    i2: 90
+    i3: 203
+    i4: 171
+    i5: 69
+    i6: 81
+    i7: 52
+    i8: 248
+    i9: 92
+    i10: 62
+    i11: 245
+    i12: 198
+    i13: 128
+    i14: 6
+    i15: 35
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!212 &212591512614060768
 SpriteRenderer:
   m_ObjectHideFlags: 1

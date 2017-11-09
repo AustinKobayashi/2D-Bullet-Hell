@@ -14,8 +14,10 @@ public abstract class AbstractStats : NetworkBehaviour {
 	[SyncVar (hook = "UpdateDexterityText")] protected int dexterity;
 	[SyncVar] protected int maxHealth;
     public InventoryControls inventoryControls;
+	public GameObject Bar;
 
-    protected bool invulnerable; 
+
+	protected bool invulnerable; 
 
 	void Die(){
 		Destroy (this.gameObject);
@@ -108,13 +110,14 @@ public abstract class AbstractStats : NetworkBehaviour {
 	}
 
 	#endregion
-
 	// Syncvar hooks to update the text for the player menu
 	#region UpdateTexts
 	public void UpdateHealthText(int health){
-		if (!isLocalPlayer)
-			return;
-		inventoryControls.UpdateHealthText (health);
+		if (isLocalPlayer)
+			inventoryControls.UpdateHealthText (health);
+		Image i = Bar.GetComponent<Image>();
+		var fillamt = GetHealth() / (float) getMaxHealth();
+		i.fillAmount = fillamt < 0 ? 0 : fillamt;
 	}
 
 	public void UpdateStrengthText(int strength){

@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
-public class EnemyAI : MonoBehaviour {
+public class EnemyAI : NetworkBehaviour {
 
 	private EnemyMovement movement;
 	private EnemyAttack attack;
 	public GameObject itemDrop;
+	private bool isExiting = false;
 	
 
 	// Use this for initialization
@@ -14,8 +16,18 @@ public class EnemyAI : MonoBehaviour {
 		attack = GetComponent<EnemyAttack> ();
 	}
 
+	private void OnApplicationQuit() {
+		isExiting = true;
+	}
+
 	private void OnDestroy() {
-		Instantiate(itemDrop, transform.position, Quaternion.identity);
+		if (isExiting) return;
+		CmdDrop();
+	}
+	[Command]
+	public void CmdDrop() {
+		var drop = Instantiate(itemDrop, transform.position, Quaternion.identity);
+		NetworkServer.Spawn(drop);
 	}
 
 	// Update is called once per frame

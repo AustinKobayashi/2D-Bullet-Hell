@@ -31,7 +31,6 @@ public class ItemDatabase : NetworkBehaviour {
 		return ItemRarity.Common;
 	}
 	
-	[Server]
 	public Item Roll() {
 		int i = -1;
 		while (i < 0) {

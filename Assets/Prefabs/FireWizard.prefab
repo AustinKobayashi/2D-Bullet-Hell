@@ -1015,7 +1015,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224079353190934374}
-  - component: {fileID: 114924862349338926}
   m_Layer: 9
   m_Name: PlayerHealth
   m_TagString: Untagged
@@ -3314,6 +3313,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 0
   inventoryControls: {fileID: 114000011105857710}
+  Bar: {fileID: 0}
 --- !u!114 &114000014127057184
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3733,19 +3733,6 @@ MonoBehaviour:
     type: 2}
   fireStormPrefab: {fileID: 1867249858863192, guid: 5e36bc12a2ecd4abe9bc7fff7b660367,
     type: 2}
---- !u!114 &114924862349338926
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1804016847781838}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c20234068176d3f4f8ab2034b6bfac2e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Mob: {fileID: 1000010329159928}
-  Bar: {fileID: 1565636824895634}
 --- !u!114 &114945475703684800
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 
-public class ItemDrop : MonoBehaviour {
+public class ItemDrop : NetworkBehaviour {
+	[SyncVar]
 	private Item _item;
 	private ItemDatabase _database;
 	// Use this for initialization
@@ -8,7 +10,7 @@ public class ItemDrop : MonoBehaviour {
 		_database = GameObject.FindGameObjectWithTag ("ItemDatabase").GetComponent<ItemDatabase>();
 		rollItem();
 	}
-
+	
 	void rollItem() {
 		_item = _database.Roll();
 		gameObject.GetComponent<SpriteRenderer>().sprite = _item.GetItemImage();

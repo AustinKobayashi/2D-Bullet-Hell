@@ -25,9 +25,8 @@ public class EnemyAttack : NetworkBehaviour {
 		}
 	}
 		
-	[Server]
-	public void DealDamage(GameObject player){
-
+	public void DealDamage(GameObject player) {
+		if (!isServer) return;
 		AbstractPlayerStats playerStats = player.GetComponent<AbstractPlayerStats> ();
 
 		if (playerStats != null) 
