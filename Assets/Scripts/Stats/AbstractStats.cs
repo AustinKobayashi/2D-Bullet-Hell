@@ -112,13 +112,13 @@ public abstract class AbstractStats : NetworkBehaviour {
 	#endregion
 	// Syncvar hooks to update the text for the player menu
 	#region UpdateTexts
+	/*
+	TODO Set fill amount on start so its loaded without calling the hook
+		(add start to this class, probably should ask austin first)
+	*/
 	public void UpdateHealthText(int health){
-		if (isLocalPlayer) {
-			inventoryControls.UpdateHealthText(health);
-			return;
-		}
 		Image i = Bar.GetComponent<Image>();
-		var fillamt = GetHealth() / (float) getMaxHealth();
+		var fillamt = health / (float) getMaxHealth();
 		i.fillAmount = fillamt < 0 ? 0 : fillamt;
 	}
 
