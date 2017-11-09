@@ -14,7 +14,6 @@ public class ItemDatabase : NetworkBehaviour {
 		IRDB.updateDB(database);
 	}
 
-	[Server]
 	public Item GetItem(int index){
 		if (index == -1)
 			return null;

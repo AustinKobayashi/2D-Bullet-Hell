@@ -2,18 +2,20 @@
 using UnityEngine.Networking;
 
 public class ItemDrop : NetworkBehaviour {
-	[SyncVar]
 	private Item _item;
+
 	private ItemDatabase _database;
 	// Use this for initialization
-	void Start () {
-		_database = GameObject.FindGameObjectWithTag ("ItemDatabase").GetComponent<ItemDatabase>();
-		rollItem();
-	}
-	
-	void rollItem() {
-		_item = _database.Roll();
+
+	[ClientRpc]
+	public void RpcSetItem(int i) {
+		Debug.Log("Setting item to : " + i)	;
+		_database = GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>();
+		_item = _database.GetItem(i);
+		Debug.Log("_item immage: " + _item.GetItemImage());
+		Debug.Log("GO Image: " + gameObject.GetComponent<SpriteRenderer>().sprite);
 		gameObject.GetComponent<SpriteRenderer>().sprite = _item.GetItemImage();
+		Debug.Log("GO Image: " + gameObject.GetComponent<SpriteRenderer>().sprite);
 	}
 
 	private void OnTriggerEnter2D(Collider2D other) {

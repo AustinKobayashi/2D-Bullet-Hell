@@ -113,8 +113,10 @@ public abstract class AbstractStats : NetworkBehaviour {
 	// Syncvar hooks to update the text for the player menu
 	#region UpdateTexts
 	public void UpdateHealthText(int health){
-		if (isLocalPlayer)
-			inventoryControls.UpdateHealthText (health);
+		if (isLocalPlayer) {
+			inventoryControls.UpdateHealthText(health);
+			return;
+		}
 		Image i = Bar.GetComponent<Image>();
 		var fillamt = GetHealth() / (float) getMaxHealth();
 		i.fillAmount = fillamt < 0 ? 0 : fillamt;

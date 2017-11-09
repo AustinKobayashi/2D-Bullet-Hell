@@ -7,7 +7,7 @@ public class EnemyAI : NetworkBehaviour {
 	private EnemyMovement movement;
 	private EnemyAttack attack;
 	public GameObject itemDrop;
-	private bool isExiting = false;
+	private bool isExiting;
 	
 
 	// Use this for initialization
@@ -22,12 +22,16 @@ public class EnemyAI : NetworkBehaviour {
 
 	private void OnDestroy() {
 		if (isExiting) return;
-		CmdDrop();
+		if (!isServer) return;
+		Drop();
 	}
-	[Command]
-	public void CmdDrop() {
+	[Server]
+	public void Drop() {
 		var drop = Instantiate(itemDrop, transform.position, Quaternion.identity);
+		var i = GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>().Roll();
 		NetworkServer.Spawn(drop);
+		Debug.Log("server dropeed.");
+		drop.GetComponent<ItemDrop>().RpcSetItem(i.GetId());
 	}
 
 	// Update is called once per frame

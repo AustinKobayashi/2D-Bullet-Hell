@@ -9,6 +9,8 @@ public class BasicAttackMovement : AbstractProjectileMovement {
         }
 
         public override void hit(Collider2D coll) {
+            Debug.Log(_wizardAttack);
+            Debug.Log(coll);
             _wizardAttack.CmdDealDamage(coll.gameObject);
         }
         public void SetPlayerAttack(WizardAttack wizardAttack){
