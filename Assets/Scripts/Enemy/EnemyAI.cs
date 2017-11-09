@@ -5,7 +5,10 @@ using UnityEngine.Networking;
 public class EnemyAI : NetworkBehaviour {
 /*
  * Its pretty funny but the AI can somehow attack one player and follow another.
- * TODO: Upgrade AI (not important)
+ * Sometimes it'll shoot at one player but damage the other as well
+ * 		(Bullets going the wrong way but hitting the player anyway)
+ * Probably caused by either lack of Network Sync for bullet shooting or target acquisition;
+ * TODO: Upgrade Networked AI
  */
 	private EnemyMovement movement;
 	private EnemyAttack attack;
@@ -34,11 +37,6 @@ public class EnemyAI : NetworkBehaviour {
 		var i = GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>().Roll();
 		NetworkServer.Spawn(drop);
 		drop.GetComponent<ItemDrop>().RpcSetItem(i.GetId());
-	}
-
-	// Update is called once per frame
-	void Update () {
-	
 	}
 
 	void OnTriggerEnter2D(Collider2D coll) {
