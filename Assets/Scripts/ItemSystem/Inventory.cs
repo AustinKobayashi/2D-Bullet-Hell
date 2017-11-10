@@ -40,6 +40,7 @@ public class Inventory : NetworkBehaviour {
 		for (int i = 0; i < _inventorySize; i++) {
 			inv[i] = GetItem(i);
 		}
+		gameObject.GetComponent<StatsHandler>().UpdateText();
 		_inventoryHandler.UpdateSlots(GetWeapon(), GetAbility(), GetArmour(), null, inv);
 	}
 

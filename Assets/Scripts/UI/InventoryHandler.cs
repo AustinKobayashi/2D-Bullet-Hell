@@ -188,7 +188,7 @@ public class InventoryHandler : NetworkBehaviour {
 	void Update () {
 		if (Input.GetKeyDown(KeyCode.Tab)) {
 			if (!isLocalPlayer) return;
-			gameObject.GetComponentInParent<Inventory>().UpdateUI();
+			gameObject.GetComponent<Inventory>().UpdateUI();
 			_invCanvas.enabled = !_invCanvas.enabled;
 			MenuOpen = !MenuOpen;
 		}
