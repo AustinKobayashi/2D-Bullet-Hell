@@ -8,6 +8,7 @@ public class Inventory : NetworkBehaviour {
 	ItemDatabase _database;
 	private InventoryHandler _inventoryHandler;
 	private int _inventorySize = 5;
+	private int _inventoryOffset = 5;
 	//[SyncVar]s for the players equiped items.
 	[SyncVar] private int _weapon;
 	[SyncVar] private int _ability;
@@ -42,16 +43,25 @@ public class Inventory : NetworkBehaviour {
 		_inventoryHandler.UpdateSlots(GetWeapon(), GetAbility(), GetArmour(), null, inv);
 	}
 
+	private IEnumerator updateOffset() {
+		yield return new WaitForSeconds(0.10f);
+		UpdateUI();
+		yield return null;
+	}
+
 	public void Swap(int firstSelection, int secondSelection) {
+		if (!isLocalPlayer) {
+			return;
+		}
 		if (firstSelection < 5 && secondSelection < 5) return;
 		if (firstSelection < 5) {
-			SwitchEquipment(firstSelection, secondSelection);
+			SwitchEquipment(firstSelection, secondSelection-_inventoryOffset);
 		} else if (secondSelection < 5) {
-			SwitchEquipment(secondSelection, firstSelection);
+			SwitchEquipment(secondSelection, firstSelection-_inventoryOffset);
 		} else {
-			CmdSwapItems(firstSelection - 5, secondSelection - 5);
+			CmdSwapItems(firstSelection - _inventoryOffset, secondSelection - _inventoryOffset);
 		}
-		UpdateUI();
+		StartCoroutine(updateOffset());
 	}
 
 	private void SwitchEquipment(int equipment, int index) {
@@ -154,11 +164,6 @@ public class Inventory : NetworkBehaviour {
 	//Swaps two items by index in the inventory.
 	[Command]
 	public void CmdSwapItems(int index1, int index2){
-		for (int i = 0; i < _inventory.Count; i++) {
-			Debug.Log(_inventory[i]);
-		}
-		Debug.Log("Count: " + _inventory.Count);
-		Debug.Log("Index 1: " + index1 + "\n Index2: " + index1);
 		Item temp = GetItem (index1);
 		_inventory [index1] = _inventory [index2];
 		_inventory [index2] = temp.GetId();

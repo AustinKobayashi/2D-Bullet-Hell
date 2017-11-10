@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
-public class InventoryHandler : MonoBehaviour {
+public class InventoryHandler : NetworkBehaviour {
 	private Button
 		_weaponSlot,
 		_abilitySlot,
@@ -26,149 +28,169 @@ public class InventoryHandler : MonoBehaviour {
 	 */
 	private int _firstSelection;
 	private int _secondSelection;
-	
+	private Button _firstButton;
+	private Button _secondButton;
+
+	private Canvas _invCanvas;
+
+	public bool MenuOpen;
 	// Use this for initialization
 	void Start () {
-		_weaponSlot = GameObject.FindGameObjectWithTag("WeaponSlot").GetComponent<Button>();
-		_abilitySlot = GameObject.FindGameObjectWithTag("AbilitySlot").GetComponent<Button>();
-		_armourSlot = GameObject.FindGameObjectWithTag("ArmourSlot").GetComponent<Button>();
-		_ringSlot = GameObject.FindGameObjectWithTag("RingSlot").GetComponent<Button>();
-		_itemSlot1 = GameObject.FindGameObjectWithTag("ItemSlot").GetComponent<Button>();
-		_itemSlot2 = GameObject.FindGameObjectWithTag("ItemSlot2").GetComponent<Button>();
-		_itemSlot3 = GameObject.FindGameObjectWithTag("ItemSlot3").GetComponent<Button>();
-		_itemSlot4 = GameObject.FindGameObjectWithTag("ItemSlot4").GetComponent<Button>();
-		_itemSlot5 = GameObject.FindGameObjectWithTag("ItemSlot5").GetComponent<Button>();
+		foreach (var button in GetComponentsInChildren<Button>()) {
+			switch (button.gameObject.tag) {
+				case "WeaponSlot":
+					_weaponSlot = button;
+					break;
+				case "AbilitySlot":
+					_abilitySlot = button;
+					break;
+				case "ArmourSlot":
+					_armourSlot = button;
+					break;
+				case "RingSlot":
+					_ringSlot = button;
+					break;
+				case "ItemSlot":
+					_itemSlot1 = button;
+					break;
+				case "ItemSlot2":
+					_itemSlot2 = button;
+					break;
+				case "ItemSlot3":
+					_itemSlot3 = button;
+					break;
+				case "ItemSlot4":
+					_itemSlot4 = button;
+					break;
+				case "ItemSlot5":
+					_itemSlot5 = button;
+					break;
+			}
+		}
+		foreach (Canvas c in GetComponentsInChildren<Canvas>()) {
+			if (!c.gameObject.CompareTag("Inventory")) continue;
+			_invCanvas = c;
+			break;
+		}
+		
 	}
 
 	public void UpdateSlots(Item weapon, Item ability, Item armour, Item ring, Item[] inventory) {
 		if (weapon != null) {
-			Color tempColor = _weaponSlot.image.color;
-			tempColor.a = 255;
-			_weaponSlot.image.color = tempColor;
+			ActivateColor(_weaponSlot);
 			_weaponSlot.image.sprite = weapon.GetItemImage();
 		}
 		else {
-			Color tempColor = _weaponSlot.image.color;
-			tempColor.a = 0;
-			_weaponSlot.image.color = tempColor;
+			DeactivateColor(_weaponSlot);
 		}
 		if (ability != null) {
-			Color tempColor = _abilitySlot.image.color;
-			tempColor.a = 255;
-			_abilitySlot.image.color = tempColor;
+			ActivateColor(_abilitySlot);
 			_abilitySlot.image.sprite = ability.GetItemImage();
 		}
 		else {
-			Color tempColor = _abilitySlot.image.color;
-			tempColor.a = 0;
-			_abilitySlot.image.color = tempColor;
+			DeactivateColor(_abilitySlot);
 		}
 		if (armour != null) {
-			Color tempColor = _armourSlot.image.color;
-			tempColor.a = 255;
-			_armourSlot.image.color = tempColor;
+			ActivateColor(_armourSlot);
 			_armourSlot.image.sprite = armour.GetItemImage();
 		}
 		else {
-			Color tempColor = _armourSlot.image.color;
-			tempColor.a = 0;
-			_armourSlot.image.color = tempColor;
-
+			DeactivateColor(_armourSlot);
 		}
 		if (ring != null) {
-			Color tempColor = _ringSlot.image.color;
-			tempColor.a = 255;
-			_ringSlot.image.color = tempColor;
+			ActivateColor(_ringSlot);
 			_ringSlot.image.sprite = ring.GetItemImage();
 		}
 		else {
-			Color tempColor = _ringSlot.image.color;
-			tempColor.a = 0;
-			_ringSlot.image.color = tempColor;
+			DeactivateColor(_ringSlot);
 		}
 		if (inventory[0] != null) {
-			Color tempColor = _itemSlot1.image.color;
-			tempColor.a = 255;
-			_itemSlot1.image.color = tempColor;
+			ActivateColor(_itemSlot1);
 			_itemSlot1.image.sprite = inventory[0].GetItemImage();
 		}
 		else {
-			Color tempColor = _itemSlot1.image.color;
-			tempColor.a = 0;
-			_itemSlot1.image.color = tempColor;
+			DeactivateColor(_itemSlot1);
 		}
 		if (inventory[1] != null) {
-			Color tempColor = _itemSlot2.image.color;
-			tempColor.a = 255;
-			_itemSlot2.image.color = tempColor;
+			ActivateColor(_itemSlot2);
 			_itemSlot2.image.sprite = inventory[1].GetItemImage();
 		}
 		else {
-			Color tempColor = _itemSlot2.image.color;
-			tempColor.a = 0;
-			_itemSlot2.image.color = tempColor;
+			DeactivateColor(_itemSlot2);
 		}
 		if (inventory[2] != null) {
-			Color tempColor = _itemSlot3.image.color;
-			tempColor.a = 255;
-			_itemSlot3.image.color = tempColor;
+			ActivateColor(_itemSlot3);
 			_itemSlot3.image.sprite = inventory[2].GetItemImage();
 		}
 		else {
-			Color tempColor = _itemSlot3.image.color;
-			tempColor.a = 0;
-			_itemSlot3.image.color = tempColor;
+			DeactivateColor(_itemSlot3);
 		}
 		if (inventory[3] != null) {
-			Color tempColor = _itemSlot4.image.color;
-			tempColor.a = 255;
-			_itemSlot4.image.color = tempColor;
+			ActivateColor(_itemSlot4);
 			_itemSlot4.image.sprite = inventory[3].GetItemImage();
 		}
 		else {
-			Color tempColor = _itemSlot4.image.color;
-			tempColor.a = 0;
-			_itemSlot4.image.color = tempColor;
+			DeactivateColor(_itemSlot4);
 		}
 		if (inventory[4] != null) {
-			Color tempColor = _itemSlot5.image.color;
-			tempColor.a = 255;
-			_itemSlot5.image.color = tempColor;
-			_itemSlot5.image.sprite = inventory[0].GetItemImage();
+			ActivateColor(_itemSlot5);
+			_itemSlot5.image.sprite = inventory[4].GetItemImage();
 		}
 		else {
-			Color tempColor = _itemSlot5.image.color;
-			tempColor.a = 0;
-			_itemSlot5.image.color = tempColor;
+			DeactivateColor(_itemSlot5);
 		}
 	}
 
+	private void ActivateColor(Button b) {
+		var tempColor = Color.white;
+		tempColor.a = 255;
+		b.image.color = tempColor;
+	}
+	private void DeactivateColor(Button b) {
+		var tempColor = Color.white;
+		tempColor.a = 0;
+		b.image.sprite = null;
+		b.image.color = tempColor;
+	}
+
+
+	private void selectButton(Button b) {
+		Color c = Color.red;
+		c.a = 0.8f;
+		b.image.color = c;
+	}
 	public void ClickItem(int selected) {
+		if (!isLocalPlayer) return;
+		if (_firstSelection == 0) {
+			_firstSelection = selected;
+			_firstButton = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
+			selectButton(_firstButton);
+			return;
+		}
 		if (selected == _firstSelection) {
 			_firstSelection = 0;
-			Debug.Log("First: " + _firstSelection);
-			Debug.Log("Second: " + _secondSelection);
+			gameObject.GetComponentInParent<Inventory>().UpdateUI();
 			return;
 		}
 		if (_firstSelection != 0) {
 			_secondSelection = selected;
+			_secondButton = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
+			selectButton(_secondButton);
 			GetComponentInParent<Inventory>().Swap(_firstSelection, _secondSelection);
 			_secondSelection = 0;
 			_firstSelection = 0;
-			Debug.Log("First: " + _firstSelection);
-			Debug.Log("Second: " + _secondSelection);
 			return;
 		}
-		_firstSelection = selected;
-		Debug.Log("First: " + _firstSelection);
-		Debug.Log("Second: " + _secondSelection);
 	}
 	
 	// Update is called once per frame
+	private float _timer;
 	void Update () {
 		if (Input.GetKeyDown(KeyCode.Tab)) {
+			if (!isLocalPlayer) return;
 			gameObject.GetComponentInParent<Inventory>().UpdateUI();
-			GameObject.FindGameObjectWithTag("Inventory").GetComponent<Canvas>().enabled = !GameObject.FindGameObjectWithTag("Inventory").GetComponent<Canvas>().enabled;
+			_invCanvas.enabled = !_invCanvas.enabled;
+			MenuOpen = !MenuOpen;
 		}
 	}
 }

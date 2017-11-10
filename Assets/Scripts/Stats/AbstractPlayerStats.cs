@@ -5,11 +5,11 @@ using UnityEngine.Networking;
 // Base class for all player stats
 public abstract class AbstractPlayerStats : AbstractStats {
 
-	[SyncVar (hook = "UpdateManaText")] protected int mana;
-	[SyncVar (hook = "UpdateEnduranceText")] protected int endurance;
-	[SyncVar (hook = "UpdateWisdomText")] protected int wisdom;
-	[SyncVar(hook = "UpdateExperienceText") ] protected int experience;
-	[SyncVar (hook = "UpdateLevelText")] protected int level;
+	[SyncVar] protected int mana;
+	[SyncVar] protected int endurance;
+	[SyncVar] protected int wisdom;
+	[SyncVar] protected int experience;
+	[SyncVar] protected int level;
 	[SyncVar] protected int maxMana;
 	[SyncVar] protected int experienceToLevel;
 	Inventory inventory;
@@ -97,35 +97,4 @@ public abstract class AbstractPlayerStats : AbstractStats {
 	}
 	#endregion
 
-	#region UpdateTexts
-	public void UpdateManaText(int mana){
-		if (!isLocalPlayer)
-			return;
-		inventoryControls.UpdateManaText (mana);
-	}
-
-	public void UpdateEnduranceText(int endurance){
-		if (!isLocalPlayer)
-			return;
-		inventoryControls.UpdateEnduranceText (endurance);
-	}
-
-	public void UpdateWisdomText(int wisdom){
-		if (!isLocalPlayer)
-			return;
-		inventoryControls.UpdateWisdomText (wisdom);
-	}
-
-	public void UpdateExperienceText(int experience){
-		if (!isLocalPlayer)
-			return;
-		inventoryControls.UpdateExperienceText (experience);
-	}
-
-	public void UpdateLevelText(int level){
-		if (!isLocalPlayer)
-			return;
-		inventoryControls.UpdateLevelText (level);
-	}
-	#endregion
 }
