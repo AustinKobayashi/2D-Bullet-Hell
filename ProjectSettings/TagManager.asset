@@ -6,6 +6,16 @@ TagManager:
   tags:
   - Enemy
   - ItemDatabase
+  - WeaponSlot
+  - AbilitySlot
+  - ArmourSlot
+  - RingSlot
+  - ItemSlot
+  - ItemSlot2
+  - ItemSlot3
+  - ItemSlot4
+  - ItemSlot5
+  - Inventory
   layers:
   - Default
   - TransparentFX

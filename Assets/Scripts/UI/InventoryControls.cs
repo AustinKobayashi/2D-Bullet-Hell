@@ -108,7 +108,7 @@ public class InventoryControls : NetworkBehaviour {
 				inventory.CmdSwapItems (selectedItemIndex, index);
 				selectedItemIndex = -1;
 			}else {
-				inventory.CmdUnequipItem(selectedItem, index);
+	//			inventory.CmdUnequipItem(selectedItem, index);
 				selectedItem = -1;
 			}
 		}
