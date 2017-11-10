@@ -27,13 +27,12 @@ public class PlayerWizardStatsTest : AbstractPlayerStats {
 		regenTimer += Time.deltaTime;
 		if(regenTimer >= 1){
 			regenTimer = 0;
-			CmdRegenHealth ();
-			CmdRegenMana ();
+			RegenHealth ();
+			RegenMana ();
 		}
 	}
 
-	[Command]
-	void CmdRegenHealth(){
+	void RegenHealth(){
 		health += (1 + (int)(0.15f * endurance));
 		if (health > maxHealth)
 			health = maxHealth;
@@ -41,8 +40,7 @@ public class PlayerWizardStatsTest : AbstractPlayerStats {
 		//controls.UpdateStatText (); shouldnt be necessary due to the stat hooks (requires testing)
 	}
 
-	[Command]
-	void CmdRegenMana(){
+	void RegenMana(){
 		mana += (1 + (int)(0.15f * wisdom));
 		if (mana > maxMana)
 			mana = maxMana;
@@ -51,8 +49,7 @@ public class PlayerWizardStatsTest : AbstractPlayerStats {
 	}
 		
 	// Increases each stat by a random value
-	[Command]
-	public override void CmdLevelUp(){
+	public override void LevelUp(){
 		level++;
 		maxHealth += Random.Range (20, 31);
 		mana += Random.Range (5, 16);

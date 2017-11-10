@@ -1,16 +1,16 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 
-public class ItemDrop : MonoBehaviour {
+public class ItemDrop : NetworkBehaviour {
 	private Item _item;
+
 	private ItemDatabase _database;
 	// Use this for initialization
-	void Start () {
-		_database = GameObject.FindGameObjectWithTag ("ItemDatabase").GetComponent<ItemDatabase>();
-		rollItem();
-	}
 
-	void rollItem() {
-		_item = _database.Roll();
+	[ClientRpc]
+	public void RpcSetItem(int i) {
+		_database = GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>();
+		_item = _database.GetItem(i);
 		gameObject.GetComponent<SpriteRenderer>().sprite = _item.GetItemImage();
 	}
 

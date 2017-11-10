@@ -4,7 +4,12 @@ using UnityEngine.UI;
 using UnityEngine.Networking;
 
 public class InventoryControls : NetworkBehaviour {
-
+	
+	
+	/*
+	 * This script doesn't work at all for networked behavior (so no inventory for Clients)
+	 * TODO: Network this script and fix the Inveotry UI on the client.
+	 */
 	//public Image menu;
 	public GameObject menu;
 	public GameObject statsMenu;

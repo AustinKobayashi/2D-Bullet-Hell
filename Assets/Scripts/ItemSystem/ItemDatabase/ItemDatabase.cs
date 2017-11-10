@@ -4,7 +4,12 @@ using System.Collections.Generic;
 using UnityEngine.Networking;
 
 public class ItemDatabase : NetworkBehaviour {
-
+	
+	/*
+	 * Since pretty much all players and some objects need access to the ItemDatabase, it should not be serverside.
+	 * Changes to the database should be made by the server, then pushed with ClientRpc to all clients.
+	 * TODO: Network proof the database while keeping it up to date on all clients
+	 */
 	List<Item> database;
 	private ItemRarityDatabase IRDB;
 
@@ -14,7 +19,6 @@ public class ItemDatabase : NetworkBehaviour {
 		IRDB.updateDB(database);
 	}
 
-	[Server]
 	public Item GetItem(int index){
 		if (index == -1)
 			return null;
@@ -31,7 +35,6 @@ public class ItemDatabase : NetworkBehaviour {
 		return ItemRarity.Common;
 	}
 	
-	[Server]
 	public Item Roll() {
 		int i = -1;
 		while (i < 0) {

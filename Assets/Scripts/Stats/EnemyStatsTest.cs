@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class EnemyStatsTest : AbstractStats {
 
@@ -15,6 +16,9 @@ public class EnemyStatsTest : AbstractStats {
 		SetStrength (5);
 		SetDefence (0);
 		experienceMultiplier = 2f;
+		Image i = Bar.GetComponent<Image>();
+		i.fillAmount = 1;
+
 	}
 
 	// Called when the player kills an enemy to calculate experience gain

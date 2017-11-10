@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.Networking;
 
 public class Inventory : NetworkBehaviour {
-
+	
 	//Synclist representing the players inventory.
 	public SyncListInt inventory = new SyncListInt();
 	ItemDatabase database;
