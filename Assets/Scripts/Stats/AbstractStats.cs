@@ -7,7 +7,6 @@ using UnityEngine.UI;
 // Base class for all stats
 public abstract class AbstractStats : NetworkBehaviour {
 /*
- * TODO: Stats needs to be looked at and redesigned for NetworkBehavior
  * Ideally more things would be initialized at start (for new clients joining in)
  * Also since I think there can only be one hook per syncvar, we need to make them count.
  */
@@ -124,6 +123,7 @@ public abstract class AbstractStats : NetworkBehaviour {
 		var fillamt = health / (float) getMaxHealth();
 		i.fillAmount = fillamt < 0 ? 0 : fillamt;
 	}
+
 
 	#endregion
 }
