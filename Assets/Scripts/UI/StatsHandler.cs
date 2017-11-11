@@ -32,22 +32,21 @@ public class StatsHandler : NetworkBehaviour {
 		_wisdom = menu.Find("Wisdom").GetComponent<Text>();
 		_level = menu.Find("Level").GetComponent<Text>();
 		_experience = menu.Find("Experience").GetComponent<Text>();
-
 		_stats = GetComponent<AbstractPlayerStats>();
 	}
 
 	public void UpdateText() {
-		_playerName.text = "Player";
+		_playerName.text = _stats.GetPlayerName();
 		_health.text = "Health: " + _stats.GetHealth() + "/" + _stats.getMaxHealth();
 		_strength.text = "Strength: " + _stats.GetStrength();
 		_defense.text = "Defense: " + _stats.GetDefence();
 		_speed.text = "Speed: " + _stats.GetSpeed();
 		_dexterity.text = "Dexterity: " + _stats.GetDexterity();
-		_mana.text = "Mana: " + _stats.GetMana() + "/" + _stats.getMaxMana();
+		_mana.text = "Mana: " + _stats.GetMana() + "/" + _stats.GetMaxMana();
 		_endurance.text = "Endurance: " + _stats.GetEndurance();
 		_wisdom.text = "Wisdom: " + _stats.GetWisdom();
 		_level.text = "Level: " + _stats.GetLevel();
-		_experience.text = "Experience: " + _stats.GetExperience() + "/" + _stats.getMaxExperience();
+		_experience.text = "Experience: " + _stats.GetExperience() + "/" + _stats.GetMaxExperience();
 	}
 	
 }

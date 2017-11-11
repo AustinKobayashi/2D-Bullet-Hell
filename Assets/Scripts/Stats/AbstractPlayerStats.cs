@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
 using System.Collections;
 using UnityEngine.Networking;
+using Random = UnityEngine.Random;
 
 // Base class for all player stats
 public abstract class AbstractPlayerStats : AbstractStats {
@@ -12,6 +13,7 @@ public abstract class AbstractPlayerStats : AbstractStats {
 	[SyncVar] protected int level;
 	[SyncVar] protected int maxMana;
 	[SyncVar] protected int experienceToLevel;
+	[SyncVar] protected string PlayerName;
 	Inventory inventory;
 
 	void Awake(){
@@ -64,7 +66,7 @@ public abstract class AbstractPlayerStats : AbstractStats {
 		this.mana = mana;
 	}
 
-	public int getMaxMana() {
+	public int GetMaxMana() {
 		return maxMana;
 	}
 
@@ -100,8 +102,16 @@ public abstract class AbstractPlayerStats : AbstractStats {
 		this.experience = experience;
 	}
 
-	public int getMaxExperience() {
+	public int GetMaxExperience() {
 		return experienceToLevel;
+	}
+
+	public String GetPlayerName() {
+		return PlayerName;
+	}
+
+	public void SetPlayerName(String playername) {
+		PlayerName = playername;
 	}
 	#endregion
 
