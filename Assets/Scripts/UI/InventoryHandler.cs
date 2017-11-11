@@ -190,6 +190,7 @@ public class InventoryHandler : NetworkBehaviour {
 			if (!isLocalPlayer) return;
 			gameObject.GetComponent<Inventory>().UpdateUI();
 			_invCanvas.enabled = !_invCanvas.enabled;
+			_firstSelection = 0;
 			MenuOpen = !MenuOpen;
 		}
 	}

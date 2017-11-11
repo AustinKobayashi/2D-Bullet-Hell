@@ -186,7 +186,7 @@ public class Inventory : NetworkBehaviour {
 	public void CmdSwapItems(int index1, int index2){
 		Item temp = GetItem (index1);
 		_inventory [index1] = _inventory [index2];
-		_inventory [index2] = temp.GetId();
+		_inventory[index2] = temp != null ? temp.GetId() : -1;
 	}
 	//Returns the players currently equipped weapon/ability/armour.
 	public Weapon GetWeapon(){
