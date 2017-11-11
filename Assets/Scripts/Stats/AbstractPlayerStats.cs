@@ -64,6 +64,10 @@ public abstract class AbstractPlayerStats : AbstractStats {
 		this.mana = mana;
 	}
 
+	public int getMaxMana() {
+		return maxMana;
+	}
+
 	public int GetEndurance(){
         return endurance;
     }
@@ -94,6 +98,10 @@ public abstract class AbstractPlayerStats : AbstractStats {
 
 	public void SetExperience(int experience){
 		this.experience = experience;
+	}
+
+	public int getMaxExperience() {
+		return experienceToLevel;
 	}
 	#endregion
 
