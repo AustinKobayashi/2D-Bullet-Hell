@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public abstract class AbstractProjectileMovement : MonoBehaviour {
+public abstract class AbstractProjectileMovement : NetworkBehaviour {
 
     public float Speed;
     public float LifeSpan;

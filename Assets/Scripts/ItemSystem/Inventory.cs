@@ -40,6 +40,7 @@ public class Inventory : NetworkBehaviour {
 		for (int i = 0; i < _inventorySize; i++) {
 			inv[i] = GetItem(i);
 		}
+		gameObject.GetComponent<StatsHandler>().UpdateText();
 		_inventoryHandler.UpdateSlots(GetWeapon(), GetAbility(), GetArmour(), null, inv);
 	}
 
@@ -76,7 +77,7 @@ public class Inventory : NetworkBehaviour {
 					CmdEquipArmour(index);
 					break;
 				case 4:
-					//TODO: Implement with Ring
+					CmdEquipRing(index);
 					break;
 		}
 	}
@@ -158,6 +159,25 @@ public class Inventory : NetworkBehaviour {
 		} else {
 			int temp = _armour;
 			_armour = GetItem (index).GetId();
+			_inventory [index] = temp;
+		}
+	}
+	//Sets a players Armour to an item in their inventory at index (if it is an Armour).
+	[Command]
+	public void CmdEquipRing(int index){
+		if (_inventory[index] == -1) {
+			_inventory[index] = _ring;
+			_ring = -1;
+			return;
+		}
+		if (GetItem (index).GetItemType () != ItemTypes.ring)
+			return;
+		if (_ring == -1) {
+			_ring = GetItem (index).GetId ();
+			CmdRemoveItem (index);
+		} else {
+			int temp = _ring;
+			_ring = GetItem (index).GetId();
 			_inventory [index] = temp;
 		}
 	}
