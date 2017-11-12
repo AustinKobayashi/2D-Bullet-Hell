@@ -162,6 +162,7 @@ public class InventoryHandler : NetworkBehaviour {
 	public void ClickItem(int selected) {
 		if (!isLocalPlayer) return;
 		if (_firstSelection == 0) {
+			if (gameObject.GetComponentInParent<Inventory>().checkEmpty(selected)) return;
 			_firstSelection = selected;
 			_firstButton = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
 			selectButton(_firstButton);

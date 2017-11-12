@@ -65,6 +65,24 @@ public class Inventory : NetworkBehaviour {
 		StartCoroutine(updateOffset());
 	}
 
+	public bool checkEmpty(int firstSelection) {
+		if (firstSelection < 5) {
+			switch (firstSelection) {
+				case 1:
+					return _weapon == -1;
+				case 2:
+					return _ability == -1;
+				case 3:
+					return _armour == -1;
+				case 4:
+					return _ring == -1;
+			}
+		} else {
+			return _inventory[firstSelection - _inventoryOffset] == -1;
+		}
+		return false;
+	}
+
 	private void SwitchEquipment(int equipment, int index) {
 		switch (equipment) {
 				case 1:
