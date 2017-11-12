@@ -1,17 +1,19 @@
-﻿using UnityEngine;
+﻿using System;
 using System.Collections;
 using UnityEngine.Networking;
+using Random = UnityEngine.Random;
 
 // Base class for all player stats
 public abstract class AbstractPlayerStats : AbstractStats {
 
-	[SyncVar (hook = "UpdateManaText")] protected int mana;
-	[SyncVar (hook = "UpdateEnduranceText")] protected int endurance;
-	[SyncVar (hook = "UpdateWisdomText")] protected int wisdom;
-	[SyncVar(hook = "UpdateExperienceText") ] protected int experience;
-	[SyncVar (hook = "UpdateLevelText")] protected int level;
+	[SyncVar] protected int mana;
+	[SyncVar] protected int endurance;
+	[SyncVar] protected int wisdom;
+	[SyncVar] protected int experience;
+	[SyncVar] protected int level;
 	[SyncVar] protected int maxMana;
 	[SyncVar] protected int experienceToLevel;
+	[SyncVar] protected string PlayerName;
 	Inventory inventory;
 
 	void Awake(){
@@ -64,6 +66,10 @@ public abstract class AbstractPlayerStats : AbstractStats {
 		this.mana = mana;
 	}
 
+	public int GetMaxMana() {
+		return maxMana;
+	}
+
 	public int GetEndurance(){
         return endurance;
     }
@@ -95,37 +101,18 @@ public abstract class AbstractPlayerStats : AbstractStats {
 	public void SetExperience(int experience){
 		this.experience = experience;
 	}
-	#endregion
 
-	#region UpdateTexts
-	public void UpdateManaText(int mana){
-		if (!isLocalPlayer)
-			return;
-		inventoryControls.UpdateManaText (mana);
+	public int GetMaxExperience() {
+		return experienceToLevel;
 	}
 
-	public void UpdateEnduranceText(int endurance){
-		if (!isLocalPlayer)
-			return;
-		inventoryControls.UpdateEnduranceText (endurance);
+	public String GetPlayerName() {
+		return PlayerName;
 	}
 
-	public void UpdateWisdomText(int wisdom){
-		if (!isLocalPlayer)
-			return;
-		inventoryControls.UpdateWisdomText (wisdom);
-	}
-
-	public void UpdateExperienceText(int experience){
-		if (!isLocalPlayer)
-			return;
-		inventoryControls.UpdateExperienceText (experience);
-	}
-
-	public void UpdateLevelText(int level){
-		if (!isLocalPlayer)
-			return;
-		inventoryControls.UpdateLevelText (level);
+	public void SetPlayerName(String playername) {
+		PlayerName = playername;
 	}
 	#endregion
+
 }

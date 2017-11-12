@@ -17,8 +17,10 @@ public class PlayerWizardStatsTest : AbstractPlayerStats {
 		maxHealth = 100;
 		SetStrength (12);
 		SetDexterity (15);
-		endurance = 12;
-		SetDefence (0);
+		SetEndurance(0);
+		SetDefence (20);
+		SetSpeed(49);
+		SetPlayerName("Player");
 	}
 	
 	// Update is called once per frame

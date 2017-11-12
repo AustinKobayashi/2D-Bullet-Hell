@@ -5,73 +5,118 @@ using UnityEngine.Networking;
 public class Inventory : NetworkBehaviour {
 	
 	//Synclist representing the players inventory.
-	public SyncListInt inventory = new SyncListInt();
-	ItemDatabase database;
+	ItemDatabase _database;
+	private InventoryHandler _inventoryHandler;
+	private int _inventorySize = 5;
+	private int _inventoryOffset = 5;
 	//[SyncVar]s for the players equiped items.
-	[SyncVar] private int weapon;
-	[SyncVar] private int ability;
-	[SyncVar] private int armour;
-	[SyncVar] private int ring;
+	[SyncVar] private int _weapon;
+	[SyncVar] private int _ability;
+	[SyncVar] private int _armour;
+	[SyncVar] private int _ring;
+	private SyncListInt _inventory = new SyncListInt();
 
 	// Sets all inventory slots to -1 (as 0 is an item).
 	void Start () {
-		weapon = -1;
-		ability = -1;
-		armour = -1;
-		ring = -1;
-		weapon = new StaffTest ().GetId();
-        ability = new ScrollTest().GetId();
-
-		database = GameObject.FindGameObjectWithTag ("ItemDatabase").GetComponent<ItemDatabase>();
-		for (int i = 0; i < 8; i++)
-			inventory.Add (-1);
+		_weapon = -1;
+		_ability = -1;
+		_armour = -1;
+		_ring = -1;
+		_weapon = new StaffTest ().GetId();
+        _ability = new ScrollTest().GetId();
+		_database = GameObject.FindGameObjectWithTag ("ItemDatabase").GetComponent<ItemDatabase>();
+		_inventoryHandler = GetComponent<InventoryHandler>();
+		for (int i = 0; i < _inventorySize; i++)
+			_inventory.Add(-1);
 		
-		inventory [0] = new ArmourTest ().GetId();
-		inventory [1] = new SwordTest ().GetId();
-		inventory [2] = new PotionTest ().GetId();
-		inventory [3] = new ScrollTest ().GetId();
+		_inventory [0] = new ArmourTest ().GetId();
+		_inventory [1] = new SwordTest ().GetId();
+		_inventory [2] = new PotionTest ().GetId();
+		_inventory [3] = new ScrollTest ().GetId();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+	public void UpdateUI() {
+		Item[] inv = new Item[5];
+		for (int i = 0; i < _inventorySize; i++) {
+			inv[i] = GetItem(i);
+		}
+		gameObject.GetComponent<StatsHandler>().UpdateText();
+		_inventoryHandler.UpdateSlots(GetWeapon(), GetAbility(), GetArmour(), null, inv);
+	}
+
+	private IEnumerator updateOffset() {
+		yield return new WaitForSeconds(0.10f);
+		UpdateUI();
+		yield return null;
+	}
+
+	public void Swap(int firstSelection, int secondSelection) {
+		if (!isLocalPlayer) {
+			return;
+		}
+		if (firstSelection < 5 && secondSelection < 5) return;
+		if (firstSelection < 5) {
+			SwitchEquipment(firstSelection, secondSelection-_inventoryOffset);
+		} else if (secondSelection < 5) {
+			SwitchEquipment(secondSelection, firstSelection-_inventoryOffset);
+		} else {
+			CmdSwapItems(firstSelection - _inventoryOffset, secondSelection - _inventoryOffset);
+		}
+		StartCoroutine(updateOffset());
+	}
+
+	public bool checkEmpty(int firstSelection) {
+		if (firstSelection < 5) {
+			switch (firstSelection) {
+				case 1:
+					return _weapon == -1;
+				case 2:
+					return _ability == -1;
+				case 3:
+					return _armour == -1;
+				case 4:
+					return _ring == -1;
+			}
+		} else {
+			return _inventory[firstSelection - _inventoryOffset] == -1;
+		}
+		return false;
+	}
+
+	private void SwitchEquipment(int equipment, int index) {
+		switch (equipment) {
+				case 1:
+					CmdEquipWeapon(index);
+					break;
+				case 2:
+					CmdEquipAbility(index);
+					break;
+				case 3:
+					CmdEquipArmour(index);
+					break;
+				case 4:
+					CmdEquipRing(index);
+					break;
+		}
 	}
 
 	//Adds item to the inventory as long as its not full.
 	[Command]
 	public void CmdAddItem(Item item){
 		if(!InventoryIsFull())
-			inventory [GetFirstFreeSlot ()] = item.GetId();
+			_inventory [GetFirstFreeSlot ()] = item.GetId();
 	}
-
-	/*
-	[Command]
-	public void CmdRemoveItem(Item item){
-		for (int i = 0; i < 8; i++)
-			if (inventory [i] == item)
-				inventory [i] = null;
-	}*/
 	
 	//removes an item from the inventory at index index.
 	[Command]
 	public void CmdRemoveItem(int index){
-		inventory [index] = -1;
+		_inventory [index] = -1;
 	}
 
 	//Returns the item at index in the players inventory.
-	[Server]
 	public Item GetItem(int index){
-		return database.GetItem(inventory [index]);
+		return _database.GetItem(_inventory [index]);
 	}
-		
-
-	/*
-	[Command]
-	public void CmdEquipItem(Item item){
-		weapon = item;
-		CmdRemoveItem (item);
-	}
-	*/
 
 	/* Equips the weapon
 	 * - If the index = -1 this means that a weapon is selected in the inventory
@@ -81,121 +126,110 @@ public class Inventory : NetworkBehaviour {
 	//Sets a players weapon to an item in their inventory at index (if it is a weapon).
 	[Command]
 	public void CmdEquipWeapon(int index){
-
+		if (_inventory[index] == -1) {
+			_inventory[index] = _weapon;
+			_weapon = -1;
+			return;
+		}
 		if (GetItem (index).GetItemType () != ItemTypes.weapon)
 			return;
-		
-		if (inventory [index] == -1) {
-			weapon = GetItem (index).GetId ();
+		if (_weapon == -1) {
+			_weapon = GetItem (index).GetId ();
 			CmdRemoveItem (index);
 		} else {
-			int temp = weapon;
-			weapon = GetItem (index).GetId();
-			inventory [index] = temp;
+			int temp = _weapon;
+			_weapon = GetItem (index).GetId();
+			_inventory [index] = temp;
 		}
 	}
 	//Sets a players Ability to an item in their inventory at index (if it is an Ability).
 	[Command]
 	public void CmdEquipAbility(int index){
-
+		if (_inventory[index] == -1) {
+			_inventory[index] = _ability;
+			_ability = -1;
+			return;
+		}
 		if (GetItem (index).GetItemType () != ItemTypes.ability)
 			return;
-		if (inventory [index] == -1) {
-			ability = GetItem (index).GetId ();
+		if (_ability == -1) {
+			_ability = GetItem (index).GetId ();
 			CmdRemoveItem (index);
 		} else {
-			int temp = ability;
-			ability = GetItem (index).GetId();
-			inventory [index] = temp;
+			int temp = _ability;
+			_ability = GetItem (index).GetId();
+			_inventory [index] = temp;
 		}
 	}
 	//Sets a players Armour to an item in their inventory at index (if it is an Armour).
 	[Command]
 	public void CmdEquipArmour(int index){
-
+		if (_inventory[index] == -1) {
+			_inventory[index] = _armour;
+			_armour = -1;
+			return;
+		}
 		if (GetItem (index).GetItemType () != ItemTypes.armour)
 			return;
-		if (inventory [index] == -1) {
-			armour = GetItem (index).GetId ();
+		if (_armour == -1) {
+			_armour = GetItem (index).GetId ();
 			CmdRemoveItem (index);
 		} else {
-			int temp = armour;
-			armour = GetItem (index).GetId();
-			inventory [index] = temp;
+			int temp = _armour;
+			_armour = GetItem (index).GetId();
+			_inventory [index] = temp;
 		}
 	}
-	//Unequips an item and moves it back into the players inventory.	
+	//Sets a players Armour to an item in their inventory at index (if it is an Armour).
 	[Command]
-	public void CmdUnequipItem(int selectedItem, int index){
-		ItemTypes type = database.GetItem (selectedItem).GetItemType ();
-		switch(type){
-		case(ItemTypes.weapon):
-			if(inventory[index] == -1){
-				inventory [index] = weapon;
-				weapon = -1;
-			} else {
-				CmdEquipWeapon (index);
-			}
-			break;
-		case(ItemTypes.ability):
-			if(inventory[index] == -1){
-				inventory [index] = ability;
-				ability = -1;
-			} else {
-				CmdEquipAbility (index);
-			}
-			break;
-		case(ItemTypes.armour):
-			if(inventory[index] == -1){
-				inventory [index] = armour;
-				armour = -1;
-			} else {
-				CmdEquipArmour (index);
-			}
-			break;
-		default:
-			break;
+	public void CmdEquipRing(int index){
+		if (_inventory[index] == -1) {
+			_inventory[index] = _ring;
+			_ring = -1;
+			return;
+		}
+		if (GetItem (index).GetItemType () != ItemTypes.ring)
+			return;
+		if (_ring == -1) {
+			_ring = GetItem (index).GetId ();
+			CmdRemoveItem (index);
+		} else {
+			int temp = _ring;
+			_ring = GetItem (index).GetId();
+			_inventory [index] = temp;
 		}
 	}
 	//Swaps two items by index in the inventory.
 	[Command]
 	public void CmdSwapItems(int index1, int index2){
 		Item temp = GetItem (index1);
-		inventory [index1] = inventory [index2];
-		inventory [index2] = temp.GetId();
+		_inventory [index1] = _inventory [index2];
+		_inventory[index2] = temp != null ? temp.GetId() : -1;
 	}
-	
 	//Returns the players currently equipped weapon/ability/armour.
-	[Server]
 	public Weapon GetWeapon(){
-		return database.GetItem(weapon) as Weapon;	
+		return _database.GetItem(_weapon) as Weapon;	
 	}
 
-
-	[Server]
 	public AbilityItem GetAbility(){
-		return database.GetItem(ability) as AbilityItem;	
+		return _database.GetItem(_ability) as AbilityItem;	
 	}
 
-	[Server]
 	public Armour GetArmour(){
-		return database.GetItem(armour) as Armour;	
+		return _database.GetItem(_armour) as Armour;	
 	}
 		
 	//returns the first free inventory slot or -1 if there are no free slots.
-	int GetFirstFreeSlot(){
+	private int GetFirstFreeSlot(){
 		for (int i = 0; i < 8; i++)
-			if (inventory [i] == -1)
+			if (_inventory [i] == -1)
 				return i;
-
 		return -1;
 	}
-
-	
 	//Returns true if inventory is full, false otherwise;
-	bool InventoryIsFull(){
+	private bool InventoryIsFull(){
 		for (int i = 0; i < 8; i++)
-			if (inventory [i] == -1)
+			if (_inventory [i] == -1)
 				return false;
 		return true;
 	}

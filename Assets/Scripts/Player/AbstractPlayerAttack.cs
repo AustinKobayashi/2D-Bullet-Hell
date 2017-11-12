@@ -13,8 +13,8 @@ public abstract class AbstractPlayerAttack : NetworkBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
         timer += Time.deltaTime;
+		if (GetComponent<InventoryHandler>().MenuOpen) return;
 
 		if (Input.GetMouseButton(0) && timer >= attackCooldown) {
 			attack(Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position);

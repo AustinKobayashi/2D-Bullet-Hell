@@ -7,17 +7,15 @@ using UnityEngine.UI;
 // Base class for all stats
 public abstract class AbstractStats : NetworkBehaviour {
 /*
- * TODO: Stats needs to be looked at and redesigned for NetworkBehavior
  * Ideally more things would be initialized at start (for new clients joining in)
  * Also since I think there can only be one hook per syncvar, we need to make them count.
  */
 	[SyncVar (hook = "UpdateHealthText")] public int health;
-	[SyncVar (hook = "UpdateStrengthText")] protected int strength;
-	[SyncVar (hook = "UpdateDefenceText")] protected int defence;
-	[SyncVar (hook = "UpdateSpeedText")] protected int speed;
-	[SyncVar (hook = "UpdateDexterityText")] protected int dexterity;
+	[SyncVar] protected int strength;
+	[SyncVar] protected int defence;
+	[SyncVar] protected int speed;
+	[SyncVar] protected int dexterity;
 	[SyncVar] protected int maxHealth;
-    public InventoryControls inventoryControls;
 	public GameObject Bar;
 
 
@@ -126,28 +124,6 @@ public abstract class AbstractStats : NetworkBehaviour {
 		i.fillAmount = fillamt < 0 ? 0 : fillamt;
 	}
 
-	public void UpdateStrengthText(int strength){
-		if (!isLocalPlayer)
-			return;
-		inventoryControls.UpdateStrengthText (strength);
-	}
 
-	public void UpdateDefenceText(int defence){
-		if (!isLocalPlayer)
-			return;
-		inventoryControls.UpdateDefenceText (defence);
-	}
-
-	public void UpdateSpeedText(int speed){
-		if (!isLocalPlayer)
-			return;
-		inventoryControls.UpdateSpeedText (speed);
-	}
-
-	public void UpdateDexterityText(int dexterity){
-		if (!isLocalPlayer)
-			return;
-		inventoryControls.UpdateDexterityText (dexterity);
-	}
 	#endregion
 }

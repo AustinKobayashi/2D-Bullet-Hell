@@ -24,10 +24,8 @@ public class WizardAttack : AbstractPlayerAttack {
     void CmdAttack(Vector2 target)
     {
 		GameObject tempBullet = Instantiate(bullet, transform.position, Quaternion.identity) as GameObject;
-	    tempBullet.GetComponent<BasicAttackMovement>().SetTarget(target);
 	    tempBullet.GetComponent<BasicAttackMovement> ().SetPlayerAttack (this);
+	    tempBullet.GetComponent<BasicAttackMovement>().SetTarget(target);
 	    NetworkServer.Spawn(tempBullet);
     }
-
-	
 }

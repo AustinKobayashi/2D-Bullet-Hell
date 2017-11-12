@@ -6,5 +6,6 @@ public enum ItemTypes {
 	weapon, 
 	ability,
 	armour, 
-	consumable
+	consumable,
+	ring
 };
