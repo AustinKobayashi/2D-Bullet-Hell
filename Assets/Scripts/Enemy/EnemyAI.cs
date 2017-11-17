@@ -85,8 +85,8 @@ public class EnemyAI : NetworkBehaviour {
 	public void Drop() {
 		var drop = Instantiate(itemDrop, transform.position, Quaternion.identity);
 		var i = GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>().Roll();
+		drop.GetComponent<ItemDrop>().SetItem(i.GetId());
 		NetworkServer.Spawn(drop);
-		drop.GetComponent<ItemDrop>().RpcSetItem(i.GetId());
 	}
 
 
