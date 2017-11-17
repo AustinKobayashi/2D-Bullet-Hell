@@ -7,7 +7,7 @@ public class FireBallMovement : AbstractProjectileMovement {
     private FireWizardAbilityControls abilityControls;
 
 	public FireBallMovement() {
-		targetTag = "Enemy";
+		TargetTag = "Enemy";
 	}
 
 	public override void hit(Collider2D coll) {

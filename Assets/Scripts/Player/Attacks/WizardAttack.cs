@@ -11,7 +11,7 @@ public class WizardAttack : AbstractPlayerAttack {
 	// Use this for initialization
 	void Start () {
 		stats = GetComponent<PlayerWizardStatsTest> ();
-		attackCooldown = 1f / (1.5f + 6.5f * (stats.GetDexterity () / 75f));
+		AttackCooldown = 1f / (1.5f + 6.5f * (stats.GetDexterity () / 75f));
 	}
 
 	public override void attack(Vector2 target) {
@@ -24,8 +24,10 @@ public class WizardAttack : AbstractPlayerAttack {
     void CmdAttack(Vector2 target)
     {
 		GameObject tempBullet = Instantiate(bullet, transform.position, Quaternion.identity) as GameObject;
-	    tempBullet.GetComponent<BasicAttackMovement> ().SetPlayerAttack (this);
+	    tempBullet.GetComponent<BasicAttackMovement>()
+		    .SetDamage((int) (stats.GetWpnDamage() * (0.5f + stats.GetStrength() / 50f)));
 	    tempBullet.GetComponent<BasicAttackMovement>().SetTarget(target);
+	    tempBullet.GetComponent<BasicAttackMovement>().SetShooter(gameObject);
 	    NetworkServer.Spawn(tempBullet);
     }
 }

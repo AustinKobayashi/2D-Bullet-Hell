@@ -5,17 +5,23 @@ public class BasicAttackMovement : AbstractProjectileMovement {
     /*
      * Can't find _wizardAttack on the client, so wizard attacks for client.
      */
-    private WizardAttack _wizardAttack;
         public BasicAttackMovement()
         {
-            targetTag = "Enemy";
+            TargetTag = "Enemy";
         }
 
         public override void hit(Collider2D coll) {
             if (!isServer) return;
-            _wizardAttack.CmdDealDamage(coll.gameObject);
+            
+            EnemyStatsTest enemyStats = coll.gameObject.GetComponent<EnemyStatsTest> ();
+
+            // did player kill the enemy
+            bool kill = false;
+
+            if (enemyStats != null) 
+                kill = enemyStats.TakeDamage(Damage);
+            if (kill && Player != null)
+                Player.GetComponent<AbstractPlayerStats>().IncreaseExperience(enemyStats.GetExperienceGain());
         }
-        public void SetPlayerAttack(WizardAttack wizardAttack) {
-            this._wizardAttack = wizardAttack;
-        }
+
 }

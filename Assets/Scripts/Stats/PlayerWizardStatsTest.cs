@@ -18,7 +18,7 @@ public class PlayerWizardStatsTest : AbstractPlayerStats {
 		SetStrength (12);
 		SetDexterity (15);
 		SetEndurance(0);
-		SetDefence (20);
+		SetDefence (2);
 		SetSpeed(49);
 		SetPlayerName("Player");
 	}

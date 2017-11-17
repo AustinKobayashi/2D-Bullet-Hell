@@ -296,6 +296,11 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114497866516368878, guid: 7742c5038f647426099264eb25f8f637,
+        type: 2}
+      propertyPath: AttackCooldown
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7742c5038f647426099264eb25f8f637, type: 2}
   m_IsPrefabParent: 0
