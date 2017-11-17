@@ -19,7 +19,10 @@ public class PlayerMovement : NetworkBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (!isLocalPlayer) return;
-		if (GetComponent<InventoryHandler>().MenuOpen) return;
+		if (GetComponent<InventoryHandler>().MenuOpen) {
+			rigid.velocity = Vector2.zero;
+			return;
+		}
 
         moveVec = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 
