@@ -7,18 +7,18 @@ public abstract class AbstractPlayerAttack : NetworkBehaviour {
 /*
  * TODO: Bullets aren't shooting from the center of the player in Networked mode (probably just lag)
  */
-    public float attackCooldown;
-    public float timer;
+    public float AttackCooldown;
+    private float _timer;
 	public AbstractPlayerStats stats;
 	
 	// Update is called once per frame
 	void Update () {
-        timer += Time.deltaTime;
+        _timer += Time.deltaTime;
 		if (GetComponent<InventoryHandler>().MenuOpen) return;
 
-		if (Input.GetMouseButton(0) && timer >= attackCooldown) {
+		if (Input.GetMouseButton(0) && _timer >= AttackCooldown) {
 			attack(Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position);
-			timer = 0;
+			_timer = 0;
 		}
 	}
 

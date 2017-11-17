@@ -7,31 +7,40 @@ public abstract class AbstractProjectileMovement : NetworkBehaviour {
 
     public float Speed;
     public float LifeSpan;
-	public string targetTag;
-    private float timer;
-	private Rigidbody2D rigid;
+	public string TargetTag;
+    private float _timer;
+	private Rigidbody2D _rigid;
+	public int Damage;
+	public GameObject Player;
 
 	// Update is called once per frame
 	void Update () {
 
-        timer += Time.deltaTime;
-        if (timer >= LifeSpan)
+        _timer += Time.deltaTime;
+        if (_timer >= LifeSpan)
             Destroy(this.gameObject);
 
 	}
 
     public void SetTarget(Vector2 target)
     {
-		rigid = GetComponent<Rigidbody2D> ();
-		rigid.velocity = target.normalized * Speed;
+		_rigid = GetComponent<Rigidbody2D> ();
+		_rigid.velocity = target.normalized * Speed;
     }
 
 
 	void OnTriggerEnter2D(Collider2D coll) {
-		if (coll.tag == targetTag && !coll.isTrigger) {
-			hit(coll);
-			Destroy (this.gameObject);
-		}
+		if (!coll.CompareTag(TargetTag) || coll.isTrigger) return;
+		hit(coll);
+		Destroy (this.gameObject);
+	}
+	
+	public void SetDamage(int damage) {
+		this.Damage = damage;
+	}
+
+	public void SetShooter(GameObject player) {
+		this.Player = player;
 	}
 
 	public virtual void hit(Collider2D coll)

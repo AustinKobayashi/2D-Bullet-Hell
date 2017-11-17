@@ -5,18 +5,18 @@ using UnityEngine.Networking;
 
 public class EnemyAttackMovement : AbstractProjectileMovement {
 
-	private EnemyAttack enemyAttack;
 
 	public EnemyAttackMovement()
 	{
-		targetTag = "Player";
+		TargetTag = "Player";
 	}
 
 	public override void hit(Collider2D coll) {
-		enemyAttack.DealDamage (coll.gameObject);
-	}
+		if (!isServer) return;
+		AbstractPlayerStats playerStats = coll.gameObject.GetComponent<AbstractPlayerStats> ();
 
-	public void SetEnemyAttack(EnemyAttack enemyAttack){
-		this.enemyAttack = enemyAttack;
+		if (playerStats != null) {
+			playerStats.TakeDamage(Damage);
+		}
 	}
 }
