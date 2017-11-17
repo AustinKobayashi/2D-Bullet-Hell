@@ -16,14 +16,14 @@ public class WizardAttack : AbstractPlayerAttack {
 
 	public override void attack(Vector2 target) {
 		if (!isLocalPlayer) return;
-		CmdAttack(target);
+		CmdAttack(target, transform.position);
 	}
 
 	// Create a bullet and assign the appropriate fields
 	[Command]
-    void CmdAttack(Vector2 target)
+    void CmdAttack(Vector2 target, Vector2 position)
     {
-		GameObject tempBullet = Instantiate(bullet, transform.position, Quaternion.identity) as GameObject;
+		GameObject tempBullet = Instantiate(bullet, position, Quaternion.identity) as GameObject;
 	    tempBullet.GetComponent<BasicAttackMovement>()
 		    .SetDamage((int) (stats.GetWpnDamage() * (0.5f + stats.GetStrength() / 50f)));
 	    tempBullet.GetComponent<BasicAttackMovement>().SetTarget(target);
