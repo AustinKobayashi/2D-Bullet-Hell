@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-// TODO abstract movement
 public class PlayerMovement : NetworkBehaviour {
 
     Vector2 moveVec = Vector2.zero;
