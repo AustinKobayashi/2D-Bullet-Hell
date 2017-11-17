@@ -9,16 +9,15 @@ public class EnemyStatsTest : AbstractStats {
 
 	// Use this for initialization
 	void Start () {
-
-		// For testing
-		SetHealth (100);
-		maxHealth = health;
-		SetStrength (5);
-		SetDefence (0);
-		experienceMultiplier = 2f;
-		Image i = Bar.GetComponent<Image>();
-		i.fillAmount = 1;
-
+		if (isServer) {
+			// For testing
+			SetHealth (100);
+			maxHealth = health;
+			SetStrength (5);
+			SetDefence (0);
+			experienceMultiplier = 2f;
+		}
+		UpdateHealthText(health);
 	}
 
 	// Called when the player kills an enemy to calculate experience gain

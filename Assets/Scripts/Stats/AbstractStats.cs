@@ -17,8 +17,7 @@ public abstract class AbstractStats : NetworkBehaviour {
 	[SyncVar] protected int dexterity;
 	[SyncVar] protected int maxHealth;
 	public GameObject Bar;
-
-
+	
 	protected bool invulnerable; 
 
 	void Die(){
@@ -114,16 +113,10 @@ public abstract class AbstractStats : NetworkBehaviour {
 	#endregion
 	// Syncvar hooks to update the text for the player menu
 	#region UpdateTexts
-	/*
-	TODO: Set fill amount on start so its loaded without calling the hook
-		(add start to this class, probably should ask austin first)
-	*/
 	public void UpdateHealthText(int health){
 		Image i = Bar.GetComponent<Image>();
 		var fillamt = health / (float) getMaxHealth();
 		i.fillAmount = fillamt < 0 ? 0 : fillamt;
 	}
-
-
 	#endregion
 }
