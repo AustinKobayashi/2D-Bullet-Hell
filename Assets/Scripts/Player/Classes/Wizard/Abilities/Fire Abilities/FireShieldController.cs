@@ -23,7 +23,8 @@ public class FireShieldController : NetworkBehaviour {
 		stats.CmdIncreaseDefence (amount);
 		yield return new WaitForSeconds (duration);
 		stats.CmdDecreaseDefence (amount);
-		Destroy (this.gameObject);
+        NetworkServer.Destroy(gameObject);
+		Destroy (gameObject);
 		yield return null;
 	}
 }

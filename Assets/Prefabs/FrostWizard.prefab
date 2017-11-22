@@ -420,7 +420,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4308300785097100}
   - component: {fileID: 212005062717918972}
-  - component: {fileID: 114468605999546424}
   - component: {fileID: 114117917003098430}
   - component: {fileID: 114487014440443544}
   - component: {fileID: 114025756395360778}
@@ -432,6 +431,8 @@ GameObject:
   - component: {fileID: 114505704967923256}
   - component: {fileID: 114598685765585650}
   - component: {fileID: 114462110098415096}
+  - component: {fileID: 114482138449092838}
+  - component: {fileID: 50521874224996802}
   m_Layer: 9
   m_Name: FrostWizard
   m_TagString: Player
@@ -590,6 +591,26 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!50 &50521874224996802
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1551092487562292}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!61 &61566346666638696
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -1178,18 +1199,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TransformSyncMode: 1
-  m_SendInterval: 0.033333335
-  m_SyncRotationAxis: 2
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0
   m_SyncSpin: 0
-  m_MovementTheshold: 0.01
+  m_MovementTheshold: 0.001
   m_VelocityThreshold: 0.0001
   m_SnapThreshold: 5
   m_InterpolateRotation: 1
   m_InterpolateMovement: 1
---- !u!114 &114468605999546424
+--- !u!114 &114482138449092838
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1551092487562292}
@@ -1391,6 +1412,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c68b14d71ea394071a573585e215d226, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onCoolDown1: 0
+  onCoolDown2: 0
+  onCoolDown3: 0
 --- !u!114 &114625710935555316
 MonoBehaviour:
   m_ObjectHideFlags: 1

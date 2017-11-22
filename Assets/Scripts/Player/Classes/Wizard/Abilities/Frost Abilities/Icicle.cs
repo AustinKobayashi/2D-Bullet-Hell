@@ -6,8 +6,7 @@ public class Icicle : Ability{
 
     int damage;
 
-    public Icicle ()
-    {
+    public Icicle (){
         cooldown = 5f;
         damage = 10;
     }

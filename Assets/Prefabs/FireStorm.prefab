@@ -22,6 +22,8 @@ GameObject:
   - component: {fileID: 212391385795123334}
   - component: {fileID: 114938749188583074}
   - component: {fileID: 58536103248424864}
+  - component: {fileID: 114377492938614608}
+  - component: {fileID: 114312575161311152}
   m_Layer: 0
   m_Name: FireStorm
   m_TagString: Untagged
@@ -57,6 +59,59 @@ CircleCollider2D:
   m_Offset: {x: -0.1, y: 0}
   serializedVersion: 2
   m_Radius: 2.5
+--- !u!114 &114312575161311152
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1867249858863192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 1
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
+--- !u!114 &114377492938614608
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1867249858863192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 94
+    i1: 54
+    i2: 188
+    i3: 18
+    i4: 162
+    i5: 236
+    i6: 212
+    i7: 171
+    i8: 233
+    i9: 188
+    i10: 127
+    i11: 255
+    i12: 123
+    i13: 102
+    i14: 3
+    i15: 103
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!114 &114938749188583074
 MonoBehaviour:
   m_ObjectHideFlags: 1

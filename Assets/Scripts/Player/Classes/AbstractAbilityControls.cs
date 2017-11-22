@@ -16,32 +16,24 @@ public class AbstractAbilityControls : NetworkBehaviour {
 
     protected float cooldown1;
     float cooldownTimer1;
-    protected bool onCoolDown1;
+    public bool onCoolDown1;
 
     protected float cooldown2;
     float cooldownTimer2;
-    protected bool onCoolDown2;
+    public bool onCoolDown2;
 
     protected float cooldown3;
     float cooldownTimer3;
-    protected bool onCoolDown3;
+    public bool onCoolDown3;
 
     protected PlayerWizardStatsTest stats;
 
-    // Use this for initialization
-    void Start() {
-    }
 
-    // Update is called once per frame
-    void Update() {
+    protected void CalculateCooldown(){
 
-
-    }
-
-
-    [Server]
-    protected void CalculateCooldown()
-    {
+        if (!isServer)
+            return;
+        
         if (onCoolDown1)
             cooldownTimer1 += Time.deltaTime;
 

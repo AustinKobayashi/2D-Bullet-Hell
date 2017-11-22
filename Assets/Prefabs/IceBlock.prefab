@@ -20,6 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4017349308378424}
   - component: {fileID: 212539106584900388}
+  - component: {fileID: 114979546518970382}
+  - component: {fileID: 114284810911959062}
   m_Layer: 0
   m_Name: IceBlock
   m_TagString: Untagged
@@ -35,11 +37,64 @@ Transform:
   m_GameObject: {fileID: 1018986076127266}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.02, y: 0.059, z: 0}
-  m_LocalScale: {x: 1.5, y: 2, z: 1}
+  m_LocalScale: {x: 0.45, y: 0.6, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114284810911959062
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1018986076127266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 1
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
+--- !u!114 &114979546518970382
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1018986076127266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 143
+    i1: 169
+    i2: 85
+    i3: 154
+    i4: 253
+    i5: 164
+    i6: 84
+    i7: 13
+    i8: 27
+    i9: 255
+    i10: 86
+    i11: 23
+    i12: 10
+    i13: 194
+    i14: 138
+    i15: 77
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!212 &212539106584900388
 SpriteRenderer:
   m_ObjectHideFlags: 1
