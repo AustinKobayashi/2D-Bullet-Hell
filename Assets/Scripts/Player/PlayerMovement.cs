@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-// TODO abstract movement
 public class PlayerMovement : NetworkBehaviour {
 
     Vector2 moveVec = Vector2.zero;
@@ -19,10 +18,16 @@ public class PlayerMovement : NetworkBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (!isLocalPlayer) return;
-		if (GetComponent<InventoryHandler>().MenuOpen) return;
-
-        moveVec = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-
-		rigid.velocity = moveVec * speed;
+		if (GetComponent<InventoryHandler>().MenuOpen) {
+			rigid.velocity = Vector2.zero;
+			return;
+		}
+		var x = Input.GetAxis("Horizontal") * Time.deltaTime * 5;
+		var y = Input.GetAxis("Vertical") *Time.deltaTime * 5;
+		
+		transform.Translate(x, y, 0);
+//        moveVec = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+//
+//		rigid.velocity = moveVec * speed;
     }
 }

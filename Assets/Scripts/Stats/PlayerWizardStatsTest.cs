@@ -10,17 +10,17 @@ public class PlayerWizardStatsTest : AbstractPlayerStats {
 
 	// Use this for initialization
 	void Start () {
-		//controls = GetComponent<InventoryControls> (); shouldnt be necessary due to the stat hooks (requires testing)
-
-		// Used for testing
-		SetHealth (10000);
-		maxHealth = 100;
-		SetStrength (12);
-		SetDexterity (15);
-		SetEndurance(0);
-		SetDefence (20);
-		SetSpeed(49);
-		SetPlayerName("Player");
+		if (isServer) {
+			SetHealth (10000);
+			maxHealth = 100;
+			SetStrength (12);
+			SetDexterity (15);
+			SetEndurance(0);
+			SetDefence (2);
+			SetSpeed(49);
+			SetPlayerName("Player");
+		}
+		UpdateHealthText(health);
 	}
 	
 	// Update is called once per frame

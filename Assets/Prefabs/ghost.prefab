@@ -203,8 +203,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60b6b4859e9724d1892adb985c07ba6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 1000012770554330, guid: 14ab7b6b630f948ac875f0c05e7f81ca, type: 2}
-  attackCooldown: 1
+  Bullet: {fileID: 1000012770554330, guid: 14ab7b6b630f948ac875f0c05e7f81ca, type: 2}
+  AttackCooldown: 1
 --- !u!114 &114000012514746206
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -249,7 +249,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 0
-  inventoryControls: {fileID: 0}
   Bar: {fileID: 1429877383811022}
 --- !u!114 &114000014064947040
 MonoBehaviour:

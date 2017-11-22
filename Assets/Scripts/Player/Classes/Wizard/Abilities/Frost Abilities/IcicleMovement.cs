@@ -7,7 +7,7 @@ public class IcicleMovement : AbstractProjectileMovement {
     private FrostWizardAbilityControls abilityControls;
 
     public IcicleMovement(){
-        targetTag = "Enemy";
+        TargetTag = "Enemy";
     }
 
     public override void hit(Collider2D coll){
