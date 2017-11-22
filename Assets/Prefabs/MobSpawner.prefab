@@ -85,7 +85,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enemy: {fileID: 1000012085686948, guid: ac803270a884e4733be5c0694712c248, type: 2}
-  NumEnemies: 2
-  SpawnLocations: []
-  SpawnOnStart: 1
+  NumEnemies: 1
+  SpawnLocations:
+  - {x: 0, y: 0, z: 0}
+  SpawnOnStart: 0
   SpawnInterval: 0

@@ -25,43 +25,53 @@ public class FrostWizardAbilities : Abilities {
     }
 
 
-    [Server]
-    public void CastFirstAbility(Vector2 target, FrostWizardAbilityControls abilityControls)
-    {
+    [Command]
+    public void CmdCastFirstAbility(Vector2 target, GameObject player){
+
         GameObject tempIcicle = Instantiate(iciclePrefab, transform.position, Quaternion.identity) as GameObject;
         tempIcicle.GetComponent<IcicleMovement>().SetTarget(target);
-        tempIcicle.GetComponent<IcicleMovement>().SetAbilityControls(abilityControls);
+        tempIcicle.GetComponent<IcicleMovement>().SetAbilityControls(player.GetComponent<FrostWizardAbilityControls>());
+        NetworkServer.Spawn(tempIcicle);
     }
 
-    [Server]
-    public void CastSecondAbility(PlayerWizardStatsTest stats)
-    {
-        StartCoroutine(InvulnerableDuration(stats));
+
+    [Command]
+    public void CmdCastSecondAbility(GameObject player){
+
+        StartCoroutine(InvulnerableDuration(player));
     }
 
     // TODO implement frozen status effect
-    IEnumerator InvulnerableDuration(PlayerWizardStatsTest stats){
+    IEnumerator InvulnerableDuration(GameObject player){
 
-        GameObject tempIceBlock = Instantiate(iceBlockPrefab, transform) as GameObject;
+        PlayerWizardStatsTest stats = player.GetComponent<PlayerWizardStatsTest>();
+        GameObject tempIceBlock = Instantiate(iceBlockPrefab, transform.position, Quaternion.identity) as GameObject;
+        tempIceBlock.transform.parent = transform;
+        //tempIceBlock.GetComponent<IceBlockController>().parentNetId = gameObject.GetComponent<NetworkIdentity>().netId; // Set the parent network ID
+        NetworkServer.Spawn(tempIceBlock);
         stats.CmdSetInvulnerable(true);
         yield return new WaitForSeconds(new IceBlock().GetDuration());
         stats.CmdSetInvulnerable(false);
+        NetworkServer.Destroy(tempIceBlock);
         Destroy(tempIceBlock);
         yield return null;
     }
 
 
     // TODO attack must stun enemy (not freeze or else enemy will be invulnerable)
-    [Server]
-    public void CastThirdAbility(Vector2 target, FrostWizardAbilityControls abilityControls)
-    {
-        GameObject tempFrostCone = Instantiate(frostConePrefab, transform) as GameObject;
+    // TODO should root while casting
+    [Command]
+    public void CmdCastThirdAbility(Vector2 target, GameObject player){
+        
+        GameObject tempFrostCone = Instantiate(frostConePrefab, transform.position, Quaternion.identity) as GameObject;
+        tempFrostCone.transform.parent = transform;
+
         var dir = target - (Vector2)transform.position;
         var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg + 90;
         tempFrostCone.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
-        tempFrostCone.GetComponent<FrostConeController>().SetDuration(new FrostCone().GetDuration());
-        tempFrostCone.GetComponent<FrostConeController>().SetAbilityControls(abilityControls);
-
+        //tempFrostCone.GetComponent<FrostConeController>().SetDuration(new FrostCone().GetDuration());
+        tempFrostCone.GetComponent<FrostConeController>().SetAbilityControls(player.GetComponent<FrostWizardAbilityControls>());
+        NetworkServer.Spawn(tempFrostCone);
     }
 }

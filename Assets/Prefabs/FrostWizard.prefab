@@ -432,7 +432,7 @@ GameObject:
   - component: {fileID: 114933100406256550}
   - component: {fileID: 114505704967923256}
   - component: {fileID: 114598685765585650}
-  - component: {fileID: 114462110098415096}
+  - component: {fileID: 114482138449092838}
   m_Layer: 9
   m_Name: FrostWizard
   m_TagString: Player
@@ -1187,27 +1187,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114462110098415096
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1551092487562292}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_TransformSyncMode: 2
-  m_SendInterval: 0.33333334
-  m_SyncRotationAxis: 3
-  m_RotationSyncCompression: 0
-  m_SyncSpin: 0
-  m_MovementTheshold: 0.001
-  m_VelocityThreshold: 0.0001
-  m_SnapThreshold: 5
-  m_InterpolateRotation: 1
-  m_InterpolateMovement: 1
 --- !u!114 &114468605999546424
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1219,6 +1198,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159ca6f57da393f4ea5d2544edcc1442, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114482138449092838
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1551092487562292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 2
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 3
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
 --- !u!114 &114487014440443544
 MonoBehaviour:
   m_ObjectHideFlags: 1

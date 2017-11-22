@@ -26,7 +26,7 @@ public class FireWizardAbilityControls : AbstractAbilityControls {
 		*/
 
         if (onCoolDown1 || onCoolDown2 || onCoolDown3)
-            CalculateCooldown();
+            CmdCalculateCooldown();
         
 		if(Input.GetKeyDown(KeyCode.Alpha1) && !onCoolDown1){
 			onCoolDown1 = true;

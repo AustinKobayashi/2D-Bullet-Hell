@@ -39,9 +39,9 @@ public class AbstractAbilityControls : NetworkBehaviour {
     }
 
 
-    [Server]
-    protected void CalculateCooldown()
-    {
+    [Command]
+    protected void CmdCalculateCooldown(){
+        
         if (onCoolDown1)
             cooldownTimer1 += Time.deltaTime;
 

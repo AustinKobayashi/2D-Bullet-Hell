@@ -9,7 +9,8 @@ public class IceBlock : Ability {
 
     public IceBlock()
     {
-        cooldown = 15f;
+        //cooldown = 15f;
+        cooldown = 10f;
         duration = 5;
     }
 

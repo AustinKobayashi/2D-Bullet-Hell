@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 public abstract class AbstractPlayerAttack : NetworkBehaviour {
 /*
  * TODO: Bullets aren't shooting from the center of the player in Networked mode (probably just lag)
+ * TODO check if the cooldowns are shared by all clients (ie only one cooldown is run on the server)
  */
     public float attackCooldown;
     public float timer;
