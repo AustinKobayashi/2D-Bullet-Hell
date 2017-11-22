@@ -426,7 +426,6 @@ GameObject:
   - component: {fileID: 114025756395360778}
   - component: {fileID: 114497866516368878}
   - component: {fileID: 61566346666638696}
-  - component: {fileID: 50979733210293182}
   - component: {fileID: 114714486139944660}
   - component: {fileID: 114119205028365378}
   - component: {fileID: 114933100406256550}
@@ -591,26 +590,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!50 &50979733210293182
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1551092487562292}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!61 &61566346666638696
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -1198,12 +1177,12 @@ MonoBehaviour:
   m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TransformSyncMode: 2
-  m_SendInterval: 0.33333334
-  m_SyncRotationAxis: 3
+  m_TransformSyncMode: 1
+  m_SendInterval: 0.033333335
+  m_SyncRotationAxis: 2
   m_RotationSyncCompression: 0
   m_SyncSpin: 0
-  m_MovementTheshold: 0.001
+  m_MovementTheshold: 0.01
   m_VelocityThreshold: 0.0001
   m_SnapThreshold: 5
   m_InterpolateRotation: 1
@@ -1269,8 +1248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44da17fa5084e014a8476ec65a858753, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCooldown: 0.6666667
-  timer: 15.017209
+  AttackCooldown: 2
   stats: {fileID: 114714486139944660}
   bullet: {fileID: 1528086511244940, guid: cd9686bedad96fb4097c751dfe135306, type: 2}
 --- !u!114 &114505704967923256

@@ -22,9 +22,12 @@ public class PlayerMovement : NetworkBehaviour {
 			rigid.velocity = Vector2.zero;
 			return;
 		}
-
-        moveVec = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-
-		rigid.velocity = moveVec * speed;
+		var x = Input.GetAxis("Horizontal") * Time.deltaTime * 5;
+		var y = Input.GetAxis("Vertical") *Time.deltaTime * 5;
+		
+		transform.Translate(x, y, 0);
+//        moveVec = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+//
+//		rigid.velocity = moveVec * speed;
     }
 }
