@@ -30,6 +30,9 @@ public class AbstractAbilityControls : NetworkBehaviour {
 
 
     protected void CalculateCooldown(){
+
+        if (!isServer)
+            return;
         
         if (onCoolDown1)
             cooldownTimer1 += Time.deltaTime;
