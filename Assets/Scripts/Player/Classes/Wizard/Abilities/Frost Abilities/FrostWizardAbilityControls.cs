@@ -21,13 +21,15 @@ public class FrostWizardAbilityControls : AbstractAbilityControls {
 
     }
 
+
     // Update is called once per frame
     void Update(){
 
         if (!isLocalPlayer)
             return;
         
-        CmdCalculateCooldown ();
+        CalculateCooldown ();
+
         if (Input.GetKeyDown(KeyCode.Alpha1)){
             abilities.CmdCastFirstAbility(Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position, gameObject);
         }
@@ -40,6 +42,7 @@ public class FrostWizardAbilityControls : AbstractAbilityControls {
             abilities.CmdCastThirdAbility(Camera.main.ScreenToWorldPoint(Input.mousePosition), gameObject);
         }
     }
+
 
 
     [Command]

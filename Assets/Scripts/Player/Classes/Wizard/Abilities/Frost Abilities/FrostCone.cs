@@ -9,8 +9,7 @@ public class FrostCone : Ability {
     int damage;
 
     public FrostCone() {
-        //cooldown = 15f;
-        cooldown = 10f;
+        cooldown = 15f;
         duration = 1;
         damage = 15;
     }

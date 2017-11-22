@@ -28,19 +28,8 @@ public class AbstractAbilityControls : NetworkBehaviour {
 
     protected PlayerWizardStatsTest stats;
 
-    // Use this for initialization
-    void Start() {
-    }
 
-    // Update is called once per frame
-    void Update() {
-
-
-    }
-
-
-    [Command]
-    protected void CmdCalculateCooldown(){
+    protected void CalculateCooldown(){
         
         if (onCoolDown1)
             cooldownTimer1 += Time.deltaTime;
