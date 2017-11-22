@@ -8,6 +8,7 @@ public class FrostWizardAbilities : Abilities {
     public GameObject iciclePrefab;
     public GameObject iceBlockPrefab;
     public GameObject frostConePrefab;
+    private PlayerWizardStatsTest stats;
 
     // Use this for initialization
     void Awake()
@@ -15,6 +16,7 @@ public class FrostWizardAbilities : Abilities {
         firstAbility = new Icicle();
         secondAbility = new IceBlock();
         thirdAbility = new FrostCone();
+        stats = GetComponent<PlayerWizardStatsTest>();
     }
 
 
@@ -31,7 +33,8 @@ public class FrostWizardAbilities : Abilities {
         GetComponent<AbstractAbilityControls>().onCoolDown1 = true;
         GameObject tempIcicle = Instantiate(iciclePrefab, transform.position, Quaternion.identity) as GameObject;
         tempIcicle.GetComponent<IcicleMovement>().SetTarget(target);
-        tempIcicle.GetComponent<IcicleMovement>().SetAbilityControls(player.GetComponent<FrostWizardAbilityControls>());
+        tempIcicle.GetComponent<IcicleMovement>().SetDamage((int)(stats.GetAbilityPower() * (0.5f + (stats.GetStrength() + new Icicle().GetDamage()) / 50f)));
+        tempIcicle.GetComponent<IcicleMovement>().SetShooter(gameObject);
         NetworkServer.Spawn(tempIcicle);
     }
 

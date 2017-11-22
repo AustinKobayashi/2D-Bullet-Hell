@@ -9,12 +9,14 @@ public class FireWizardAbilities : Abilities {
 	public GameObject fireBallPrefab;
 	public GameObject fireShieldPrefab;
     public GameObject fireStormPrefab;
+	private AbstractPlayerStats stats;
 
 	// Use this for initialization
 	void Awake () {
 		firstAbility = new FireBall ();
 		secondAbility = new FireShield ();
         thirdAbility = new FireStorm ();
+		stats = GetComponent<AbstractPlayerStats>();
 	}
 
 	// Update is called once per frame
@@ -31,7 +33,8 @@ public class FireWizardAbilities : Abilities {
         FireWizardAbilityControls abilityControls = player.GetComponent<FireWizardAbilityControls>();
 		GameObject tempFireBall = Instantiate(fireBallPrefab, transform.position, Quaternion.identity) as GameObject;
 		tempFireBall.GetComponent<FireBallMovement>().SetTarget(target);
-		tempFireBall.GetComponent<FireBallMovement> ().SetAbilityControls (abilityControls);
+		tempFireBall.GetComponent<FireBallMovement> ().SetShooter(gameObject);
+	    tempFireBall.GetComponent<FireBallMovement> ().SetDamage((int)(stats.GetAbilityPower() * (0.5f + (stats.GetStrength() + new FireBall().GetDamage()) / 50f)));
         NetworkServer.Spawn(tempFireBall);
 	}
 

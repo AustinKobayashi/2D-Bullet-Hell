@@ -31,7 +31,7 @@ public abstract class AbstractProjectileMovement : NetworkBehaviour {
 
 	void OnTriggerEnter2D(Collider2D coll) {
 		if (!coll.CompareTag(TargetTag) || coll.isTrigger) return;
-		hit(coll);
+		Hit(coll);
 		Destroy (this.gameObject);
 	}
 	
@@ -43,8 +43,17 @@ public abstract class AbstractProjectileMovement : NetworkBehaviour {
 		this.Player = player;
 	}
 
-	public virtual void hit(Collider2D coll)
-	{
+	public virtual void Hit(Collider2D coll) {
+            
+		EnemyStatsTest enemyStats = coll.gameObject.GetComponent<EnemyStatsTest> ();
+
+		// did player kill the enemy
+		bool kill = false;
+
+		if (enemyStats != null) 
+			kill = enemyStats.TakeDamage(Damage);
+		if (kill && Player != null)
+			Player.GetComponent<AbstractPlayerStats>().IncreaseExperience(enemyStats.GetExperienceGain());
 	}
 
 }

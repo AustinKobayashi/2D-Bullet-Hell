@@ -11,7 +11,7 @@ public class EnemyAttackMovement : AbstractProjectileMovement {
 		TargetTag = "Player";
 	}
 
-	public override void hit(Collider2D coll) {
+	public override void Hit(Collider2D coll) {
 		if (!isServer) return;
 		AbstractPlayerStats playerStats = coll.gameObject.GetComponent<AbstractPlayerStats> ();
 

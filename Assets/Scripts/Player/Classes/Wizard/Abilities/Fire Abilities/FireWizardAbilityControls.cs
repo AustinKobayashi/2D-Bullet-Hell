@@ -52,8 +52,7 @@ public class FireWizardAbilityControls : AbstractAbilityControls {
         bool kill = false;
 
         if (enemyStats != null)
-            kill = ability == 1 ? enemyStats.TakeDamage((int)(stats.GetAbilityPower() * (0.5f + (stats.GetStrength() + new FireBall().GetDamage()) / 50f))) :
-                                            enemyStats.TakeDamage((int)(stats.GetAbilityPower() * (0.5f + (stats.GetStrength() + new FireStorm().GetDamage()) / 50f)));
+            kill = enemyStats.TakeDamage((int)(stats.GetAbilityPower() * (0.5f + (stats.GetStrength() + new FireStorm().GetDamage()) / 50f)));
 
         if (kill)
             stats.IncreaseExperience(enemyStats.GetExperienceGain());
