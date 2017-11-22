@@ -9,12 +9,4 @@ public class FireBallMovement : AbstractProjectileMovement {
 	public FireBallMovement() {
 		TargetTag = "Enemy";
 	}
-
-	public override void hit(Collider2D coll) {
-		abilityControls.CmdDealDamage(coll.gameObject, 1);
-	}
-		
-    public void SetAbilityControls(FireWizardAbilityControls abilityControls){
-		this.abilityControls = abilityControls;
-	}
 }

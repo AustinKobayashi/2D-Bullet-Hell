@@ -1324,8 +1324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44da17fa5084e014a8476ec65a858753, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCooldown: 0.6666667
-  timer: 15.017209
+  AttackCooldown: 0
   stats: {fileID: 114353056333864218}
   bullet: {fileID: 1528086511244940, guid: cd9686bedad96fb4097c751dfe135306, type: 2}
 --- !u!114 &114576988056868372
