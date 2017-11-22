@@ -26,8 +26,9 @@ public class FrostWizardAbilities : Abilities {
 
 
     [Command]
-    public void CmdCastFirstAbility(Vector2 target, GameObject player){
-
+    public void CmdCastFirstAbility(Vector2 target, GameObject player) {
+        if (GetComponent<AbstractAbilityControls>().onCoolDown1){ return;}
+        GetComponent<AbstractAbilityControls>().onCoolDown1 = true;
         GameObject tempIcicle = Instantiate(iciclePrefab, transform.position, Quaternion.identity) as GameObject;
         tempIcicle.GetComponent<IcicleMovement>().SetTarget(target);
         tempIcicle.GetComponent<IcicleMovement>().SetAbilityControls(player.GetComponent<FrostWizardAbilityControls>());
@@ -37,7 +38,8 @@ public class FrostWizardAbilities : Abilities {
 
     [Command]
     public void CmdCastSecondAbility(GameObject player){
-
+        if (GetComponent<AbstractAbilityControls>().onCoolDown2) return;
+        GetComponent<AbstractAbilityControls>().onCoolDown2 = true;
         StartCoroutine(InvulnerableDuration(player));
     }
 
@@ -62,7 +64,8 @@ public class FrostWizardAbilities : Abilities {
     // TODO should root while casting
     [Command]
     public void CmdCastThirdAbility(Vector2 target, GameObject player){
-        
+        if (GetComponent<AbstractAbilityControls>().onCoolDown3) return;
+        GetComponent<AbstractAbilityControls>().onCoolDown3 = true;
         GameObject tempFrostCone = Instantiate(frostConePrefab, transform.position, Quaternion.identity) as GameObject;
         tempFrostCone.transform.parent = transform;
 

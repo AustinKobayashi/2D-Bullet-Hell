@@ -16,15 +16,15 @@ public class AbstractAbilityControls : NetworkBehaviour {
 
     protected float cooldown1;
     float cooldownTimer1;
-    protected bool onCoolDown1;
+    public bool onCoolDown1;
 
     protected float cooldown2;
     float cooldownTimer2;
-    protected bool onCoolDown2;
+    public bool onCoolDown2;
 
     protected float cooldown3;
     float cooldownTimer3;
-    protected bool onCoolDown3;
+    public bool onCoolDown3;
 
     protected PlayerWizardStatsTest stats;
 

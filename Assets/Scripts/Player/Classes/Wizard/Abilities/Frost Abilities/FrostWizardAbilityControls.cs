@@ -24,30 +24,19 @@ public class FrostWizardAbilityControls : AbstractAbilityControls {
     // Update is called once per frame
     void Update(){
 
-        // TODO check if cooldowns work on client players
-        /*
-        if (!isLocalPlayer)
-            return;
-        */
-
-        if(onCoolDown1 || onCoolDown2 || onCoolDown3)
-            CmdCalculateCooldown ();
-
         if (!isLocalPlayer)
             return;
         
-        if (Input.GetKeyDown(KeyCode.Alpha1) && !onCoolDown1){
-            onCoolDown1 = true;
+        CmdCalculateCooldown ();
+        if (Input.GetKeyDown(KeyCode.Alpha1)){
             abilities.CmdCastFirstAbility(Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position, gameObject);
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha2) && !onCoolDown2){
-            onCoolDown2 = true;
+        if (Input.GetKeyDown(KeyCode.Alpha2)){
             abilities.CmdCastSecondAbility(gameObject);
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha3) && !onCoolDown3){
-            onCoolDown3 = true;
+        if (Input.GetKeyDown(KeyCode.Alpha3)){
             abilities.CmdCastThirdAbility(Camera.main.ScreenToWorldPoint(Input.mousePosition), gameObject);
         }
     }
