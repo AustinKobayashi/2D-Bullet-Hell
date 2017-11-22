@@ -25,6 +25,9 @@ public class FireWizardAbilities : Abilities {
     [Command]
     public void CmdCastFirstAbility(Vector2 target, GameObject player){
         
+        if (GetComponent<AbstractAbilityControls>().onCoolDown1) return; 
+        GetComponent<AbstractAbilityControls>().onCoolDown1 = true;
+
         FireWizardAbilityControls abilityControls = player.GetComponent<FireWizardAbilityControls>();
 		GameObject tempFireBall = Instantiate(fireBallPrefab, transform.position, Quaternion.identity) as GameObject;
 		tempFireBall.GetComponent<FireBallMovement>().SetTarget(target);
@@ -34,18 +37,24 @@ public class FireWizardAbilities : Abilities {
 
     [Command]
     public void CmdCastSecondAbility(GameObject player){
-        
+
+        if (GetComponent<AbstractAbilityControls>().onCoolDown2) return; 
+        GetComponent<AbstractAbilityControls>().onCoolDown2 = true;
+
         PlayerWizardStatsTest stats = player.GetComponent<PlayerWizardStatsTest>();
         GameObject tempFireShield = Instantiate(fireShieldPrefab, transform.position, Quaternion.identity) as GameObject;
         tempFireShield.transform.parent = transform;
         NetworkServer.Spawn(tempFireShield);
 		tempFireShield.GetComponent<FireShieldController> ().SetStats (stats);
-		tempFireShield.GetComponent<FireShieldController>().AddDefence((int)(stats.GetDefence() * 0.25f), 5);
+        tempFireShield.GetComponent<FireShieldController>().AddDefence((int)(stats.GetDefence() * 0.25f), new FireShield().GetDuration());
 	}
 
     [Command]
     public void CmdCastThirdAbility(Vector2 target, GameObject player){
         
+        if (GetComponent<AbstractAbilityControls>().onCoolDown3) return; 
+        GetComponent<AbstractAbilityControls>().onCoolDown3 = true;
+
         FireWizardAbilityControls abilityControls = player.GetComponent<FireWizardAbilityControls>();
         GameObject tempFireStorm = Instantiate(fireStormPrefab, target, Quaternion.identity) as GameObject;
         tempFireStorm.GetComponent<FireStormController>().SetAbilityControls(abilityControls);

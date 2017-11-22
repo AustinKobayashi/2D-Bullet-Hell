@@ -10,4 +10,8 @@ public class FireShield : Ability {
 		cooldown = 15f;
 		duration = 5;
 	}
+
+    public int GetDuration(){
+        return duration;
+    }
 }

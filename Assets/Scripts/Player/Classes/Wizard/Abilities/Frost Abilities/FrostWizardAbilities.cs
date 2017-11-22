@@ -27,6 +27,7 @@ public class FrostWizardAbilities : Abilities {
 
     [Command]
     public void CmdCastFirstAbility(Vector2 target, GameObject player) {
+        if (GetComponent<AbstractAbilityControls>().onCoolDown1) return;
         GetComponent<AbstractAbilityControls>().onCoolDown1 = true;
         GameObject tempIcicle = Instantiate(iciclePrefab, transform.position, Quaternion.identity) as GameObject;
         tempIcicle.GetComponent<IcicleMovement>().SetTarget(target);
@@ -37,6 +38,7 @@ public class FrostWizardAbilities : Abilities {
 
     [Command]
     public void CmdCastSecondAbility(GameObject player){
+        if (GetComponent<AbstractAbilityControls>().onCoolDown2) return;
         GetComponent<AbstractAbilityControls>().onCoolDown2 = true;
         StartCoroutine(InvulnerableDuration(player));
     }
@@ -47,6 +49,7 @@ public class FrostWizardAbilities : Abilities {
         PlayerWizardStatsTest stats = player.GetComponent<PlayerWizardStatsTest>();
         GameObject tempIceBlock = Instantiate(iceBlockPrefab, transform.position, Quaternion.identity) as GameObject;
         tempIceBlock.transform.parent = transform;
+
         NetworkServer.Spawn(tempIceBlock);
         stats.CmdSetInvulnerable(true);
         yield return new WaitForSeconds(new IceBlock().GetDuration());
@@ -61,6 +64,7 @@ public class FrostWizardAbilities : Abilities {
     // TODO should root while casting
     [Command]
     public void CmdCastThirdAbility(Vector2 target, GameObject player){
+        if (GetComponent<AbstractAbilityControls>().onCoolDown3) return;
         GetComponent<AbstractAbilityControls>().onCoolDown3 = true;
         GameObject tempFrostCone = Instantiate(frostConePrefab, transform.position, Quaternion.identity) as GameObject;
         tempFrostCone.transform.parent = transform;
