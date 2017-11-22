@@ -20,11 +20,11 @@ public class FireWizardAbilityControls : AbstractAbilityControls {
 	
 	// Update is called once per frame
 	void Update () {
+		
+		CalculateCooldown();
         
         if (!isLocalPlayer)
             return;
-
-        CalculateCooldown();
         
 		if(Input.GetKeyDown(KeyCode.Alpha1)){
 			abilities.CmdCastFirstAbility(Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position, gameObject);
