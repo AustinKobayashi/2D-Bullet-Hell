@@ -58,14 +58,4 @@ public class AbstractAbilityControls : NetworkBehaviour {
             cooldownTimer3 = 0;
         }
     }
-
-
-    /*
-    [Command]
-    public virtual void CmdDealDamage(GameObject enemy, int ability) {
-        Debug.Log("called");
-
-    }
-    */
-
 }

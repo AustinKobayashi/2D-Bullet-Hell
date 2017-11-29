@@ -5,10 +5,10 @@ using UnityEngine.Networking;
 
 public class FireShieldController : NetworkBehaviour {
 
-	PlayerWizardStatsTest stats;
+    AbstractPlayerStats stats;
 
 
-	public void SetStats(PlayerWizardStatsTest stats){
+    public void SetStats(AbstractPlayerStats stats){
 		this.stats = stats;
 	}
 

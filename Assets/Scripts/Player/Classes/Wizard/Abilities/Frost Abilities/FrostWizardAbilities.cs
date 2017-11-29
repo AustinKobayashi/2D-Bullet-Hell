@@ -28,9 +28,10 @@ public class FrostWizardAbilities : Abilities {
 
 
     [Command]
-    public void CmdCastFirstAbility(Vector2 target, GameObject player) {
+    public void CmdCastFirstAbility(Vector2 target) {
         if (GetComponent<AbstractAbilityControls>().onCoolDown1) return;
         GetComponent<AbstractAbilityControls>().onCoolDown1 = true;
+
         GameObject tempIcicle = Instantiate(iciclePrefab, transform.position, Quaternion.identity) as GameObject;
         tempIcicle.GetComponent<IcicleMovement>().SetTarget(target);
         tempIcicle.GetComponent<IcicleMovement>().SetDamage((int)(stats.GetAbilityPower() * (0.5f + (stats.GetStrength() + new Icicle().GetDamage()) / 50f)));
@@ -40,16 +41,19 @@ public class FrostWizardAbilities : Abilities {
 
 
     [Command]
-    public void CmdCastSecondAbility(GameObject player){
+    public void CmdCastSecondAbility(){
+        
         if (GetComponent<AbstractAbilityControls>().onCoolDown2) return;
         GetComponent<AbstractAbilityControls>().onCoolDown2 = true;
-        StartCoroutine(InvulnerableDuration(player));
+
+        StartCoroutine(InvulnerableDuration());
     }
 
-    // TODO implement frozen status effect
-    IEnumerator InvulnerableDuration(GameObject player){
 
-        PlayerWizardStatsTest stats = player.GetComponent<PlayerWizardStatsTest>();
+
+    // TODO implement frozen status effect
+    IEnumerator InvulnerableDuration(){
+
         GameObject tempIceBlock = Instantiate(iceBlockPrefab, transform.position, Quaternion.identity) as GameObject;
         tempIceBlock.transform.parent = transform;
 
@@ -63,21 +67,22 @@ public class FrostWizardAbilities : Abilities {
     }
 
 
+
     // TODO attack must stun enemy (not freeze or else enemy will be invulnerable)
     // TODO should root while casting
     [Command]
     public void CmdCastThirdAbility(Vector2 target, GameObject player){
+        
         if (GetComponent<AbstractAbilityControls>().onCoolDown3) return;
         GetComponent<AbstractAbilityControls>().onCoolDown3 = true;
+
         GameObject tempFrostCone = Instantiate(frostConePrefab, transform.position, Quaternion.identity) as GameObject;
         tempFrostCone.transform.parent = transform;
-
         var dir = target - (Vector2)transform.position;
         var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg + 90;
         tempFrostCone.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-
-        //tempFrostCone.GetComponent<FrostConeController>().SetDuration(new FrostCone().GetDuration());
-        tempFrostCone.GetComponent<FrostConeController>().SetAbilityControls(player.GetComponent<FrostWizardAbilityControls>());
+        tempFrostCone.GetComponent<FrostConeController>().SetPlayer(player);
+        tempFrostCone.GetComponent<FrostConeController>().SetDamage((int)(stats.GetAbilityPower() * (0.5f + (stats.GetStrength() + new FrostCone().GetDamage()) / 50f)));
         NetworkServer.Spawn(tempFrostCone);
     }
 }
