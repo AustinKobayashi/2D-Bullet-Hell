@@ -6,12 +6,13 @@ using UnityEngine.Networking;
 public class FrostConeController : MonoBehaviour {
 
     float durationTimer;
-    int duration;
-    private FrostWizardAbilityControls abilityControls;
+    GameObject player;
+    int damage;
 
     void Awake(){
         StartCoroutine(CastDuration());
     }
+
 
     IEnumerator CastDuration(){
 
@@ -21,23 +22,38 @@ public class FrostConeController : MonoBehaviour {
         yield return null;
     }
 
+
+
     void OnTriggerEnter2D(Collider2D coll) {
 
         if (coll.tag == "Enemy" && !coll.isTrigger){
-
+            Debug.Log("called");
             try{
-                abilityControls.CmdDealDamage(coll.gameObject, 3);
+                DealDamage(coll.gameObject);
             } catch (System.NullReferenceException){
                 
             }
         }
     }
 
-    public void SetDuration(int duration) {
-        this.duration = duration;
-    }
 
-    public void SetAbilityControls(FrostWizardAbilityControls abilityControls) {
-        this.abilityControls = abilityControls;
+
+    public void SetPlayer(GameObject player) { this.player = player; }
+
+    public void SetDamage(int damage) { this.damage = damage; }
+
+
+
+    public void DealDamage(GameObject enemy) {
+
+        EnemyStatsTest enemyStats = enemy.GetComponent<EnemyStatsTest>();
+
+        // did player kill the enemy
+        bool kill = false;
+
+        if (enemyStats != null)
+            kill = enemyStats.TakeDamage(damage);
+        if (kill && player != null)
+            player.GetComponent<AbstractPlayerStats>().IncreaseExperience(enemyStats.GetExperienceGain());
     }
 }

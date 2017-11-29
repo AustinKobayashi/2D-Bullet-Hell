@@ -19,18 +19,13 @@ public class FireWizardAbilities : Abilities {
 		stats = GetComponent<AbstractPlayerStats>();
 	}
 
-	// Update is called once per frame
-	void Update () {
-
-	}
 
     [Command]
-    public void CmdCastFirstAbility(Vector2 target, GameObject player){
+    public void CmdCastFirstAbility(Vector2 target){
         
         if (GetComponent<AbstractAbilityControls>().onCoolDown1) return; 
         GetComponent<AbstractAbilityControls>().onCoolDown1 = true;
 
-        FireWizardAbilityControls abilityControls = player.GetComponent<FireWizardAbilityControls>();
 		GameObject tempFireBall = Instantiate(fireBallPrefab, transform.position, Quaternion.identity) as GameObject;
 		tempFireBall.GetComponent<FireBallMovement>().SetTarget(target);
 		tempFireBall.GetComponent<FireBallMovement> ().SetShooter(gameObject);
@@ -38,13 +33,14 @@ public class FireWizardAbilities : Abilities {
         NetworkServer.Spawn(tempFireBall);
 	}
 
+
+
     [Command]
-    public void CmdCastSecondAbility(GameObject player){
+    public void CmdCastSecondAbility(){
 
         if (GetComponent<AbstractAbilityControls>().onCoolDown2) return; 
         GetComponent<AbstractAbilityControls>().onCoolDown2 = true;
 
-        PlayerWizardStatsTest stats = player.GetComponent<PlayerWizardStatsTest>();
         GameObject tempFireShield = Instantiate(fireShieldPrefab, transform.position, Quaternion.identity) as GameObject;
         tempFireShield.transform.parent = transform;
         NetworkServer.Spawn(tempFireShield);
@@ -52,15 +48,17 @@ public class FireWizardAbilities : Abilities {
         tempFireShield.GetComponent<FireShieldController>().AddDefence((int)(stats.GetDefence() * 0.25f), new FireShield().GetDuration());
 	}
 
+
+
     [Command]
-    public void CmdCastThirdAbility(Vector2 target, GameObject player){
+    public void CmdCastThirdAbility(Vector2 target){
         
         if (GetComponent<AbstractAbilityControls>().onCoolDown3) return; 
         GetComponent<AbstractAbilityControls>().onCoolDown3 = true;
 
-        FireWizardAbilityControls abilityControls = player.GetComponent<FireWizardAbilityControls>();
         GameObject tempFireStorm = Instantiate(fireStormPrefab, target, Quaternion.identity) as GameObject;
-        tempFireStorm.GetComponent<FireStormController>().SetAbilityControls(abilityControls);
+        tempFireStorm.GetComponent<FireStormController>().SetPlayer(gameObject);
+        tempFireStorm.GetComponent<FireStormController>().SetDamage((int)(stats.GetAbilityPower() * (0.5f + (stats.GetStrength() + new FireStorm().GetDamage()) / 50f)));
         NetworkServer.Spawn(tempFireStorm);
     }
 }

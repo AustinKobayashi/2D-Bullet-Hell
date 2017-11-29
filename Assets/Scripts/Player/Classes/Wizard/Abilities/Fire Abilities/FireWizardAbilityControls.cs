@@ -26,35 +26,13 @@ public class FireWizardAbilityControls : AbstractAbilityControls {
         if (!isLocalPlayer)
             return;
         
-		if(Input.GetKeyDown(KeyCode.Alpha1)){
-			abilities.CmdCastFirstAbility(Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position, gameObject);
-		}
-
-		if(Input.GetKeyDown(KeyCode.Alpha2)){
-            abilities.CmdCastSecondAbility(gameObject);
-		}
-
-        if (Input.GetKeyDown(KeyCode.Alpha3)){
-            abilities.CmdCastThirdAbility(Camera.main.ScreenToWorldPoint(Input.mousePosition), gameObject);
-        }
+		if(Input.GetKeyDown(KeyCode.Alpha1))
+			abilities.CmdCastFirstAbility(Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position);
+		
+		if(Input.GetKeyDown(KeyCode.Alpha2))
+            abilities.CmdCastSecondAbility();
+		
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+            abilities.CmdCastThirdAbility(Camera.main.ScreenToWorldPoint(Input.mousePosition));   
 	}
-
-
-    [Command]
-    public void CmdDealDamage(GameObject enemy, int ability){
-
-        if (!isLocalPlayer)
-            return;
-
-        EnemyStatsTest enemyStats = enemy.GetComponent<EnemyStatsTest>();
-
-        // did player kill the enemy
-        bool kill = false;
-
-        if (enemyStats != null)
-            kill = enemyStats.TakeDamage((int)(stats.GetAbilityPower() * (0.5f + (stats.GetStrength() + new FireStorm().GetDamage()) / 50f)));
-
-        if (kill)
-            stats.IncreaseExperience(enemyStats.GetExperienceGain());
-    }
 }

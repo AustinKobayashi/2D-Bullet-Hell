@@ -31,11 +31,11 @@ public class FrostWizardAbilityControls : AbstractAbilityControls {
             return;        
 
         if (Input.GetKeyDown(KeyCode.Alpha1)){
-            abilities.CmdCastFirstAbility(Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position, gameObject);
+            abilities.CmdCastFirstAbility(Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2)){
-            abilities.CmdCastSecondAbility(gameObject);
+            abilities.CmdCastSecondAbility();
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha3)){
