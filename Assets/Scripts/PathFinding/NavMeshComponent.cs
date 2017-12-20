@@ -7,9 +7,9 @@ public class NavMeshComponent {
     Vector2[] corners;
     Vector2 center;
     Bounds bounds;
-    List<NavMeshGateway> gateWays;
+    List<NavMeshGateway> gateWays = new List<NavMeshGateway>();
 
-    public NavMeshComponent(Vector2 topLeft, Vector2 topRight, Vector2 bottomLeft, Vector2 bottomRight, List<NavMeshGateway> gateWays){
+    public NavMeshComponent(Vector2 topLeft, Vector2 topRight, Vector2 bottomLeft, Vector2 bottomRight){
 
         corners = new Vector2[4];
         corners[0] = topLeft;
@@ -18,8 +18,15 @@ public class NavMeshComponent {
         corners[3] = bottomRight;
         center = new Vector2((topRight.x - topLeft.x) / 2f, (topLeft.y - bottomLeft.y) / 2f);
         bounds = new Bounds(center, new Vector2(topRight.x - topLeft.x, topLeft.y - bottomLeft.y));
-        this.gateWays = gateWays;
+
+        Debug.DrawLine(bottomLeft, bottomRight, Color.red, 10000f);
+        Debug.DrawLine(topLeft, topRight, Color.red, 10000f);
+        Debug.DrawLine(bottomLeft, topLeft, Color.red, 10000f);
+        Debug.DrawLine(bottomRight, topRight, Color.red, 10000f);
     }
+
+
+    public void AddNavMeshGateWay(NavMeshGateway gateWay){ gateWays.Add(gateWay); }
 
     public Vector2[] GetCorners() { return corners; }
 

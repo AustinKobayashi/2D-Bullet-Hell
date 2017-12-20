@@ -12,6 +12,9 @@ public class Room : ScriptableObject {
     public int roomHeight;                    // How many tiles high the room is.
     public Direction enteringCorridor;    // The direction of the corridor that is entering this room.
     List<Corridor> corridors = new List<Corridor>();
+    NavMeshComponent navMeshComponent;
+
+
 
     public void SetupRoom(IntRange widthRange, IntRange heightRange) {
 
@@ -20,12 +23,8 @@ public class Room : ScriptableObject {
 
         xPos = 0 - (int)(roomWidth / 2f);
         yPos = 0 - (int)(roomHeight / 2f);
-
-        Debug.DrawLine(new Vector3(xPos + 1, yPos + 1), new Vector3(xPos + roomWidth - 2, yPos + 1), Color.red, 10000f);
-        Debug.DrawLine(new Vector3(xPos + 1, yPos + roomHeight - 2), new Vector3(xPos + roomWidth - 2, yPos + roomHeight - 2), Color.red, 10000f);
-        Debug.DrawLine(new Vector3(xPos + 1, yPos + 1), new Vector3(xPos + 1, yPos + roomHeight - 2), Color.red, 10000f);
-        Debug.DrawLine(new Vector3(xPos + roomWidth - 2, yPos + 1), new Vector3(xPos + roomWidth - 2, yPos + roomHeight - 2), Color.red, 10000f);
     }
+
 
 
     public void SetupRoom(Vector2 roomPos, IntRange widthRange, IntRange heightRange, int maxWidth, int maxHeight, Direction direction) {
@@ -48,12 +47,15 @@ public class Room : ScriptableObject {
     }
 
 
+
     public void BuildRoom(GameObject dungeonParent, GameObject[] floorTiles, GameObject[] wallTiles){
-        
+
+        /*
         Debug.DrawLine(new Vector3(xPos + 1, yPos + 1), new Vector3(xPos + roomWidth - 2, yPos + 1), Color.red, 10000f);
         Debug.DrawLine(new Vector3(xPos + 1, yPos + roomHeight - 2), new Vector3(xPos + roomWidth - 2, yPos + roomHeight - 2), Color.red, 10000f);
         Debug.DrawLine(new Vector3(xPos + 1, yPos + 1), new Vector3(xPos + 1, yPos + roomHeight - 2), Color.red, 10000f);
         Debug.DrawLine(new Vector3(xPos + roomWidth - 2, yPos + 1), new Vector3(xPos + roomWidth - 2, yPos + roomHeight - 2), Color.red, 10000f);
+        */
 
         for (int x = xPos; x < xPos + roomWidth; x++){
             for (int y = yPos; y < yPos + roomHeight; y++){
@@ -65,7 +67,7 @@ public class Room : ScriptableObject {
                     tile.transform.parent = dungeonParent.transform;
                 }
             }
-        }    
+        }
     }
 
 
@@ -80,7 +82,30 @@ public class Room : ScriptableObject {
         wall.transform.parent = dungeonParent.transform;
     }
 
+
+
+    public void BuildRoomNavMesh(NavMesh navMesh){
+        navMeshComponent = new NavMeshComponent(new Vector2(xPos + 1, yPos + roomHeight - 2), new Vector2(xPos + roomWidth - 2, yPos + roomHeight - 2),
+                                                                 new Vector2(xPos + 1, yPos + 1), new Vector2(xPos + roomWidth - 2, yPos + 1));
+        navMesh.AddNavMeshComponent(navMeshComponent);
+    }
+
+
+
+    public void BuildRoomNavMeshGateWays(){
+        
+        foreach(Corridor corridor in corridors){
+            NavMeshGateway navMeshGateWay = new NavMeshGateway(navMeshComponent, corridor.GetNavMeshComponent());
+            navMeshComponent.AddNavMeshGateWay(navMeshGateWay);
+            corridor.GetNavMeshComponent().AddNavMeshGateWay(navMeshGateWay);
+        }
+    }
+
+
+
     public void AddCorridor(Corridor corridor){ corridors.Add(corridor); }
+
+
 
     public bool PointIsInRoom(Vector2 point){ return point.x >= xPos && point.x < xPos + roomWidth && point.y >= yPos && point.y < yPos + roomHeight; }
 }

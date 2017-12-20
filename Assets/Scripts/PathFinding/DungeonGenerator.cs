@@ -20,11 +20,13 @@ public class DungeonGenerator : MonoBehaviour {
     GameObject dungeonParent;
     Vector2 nullVector = new Vector2(-1000, -1000);
     bool spawnedBossRoom;
-
+    NavMesh navMesh;
 
 
     void Start(){
         dungeonParent = new GameObject("Dungeon Parent");
+        navMesh = GetComponent<NavMesh>();
+
         PlaceStartRoom();
         PlaceRoom(rooms[0], 0);
 
@@ -43,6 +45,9 @@ public class DungeonGenerator : MonoBehaviour {
 
         BuildRooms();
         BuildCorridors();
+        BuildRoomNavMesh();
+        BuildCorridorNavMesh();
+        BuildNavMeshGateWays();
     }
 
 
@@ -323,13 +328,37 @@ public class DungeonGenerator : MonoBehaviour {
             room.BuildRoom(dungeonParent, floorTiles, wallTiles);
         }
     }
-
+   
 
 
     void BuildCorridors(){
         
         foreach(Corridor corridor in corridors){
             corridor.BuildCorridor(dungeonParent, floorTiles, wallTiles);
+        }
+    }
+
+
+
+    void BuildRoomNavMesh(){
+        foreach(Room room in rooms){
+            room.BuildRoomNavMesh(navMesh);
+        }
+    }
+
+
+
+    void BuildCorridorNavMesh(){
+        foreach(Corridor corridor in corridors){
+            corridor.BuildCorridorNavMesh(navMesh);
+        }
+    }
+
+
+
+    void BuildNavMeshGateWays(){
+        foreach(Room room in rooms){
+            room.BuildRoomNavMeshGateWays();
         }
     }
 }

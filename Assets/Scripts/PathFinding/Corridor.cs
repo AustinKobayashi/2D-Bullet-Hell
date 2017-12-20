@@ -13,6 +13,9 @@ public class Corridor : ScriptableObject {
     public int yPos;         // The y coordinate for the start of the corridor.
     public int corridorLength;            // How many units long the corridor is.
     public Direction direction;   // Which direction the corridor is heading from it's room.
+    NavMeshComponent navMeshComponent;
+
+
 
     public void SetUpCorridor(int xPos, int yPos, int length, Direction direction) {
 
@@ -21,6 +24,7 @@ public class Corridor : ScriptableObject {
         corridorLength = length;
         this.direction = direction;
 
+        /*
         if (direction == Direction.North || direction == Direction.South) {
             Debug.DrawLine(new Vector3(this.xPos + 1, yPos - 1), new Vector3(xPos + 3, yPos - 1), Color.green, 10000f); //bottom line
             Debug.DrawLine(new Vector3(this.xPos + 1, yPos + length), new Vector3(xPos + 3, yPos + length), Color.green, 10000f); //top line
@@ -32,7 +36,10 @@ public class Corridor : ScriptableObject {
             Debug.DrawLine(new Vector3(this.xPos - 1, yPos + 1), new Vector3(xPos - 1, yPos + 3), Color.green, 10000f); //left line
             Debug.DrawLine(new Vector3(xPos + length, yPos + 1), new Vector3(xPos + length, yPos + 3), Color.green, 10000f); //right line
         }
+        */
     }
+
+
 
     public bool PointIsInCorridor(Vector2 point) {
 
@@ -41,6 +48,8 @@ public class Corridor : ScriptableObject {
         
         return point.x >= xPos && point.x < xPos + corridorLength && point.y >= yPos && point.y < yPos + 5;
     }
+
+
 
     public void BuildCorridor(GameObject dungeonParent, GameObject[] floorTiles, GameObject[] wallTiles){
         
@@ -71,4 +80,22 @@ public class Corridor : ScriptableObject {
             }
         }
     }
+
+
+
+    public void BuildCorridorNavMesh(NavMesh navMesh){
+        if (direction == Direction.North || direction == Direction.South){
+            navMeshComponent = new NavMeshComponent(new Vector2(xPos + 1, yPos + corridorLength), new Vector2(xPos + 3, yPos + corridorLength),
+                                                    new Vector2(xPos + 1, yPos - 1), new Vector2(xPos + 3, yPos - 1));
+            navMesh.AddNavMeshComponent(navMeshComponent);
+        } else {
+            navMeshComponent = new NavMeshComponent(new Vector2(xPos - 1, yPos + 3), new Vector2(xPos + corridorLength, yPos + 3),
+                                                    new Vector2(xPos - 1, yPos + 1), new Vector2(xPos + corridorLength, yPos + 1));
+            navMesh.AddNavMeshComponent(navMeshComponent);
+        }
+    }
+
+
+
+    public NavMeshComponent GetNavMeshComponent() { return navMeshComponent; }
 }
