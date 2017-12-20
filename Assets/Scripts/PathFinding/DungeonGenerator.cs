@@ -21,6 +21,8 @@ public class DungeonGenerator : MonoBehaviour {
     Vector2 nullVector = new Vector2(-1000, -1000);
     bool spawnedBossRoom;
 
+
+
     void Start(){
         dungeonParent = new GameObject("Dungeon Parent");
         PlaceStartRoom();
@@ -28,7 +30,7 @@ public class DungeonGenerator : MonoBehaviour {
 
         if(!spawnedBossRoom){
             for (int i = rooms.Count - 1; i > 0; i++){
-                SpawnBossRoom(rooms[i]);
+                PlaceBossRoom(rooms[i]);
                 if (spawnedBossRoom)
                     break;
             }
@@ -47,7 +49,7 @@ public class DungeonGenerator : MonoBehaviour {
 
     void PlaceStartRoom(){
 
-        Room startRoom = new Room();
+        Room startRoom = ScriptableObject.CreateInstance<Room>();
         startRoom.SetupRoom(roomWidth, roomHeight);
         rooms.Add(startRoom);
     }
@@ -60,7 +62,7 @@ public class DungeonGenerator : MonoBehaviour {
             return;                
         } 
         if (recursionDepth > numRooms.m_Max && !spawnedBossRoom){
-            SpawnBossRoom(connectedRoom);
+            PlaceBossRoom(connectedRoom);
             return;
         }
         
@@ -76,8 +78,8 @@ public class DungeonGenerator : MonoBehaviour {
 
             if (roomPos == nullVector || maxRoomDimensions == nullVector)
                 break;
-            
-            Room room = new Room();
+
+            Room room = ScriptableObject.CreateInstance<Room>();
             room.SetupRoom(roomPos, roomWidth, roomHeight, (int)maxRoomDimensions.x, (int)maxRoomDimensions.y, direction);
             rooms.Add(room);
 
@@ -85,7 +87,36 @@ public class DungeonGenerator : MonoBehaviour {
 
             if (corridor != null) {
                 room.AddCorridor(corridor);
+                connectedRoom.AddCorridor(corridor);
                 PlaceRoom(room, recursionDepth + 1);
+            }
+        }
+    }
+
+
+
+    void PlaceBossRoom(Room connectedRoom){
+        List<Direction> directions = GetRandomValidCorridorDirections(connectedRoom, Random.Range(1, 5));
+        if (directions.Count == 0)
+            return;
+
+        foreach (Direction direction in directions){
+            Vector2 roomPos = FindValidRoomPlacement(connectedRoom, direction, true);
+
+            if (roomPos == nullVector)
+                break;
+
+            BossRoom bossRoom = ScriptableObject.CreateInstance<BossRoom>();
+            bossRoom.SetupRoom(roomPos, bossRoomWidth, bossRoomHeight, direction);
+            rooms.Add(bossRoom);
+
+            Corridor corridor = PlaceCorridor(connectedRoom, bossRoom, direction);
+
+            if (corridor != null){
+                spawnedBossRoom = true;
+                bossRoom.AddCorridor(corridor);
+                connectedRoom.AddCorridor(corridor);
+                return;
             }
         }
     }
@@ -169,7 +200,7 @@ public class DungeonGenerator : MonoBehaviour {
 
     Corridor PlaceCorridor(Room startRoom, Room endRoom, Direction direction){
 
-        Corridor corridor = new Corridor();
+        Corridor corridor = ScriptableObject.CreateInstance<Corridor>();
         Vector2 pos = FindValidCorridorPlacement(startRoom, endRoom, direction);
 
         if(pos == nullVector){
@@ -209,7 +240,7 @@ public class DungeonGenerator : MonoBehaviour {
             case Direction.North:
                 for (int x = endRoom.xPos; x < Mathf.Min(startRoom.xPos + startRoom.roomWidth - 4, endRoom.xPos + endRoom.roomWidth - 4); x++)
                     if (CorridorCanBePlaced(startRoom, x, startRoom.yPos + startRoom.roomHeight - 1, 5, endRoom.yPos - (startRoom.yPos + startRoom.roomHeight)))
-                        positions.Add(new Vector2(x, startRoom.yPos + startRoom.roomHeight - 1));
+                        positions.Add(new Vector2(x, startRoom.yPos + startRoom.roomHeight - 1)); //changed startRoom.yPos + startRoom.roomHeight - 1 to get the debug.drawlines to touch
                 return positions.Count == 0 ? nullVector : positions[Random.Range(0, positions.Count)];
             case Direction.East:
                 for (int y = endRoom.yPos; y < Mathf.Min(startRoom.yPos + startRoom.roomHeight - 4, endRoom.yPos + endRoom.roomHeight - 4); y++)
@@ -229,33 +260,6 @@ public class DungeonGenerator : MonoBehaviour {
         }
 
         return nullVector;
-    }
-
-
-
-    void SpawnBossRoom(Room connectedRoom){
-        List<Direction> directions = GetRandomValidCorridorDirections(connectedRoom, Random.Range(1, 5));
-        if (directions.Count == 0)
-            return;
-
-        foreach (Direction direction in directions) {
-            Vector2 roomPos = FindValidRoomPlacement(connectedRoom, direction, true);
-
-            if (roomPos == nullVector)
-                break;
-
-            BossRoom bossRoom = new BossRoom();
-            bossRoom.SetupRoom(roomPos, bossRoomWidth, bossRoomHeight, direction);
-            rooms.Add(bossRoom);
-
-            Corridor corridor = PlaceCorridor(connectedRoom, bossRoom, direction);
-
-            if (corridor != null) {
-                spawnedBossRoom = true;
-                bossRoom.AddCorridor(corridor);
-                return;
-            }
-        }
     }
 
 
@@ -295,31 +299,29 @@ public class DungeonGenerator : MonoBehaviour {
     }
 
 
-    void BuildRooms(){
-        foreach(Room room in rooms){
-            for (int x = room.xPos; x < room.xPos + room.roomWidth; x++){
-                for (int y = room.yPos; y < room.yPos + room.roomHeight; y++){
-                    if(x == room.xPos || x == room.xPos + room.roomWidth - 1 || y == room.yPos || y == room.yPos + room.roomHeight - 1){
-                        PlaceWallTile(x, y);
-                    } else {
-                        GameObject tile = Instantiate(floorTiles[Random.Range(0, floorTiles.Length)], new Vector2(x, y), Quaternion.identity) as GameObject;
-                        tile.transform.parent = dungeonParent.transform;
-                    }
-                }
-            }
+
+    public List<Direction> GetRandomValidCorridorDirections(Room room, int numCorridors){
+
+        List<Direction> directions = new List<Direction>();
+
+        for (int i = 0; i < 4; i++){
+            if (FindValidRoomPlacement(room, (Direction)i) != nullVector)
+                directions.Add((Direction)i);
         }
+
+        while (directions.Count > numCorridors){
+            directions.RemoveAt(Random.Range(0, directions.Count));
+        }
+
+        return directions;
     }
 
 
 
-    void PlaceWallTile(int x, int y){
-        
-        foreach (Corridor corridor in corridors)
-            if (corridor.PointIsInCorridor(new Vector2(x, y)))
-                return;
-
-        GameObject wall = Instantiate(wallTiles[Random.Range(0, wallTiles.Length)], new Vector2(x, y), Quaternion.identity) as GameObject;
-        wall.transform.parent = dungeonParent.transform;
+    void BuildRooms(){
+        foreach (Room room in rooms){
+            room.BuildRoom(dungeonParent, floorTiles, wallTiles);
+        }
     }
 
 
@@ -327,50 +329,7 @@ public class DungeonGenerator : MonoBehaviour {
     void BuildCorridors(){
         
         foreach(Corridor corridor in corridors){
-            if (corridor.direction == Direction.North || corridor.direction == Direction.South){
-                for (int x = corridor.xPos; x < corridor.xPos + 5; x++){
-                    for (int y = corridor.yPos; y < corridor.yPos + corridor.corridorLength; y++){
-                        if(x == corridor.xPos || x == corridor.xPos + 4){
-                            GameObject wall = Instantiate(wallTiles[Random.Range(0, wallTiles.Length)], new Vector2(x, y), Quaternion.identity) as GameObject;
-                            wall.transform.parent = dungeonParent.transform;
-                        } else {
-                            GameObject tile = Instantiate(floorTiles[Random.Range(0, floorTiles.Length)], new Vector2(x, y), Quaternion.identity) as GameObject;
-                            tile.transform.parent = dungeonParent.transform;
-                        }
-                    }
-                }
-            } else {
-                for (int x = corridor.xPos; x < corridor.xPos + corridor.corridorLength; x++){
-                    for (int y = corridor.yPos; y < corridor.yPos + 5; y++){
-                        if (y == corridor.yPos || y == corridor.yPos + 4){
-                            GameObject wall = Instantiate(wallTiles[Random.Range(0, wallTiles.Length)], new Vector2(x, y), Quaternion.identity) as GameObject;
-                            wall.transform.parent = dungeonParent.transform;
-                        }
-                        else{
-                            GameObject tile = Instantiate(floorTiles[Random.Range(0, floorTiles.Length)], new Vector2(x, y), Quaternion.identity) as GameObject;
-                            tile.transform.parent = dungeonParent.transform;
-                        }
-                    }
-                }
-            }
+            corridor.BuildCorridor(dungeonParent, floorTiles, wallTiles);
         }
-    }
-
-
-
-    public List<Direction> GetRandomValidCorridorDirections(Room room, int numCorridors) {
-        
-        List<Direction> directions = new List<Direction>();
-
-        for (int i = 0; i < 4; i++){
-            if (FindValidRoomPlacement(room, (Direction)i) != nullVector)
-                directions.Add((Direction)i);
-        }
-        
-        while(directions.Count > numCorridors){
-            directions.RemoveAt(Random.Range(0, directions.Count));
-        }
-
-        return directions;
     }
 }

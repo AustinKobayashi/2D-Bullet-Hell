@@ -229,8 +229,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numRooms:
-    m_Min: 1
-    m_Max: 3
+    m_Min: 4
+    m_Max: 4
   roomWidth:
     m_Min: 10
     m_Max: 15
@@ -240,8 +240,8 @@ MonoBehaviour:
   bossRoomWidth: 50
   bossRoomHeight: 50
   corridorLength:
-    m_Min: 1
-    m_Max: 1
+    m_Min: 10
+    m_Max: 10
   floorTiles:
   - {fileID: 1083134767245508, guid: da9e7adbd95b940ec979370f5dbde86f, type: 2}
   wallTiles:
