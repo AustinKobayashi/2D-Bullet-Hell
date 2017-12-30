@@ -17,20 +17,27 @@ public abstract class AbstractProjectileMovement : NetworkBehaviour {
 	void Update () {
 
         _timer += Time.deltaTime;
-        if (_timer >= LifeSpan)
+        if (_timer >= LifeSpan) {
+            NetworkServer.Destroy(gameObject);
             Destroy(this.gameObject);
-
+        }
 	}
 
-    public void SetTarget(Vector2 target)
-    {
+    public void SetTarget(Vector2 target) {
 		_rigid = GetComponent<Rigidbody2D> ();
 		_rigid.velocity = target.normalized * Speed;
     }
 
 
 	void OnTriggerEnter2D(Collider2D coll) {
+
+        if(coll.CompareTag("Terrain")) {
+            NetworkServer.Destroy(gameObject);
+            Destroy(this.gameObject);
+        }
+            
 		if (!coll.CompareTag(TargetTag) || coll.isTrigger) return;
+
 		Hit(coll);
 		Destroy (this.gameObject);
 	}
