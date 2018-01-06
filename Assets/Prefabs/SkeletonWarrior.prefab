@@ -35,7 +35,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4395174519336174}
   - component: {fileID: 212468178168658262}
-  - component: {fileID: 114207610612231852}
   - component: {fileID: 58331902295542184}
   - component: {fileID: 50823178040708382}
   - component: {fileID: 114087575475594968}
@@ -44,6 +43,7 @@ GameObject:
   - component: {fileID: 114938774554700354}
   - component: {fileID: 61619246169414702}
   - component: {fileID: 114282902713001448}
+  - component: {fileID: 114648079668045960}
   m_Layer: 11
   m_Name: SkeletonWarrior
   m_TagString: Enemy
@@ -190,21 +190,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Bullet: {fileID: 1000012770554330, guid: 14ab7b6b630f948ac875f0c05e7f81ca, type: 2}
   AttackCooldown: 1
---- !u!114 &114207610612231852
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1449313083257794}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 167410742143040d6a37541cec612c65, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  patrolDistance: 3
-  buffer: 2
-  moveSpeed: 2
 --- !u!114 &114219229108780410
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -220,6 +205,7 @@ MonoBehaviour:
   movement: {fileID: 0}
   attack: {fileID: 0}
   target: {fileID: 0}
+  collRadius: 0
 --- !u!114 &114250530756710790
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -318,6 +304,21 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &114648079668045960
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1449313083257794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77ff20885cde84bdea73c1ce342c41c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  patrolDistance: 3
+  buffer: 2
+  moveSpeed: 2
 --- !u!114 &114706826441052492
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -460,7 +461,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1898768111670236}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.000011444092, y: 0.000021457672, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.814664, y: 0.814664, z: 0.814664}
   m_Children: []
   m_Father: {fileID: 224869850518409540}
@@ -478,7 +479,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1128204548692364}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.5600014, y: 1.6699982, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.075, y: 0.075, z: 0.09803675}
   m_Children:
   - {fileID: 224865847888622310}
@@ -497,7 +498,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1797225720258614}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.1399994, y: -1.5999985, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.81466395, y: 0.81466395, z: 0.814664}
   m_Children:
   - {fileID: 224869850518409540}
@@ -516,7 +517,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1636252475444454}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.918999, y: 45.599, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224447461399679012}

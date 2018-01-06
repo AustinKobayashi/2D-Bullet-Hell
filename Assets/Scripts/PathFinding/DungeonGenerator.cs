@@ -3,9 +3,10 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using Random = UnityEngine.Random;
+using UnityEngine.Networking;
 
 //todo add start portal, treasure room spanwer.
-public class DungeonGenerator : MonoBehaviour {
+public class DungeonGenerator : NetworkBehaviour {
 
     public IntRange numRooms;
     public IntRange roomWidth;
@@ -21,11 +22,12 @@ public class DungeonGenerator : MonoBehaviour {
     Vector2 nullVector = new Vector2(-1000, -1000);
     bool spawnedBossRoom;
     NavMesh navMesh;
-
+    DungeonMobSpawner mobSpawner;
 
     void Start(){
         dungeonParent = new GameObject("Dungeon Parent");
         navMesh = GetComponent<NavMesh>();
+        mobSpawner = GetComponent<DungeonMobSpawner>();
 
         PlaceStartRoom();
         PlaceRoom(rooms[0], 0);
@@ -48,6 +50,7 @@ public class DungeonGenerator : MonoBehaviour {
         BuildRoomNavMesh();
         BuildCorridorNavMesh();
         BuildNavMeshGateWays();
+        mobSpawner.SpawnEnemies(rooms);
     }
 
 

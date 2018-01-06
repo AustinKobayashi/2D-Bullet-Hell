@@ -13,7 +13,7 @@ public class Room : ScriptableObject {
     public Direction enteringCorridor;    // The direction of the corridor that is entering this room.
     List<Corridor> corridors = new List<Corridor>();
     NavMeshComponent navMeshComponent;
-
+    List<KeyValuePair<Corridor, Vector2>> gateWayPoints = new List<KeyValuePair<Corridor, Vector2>>();
 
 
     public void SetupRoom(IntRange widthRange, IntRange heightRange) {
@@ -98,14 +98,39 @@ public class Room : ScriptableObject {
             NavMeshGateway navMeshGateWay = new NavMeshGateway(navMeshComponent, corridor.GetNavMeshComponent());
             navMeshComponent.AddNavMeshGateWay(navMeshGateWay);
             corridor.GetNavMeshComponent().AddNavMeshGateWay(navMeshGateWay);
+
+        }
+
+        GameObject point = GameObject.Find("knob");
+
+        foreach(KeyValuePair<Corridor, Vector2> kvp in gateWayPoints){
+            Instantiate(point, kvp.Value, Quaternion.identity);
         }
     }
 
 
 
-    public void AddCorridor(Corridor corridor){ corridors.Add(corridor); }
+    public void AddCorridor(Corridor corridor){ 
+        corridors.Add(corridor);
+
+        if(corridor.yPos >= yPos + roomHeight - 2 && corridor.xPos >= xPos && corridor.xPos <= xPos + roomWidth)
+            gateWayPoints.Add(new KeyValuePair<Corridor, Vector2>(corridor, new Vector2(corridor.xPos + 2, yPos + roomHeight - 2.5f)));
+        
+        if (corridor.yPos <= yPos - 2 && corridor.xPos >= xPos && corridor.xPos <= xPos + roomWidth)
+            gateWayPoints.Add(new KeyValuePair<Corridor, Vector2>(corridor, new Vector2(corridor.xPos + 2, yPos + 1.5f)));
+        
+        if(corridor.xPos >= xPos + roomWidth - 2 && corridor.yPos >= yPos && corridor.yPos <= yPos + roomHeight)
+            gateWayPoints.Add(new KeyValuePair<Corridor, Vector2>(corridor, new Vector2(xPos + roomWidth - 2.5f, corridor.yPos + 2)));
+        
+        if(corridor.xPos <= xPos - 2 && corridor.yPos >= yPos && corridor.yPos <= yPos + roomHeight)
+            gateWayPoints.Add(new KeyValuePair<Corridor, Vector2>(corridor, new Vector2(xPos + 1.5f, corridor.yPos + 2)));   
+    }
 
 
 
     public bool PointIsInRoom(Vector2 point){ return point.x >= xPos && point.x < xPos + roomWidth && point.y >= yPos && point.y < yPos + roomHeight; }
+
+
+
+    public NavMeshComponent GetNavMeshComponent() { return navMeshComponent; }
 }

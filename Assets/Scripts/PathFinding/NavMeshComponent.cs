@@ -26,6 +26,10 @@ public class NavMeshComponent {
     }
 
 
+    public Vector2 RandomPointInsideNavMeshComponent(){
+        return new Vector2(Random.Range(corners[2].x, corners[3].x), Random.Range(corners[2].y, corners[0].y));    
+    }
+
     public void AddNavMeshGateWay(NavMeshGateway gateWay){ gateWays.Add(gateWay); }
 
     public Vector2[] GetCorners() { return corners; }

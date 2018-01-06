@@ -4,13 +4,13 @@ using System.Collections;
 public class EnemyMovement : MonoBehaviour {
 
     public GameObject target;
-    private Vector2 startPos;
-    private Vector2 moveTarget;
-    private bool atMoveTarget;
+    protected Vector2 startPos;
+    protected Vector2 moveTarget;
+    protected bool atMoveTarget;
     public int patrolDistance;
     public float buffer;
     public int moveSpeed;
-    private Rigidbody2D rigid;
+    protected Rigidbody2D rigid;
 
     // Use this for initialization
     void Start () {

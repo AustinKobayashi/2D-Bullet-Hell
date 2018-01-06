@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//TODO should be spawned on dungeon creation and passed a navmesh component for random movement
 public class DungeonEnemyAI : AbstractEnemyAI {
 
     public float collRadius;
 
     void Awake(){
-        movement = GetComponent<EnemyMovement>();
+        movement = GetComponent<DungeonEnemyMovement>();
         attack = GetComponent<EnemyAttack>();
         collRadius = GetComponent<CircleCollider2D>().radius;
     }
